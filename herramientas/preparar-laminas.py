@@ -231,9 +231,10 @@ def main():
         print(f'MAL  {nombre}: {motivo}')
     print(f'\n{len(hechas)} lista(s), {len(problemas)} con problema.')
     if hechas:
-        # imágenes a color para el Rompecabezas
+        # imágenes a color para el Rompecabezas y la Memoria, y los stickers del álbum
         import subprocess
         subprocess.run([sys.executable, str(Path(__file__).with_name('colorear-rompecabezas.py')), str(cat_path.parent.parent)], check=False)
+        subprocess.run([sys.executable, str(Path(__file__).with_name('hacer-stickers.py')), str(cat_path.parent.parent)], check=False)
         print('Ahora cambia el nombre de la caché en sw.js (o corre build) para que los celulares descarguen las nuevas.')
 
 if __name__ == '__main__':

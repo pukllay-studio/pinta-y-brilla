@@ -60,7 +60,7 @@ pip install pillow numpy scipy
 python herramientas\preparar-laminas.py
 ```
 
-El script limpia cada imagen (fondo blanco, sin grises ni puntitos, huecos pequeños cerrados), la deja en 1024 × 1024, calcula los números con colores distintos entre zonas vecinas, actualiza `dibujos/dibujos.json` y crea la versión a color para el Rompecabezas en `dibujos/color/` (también se puede correr sola: `python herramientas\colorear-rompecabezas.py`). Si una imagen tiene un problema, lo dice y no la agrega. Después cambia el nombre de la caché en `sw.js`.
+El script limpia cada imagen (fondo blanco, sin grises ni puntitos, huecos pequeños cerrados), la deja en 1024 × 1024, calcula los números con colores distintos entre zonas vecinas, actualiza `dibujos/dibujos.json` y crea la versión a color para el Rompecabezas en `dibujos/color/` y el sticker del álbum en `dibujos/sticker/` (también se pueden correr solos: `python herramientas\colorear-rompecabezas.py` y luego `python herramientas\hacer-stickers.py`). Si una imagen tiene un problema, lo dice y no la agrega. Después cambia el nombre de la caché en `sw.js`.
 
 **Gratis o de pago.** En `dibujos/dibujos.json`, las láminas con `"pack":"premium"` se abren solo con la compra "Desbloquear todo". Sin ese campo, la lámina es gratis. `preparar-laminas.py` marca como premium las láminas nuevas.
 
@@ -102,7 +102,7 @@ Si prefieres tu propia voz, graba archivos MP3 con los mismos nombres que aparec
 | `icons/` | Íconos para Android, iPhone y la pestaña del navegador |
 | `fonts/` | Tipografías incluidas (licencia OFL), sin cargar nada de Google |
 | `_headers` | Cabeceras de seguridad para Netlify o Cloudflare Pages |
-| `herramientas/` | `generar-voz.py`, la lista de frases (`frases.json`), `preparar-laminas.py` y `colorear-rompecabezas.py`; no hacen falta para jugar |
+| `herramientas/` | `generar-voz.py`, la lista de frases (`frases.json`), `preparar-laminas.py`, `colorear-rompecabezas.py` y `hacer-stickers.py`; no hacen falta para jugar |
 | `voz/` | (Opcional) audios grabados que crea `generar-voz.py` |
 
 ## Política de privacidad

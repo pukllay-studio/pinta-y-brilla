@@ -44,6 +44,14 @@
         <span class="qart"><svg viewBox="0 0 46 46" stroke="#26235C" stroke-width="2.2" stroke-linejoin="round"><path d="M6 8h11a4.5 4.5 0 1 1 7 0h0v8.5a4.5 4.5 0 1 0 0 7V31H6Z" fill="#FF8A3D"/><path d="M24 16.5a4.5 4.5 0 1 1 0 7V31h8.5a4.5 4.5 0 1 0 7 0V8H24Z" fill="#2BB3A3" transform="translate(2 4)"/></svg></span>
         <span><b>Rompecabezas</b><small>Arma las piezas</small></span>
       </button>
+      <button class="qcard" id="go-mem">
+        <span class="qart"><svg viewBox="0 0 46 46" stroke="#26235C" stroke-width="2.2" stroke-linejoin="round"><rect x="5" y="9" width="17" height="24" rx="4" fill="#9B6BD6" transform="rotate(-8 13 21)"/><rect x="22" y="12" width="17" height="24" rx="4" fill="#FFFFFF" transform="rotate(7 30 24)"/><path d="M30.5 19.5l1.6 3.3 3.6.5-2.6 2.5.6 3.6-3.2-1.7-3.2 1.7.6-3.6-2.6-2.5 3.6-.5Z" fill="#FFD23F" stroke-width="1.6" transform="rotate(7 30 24)"/><circle cx="12.5" cy="21" r="3" fill="#D4B3F5" stroke="none" transform="rotate(-8 13 21)"/></svg></span>
+        <span><b>Memoria</b><small>Encuentra las parejas</small></span>
+      </button>
+      <button class="qcard stkc" id="go-stk">
+        <span class="qart"><svg viewBox="0 0 46 46" stroke="#26235C" stroke-width="2.2" stroke-linejoin="round"><path d="M9 7h22l7 7v25H9Z" fill="#FFFFFF"/><path d="M31 7v7h7" fill="#E9E5FF"/><path d="M23.5 15l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8Z" fill="#FF8FB8"/></svg></span><span class="sdot" id="stk-dot" hidden></span>
+        <span><b>Mis stickers</b><small>Colecciónalos</small></span>
+      </button>
     </div>
     <div class="cats" id="cats" role="tablist" aria-label="Categorías"></div>
     <div class="grid" id="grid"></div>
@@ -102,13 +110,29 @@
   </main>
   <p class="hint dhint" id="puz-hint" aria-live="polite"></p>
 </section>
+<section id="mem" class="screen editor" hidden>
+  <header class="etop">
+    <button class="ibtn" id="mem-back" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="etitle"><b>Memoria</b><span class="eprog" id="mem-prog" hidden></span></div>
+    <div class="seg" id="mem-lv" role="group" aria-label="Cantidad de parejas"><button data-n="4" aria-label="4 parejas">4</button><button data-n="6" aria-label="6 parejas">6</button><button data-n="8" aria-label="8 parejas">8</button></div>
+  </header>
+  <main class="stage" id="mem-stage"><div class="mgrid" id="mem-grid"></div></main>
+  <p class="hint dhint" id="mem-hint" aria-live="polite"></p>
+</section>
+<section id="alb" class="screen editor" hidden>
+  <header class="etop">
+    <button class="ibtn" id="alb-back" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="etitle"><b>Mis stickers</b><span class="eprog" id="alb-prog"></span></div>
+  </header>
+  <main class="stage albstage"><div class="alist" id="alb-list"></div></main>
+</section>
 <div class="party" id="party" role="dialog" aria-modal="true" aria-labelledby="party-t" hidden>
   <canvas id="party-fx" aria-hidden="true"></canvas>
   <div class="pcard">
     <svg class="pstar" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6l12.6 25.6 28.2 4.1-20.4 19.9 4.8 28.1L50 70.4 24.8 83.7l4.8-28.1L9.2 35.7l28.2-4.1Z" fill="#FFD23F" stroke="#26235C" stroke-width="5" stroke-linejoin="round"/><path d="M37 47c3 4 7 4 10 0M53 47c3 4 7 4 10 0" fill="none" stroke="#26235C" stroke-width="4" stroke-linecap="round"/><path d="M42 57c5 6 11 6 16 0" fill="none" stroke="#26235C" stroke-width="4" stroke-linecap="round"/></svg>
     <h2 id="party-t">¡Muy bien!</h2>
     <p id="party-s"></p>
-    <img id="party-img" alt="Tu dibujo terminado">
+    <div class="pimgw"><img id="party-img" alt="Tu dibujo terminado"><div class="pstk" id="party-stk" hidden><img id="party-stk-img" alt="Sticker nuevo"><span>¡Nuevo!</span></div></div>
     <div class="pacts">
       <button class="pbtn" id="party-more">Seguir pintando</button>
       <button class="pbtn go" id="party-home">Otro dibujo</button>

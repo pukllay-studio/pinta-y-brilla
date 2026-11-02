@@ -529,7 +529,7 @@ async function loadCatalog(){
     }
     DRAWINGS=out.concat(DRAWINGS.filter(d=>d.custom));loadState='ok';
   }catch(e){loadState='error'}
-  renderGrid();if(puz.on&&!puz.d)renderPuzList();
+  renderGrid();if(puz.on&&!puz.d)renderPuzList();if(albOn)renderAlbum();if(mem.on&&!mem.cards.length)memStart();paintStkCard();
 }
 async function loadCustom(){
   try{
@@ -848,7 +848,7 @@ const moreBtn=$('#more'),menu=$('#menu');
 function setMenu(open){menu.hidden=!open;moreBtn.setAttribute('aria-expanded',open);if(!open)disarm()}
 moreBtn.onclick=e=>{e.stopPropagation();setMenu(menu.hidden);if(!menu.hidden){const f=menu.querySelector('.mitem:not([hidden])');if(f)f.focus()}};
 document.addEventListener('pointerdown',e=>{if(!menu.hidden&&!e.target.closest('.more-wrap'))setMenu(false)});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('#voices').hidden)closeVoices();else if(!$('#pgate').hidden)closeParents();else if(!$('#party').hidden)closeParty();else if(!menu.hidden){setMenu(false);moreBtn.focus()}else if(dots.on)dotsBack();else if(puz.on)puzBack()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('#voices').hidden)closeVoices();else if(!$('#pgate').hidden)closeParents();else if(!$('#party').hidden)closeParty();else if(!menu.hidden){setMenu(false);moreBtn.focus()}else if(dots.on)dotsBack();else if(puz.on)puzBack();else if(mem.on)memBack();else if(albOn)leaveAlbum()}});
 const clearBtn=$('#clear'),clearIcon=clearBtn.innerHTML;let armed=false,armT;
 function disarm(){armed=false;clearTimeout(armT);clearBtn.innerHTML=clearIcon;clearBtn.classList.remove('armed')}
 clearBtn.onclick=()=>{
@@ -934,7 +934,7 @@ const BILL=plug('NativePurchases');
 let premium=false,priceText='',buying=false;
 try{premium=localStorage.getItem(PREM_KEY)==='1'}catch(e){}
 const isLocked=d=>!!(d&&d.premium&&!premium);
-function setPremium(v){if(premium===v)return;premium=v;try{v?localStorage.setItem(PREM_KEY,'1'):localStorage.removeItem(PREM_KEY)}catch(e){}paintShop();if(!ed.on)renderGrid();try{if(puz.on&&!puz.d)renderPuzList()}catch(e){}}
+function setPremium(v){if(premium===v)return;premium=v;try{v?localStorage.setItem(PREM_KEY,'1'):localStorage.removeItem(PREM_KEY)}catch(e){}paintShop();if(!ed.on)renderGrid();try{if(puz.on&&!puz.d)renderPuzList();if(albOn)renderAlbum()}catch(e){}}
 const owned=list=>(list||[]).some(t=>t&&t.productIdentifier===PRODUCT_ID&&(t.purchaseState===undefined||String(t.purchaseState)==='1'||t.purchaseState==='PURCHASED'));
 async function checkPurchases(){
   if(!BILL)return;
@@ -990,7 +990,7 @@ $('#pz-reset').onclick=()=>{
   if(!b.classList.contains('armed')){b.classList.add('armed');b.firstChild.textContent='Toca otra vez para borrar';resetT=setTimeout(disarmReset,3000);return}
   disarmReset();
   /* borra colores, trazos, estrellas y obras; conserva los dibujos agregados y sus números */
-  state={fills:{},strokes:{},done:{},nums:state.nums,when:{}};
+  state={fills:{},strokes:{},done:{},nums:state.nums,when:{}};stk.a.clear();stk.v.clear();stkStore();
   for(const id of Object.keys(thumbs)){delete thumbs[id];idb.del('thumbs',id).catch(()=>{})}
   prepCache.clear();history.length=0;
   try{localStorage.setItem(KEY,JSON.stringify({state,ui}))}catch(e){}
@@ -1009,7 +1009,7 @@ if(APP){
   /* botón Atrás de Android: cierra lo que esté abierto antes de salir de la app */
   APP.addListener('backButton',()=>{
     if(!$('#voices').hidden)closeVoices();else if(!$('#pgate').hidden)closeParents();else if(!$('#party').hidden)closeParty();else if(!menu.hidden)setMenu(false);
-    else if(dots.on)dotsBack();else if(puz.on)puzBack();else if(ed.on)showHome();else APP.exitApp();
+    else if(dots.on)dotsBack();else if(puz.on)puzBack();else if(mem.on)memBack();else if(albOn)leaveAlbum();else if(ed.on)showHome();else APP.exitApp();
   });
   APP.addListener('pause',()=>{stopVoice();stopMusic();save()});
   APP.addListener('resume',()=>{if(BILL)checkPurchases()});
@@ -1051,13 +1051,14 @@ function celebrate(){
   $('#party-t').textContent=phrase;$('#party-s').textContent=sub;
   const p=$('#party');partyFocus=document.activeElement;p.hidden=false;
   const pf=$('#party-fx');pf.width=Math.round(innerWidth*dpr);pf.height=Math.round(innerHeight*dpr);
-  confetti(pf,200);tada();setTimeout(()=>say(phrase),650);
+  confetti(pf,200);tada();partyFx(drawing&&!ed.d.custom?ed.d.id:null);setTimeout(()=>say(phrase),650);
   $('#party-more').focus();
 }
 function closeParty(){$('#party').hidden=true;stopVoice();if(partyFocus&&partyFocus.focus)partyFocus.focus()}
 $('#party-more').onclick=()=>{closeParty();
-  if(puz.on&&puz.done&&puz.nextN){puz.n=puz.nextN;puz.nextN=0;try{localStorage.setItem(PUZ_KEY,String(puz.n))}catch(e){}paintLevels();puzBuild();say('Arma el rompecabezas')}};
-$('#party-home').onclick=()=>{closeParty();if(dots.on)openDotsList();else if(puz.on)openPuzList();else showHome()};
+  if(puz.on&&puz.done&&puz.nextN){puz.n=puz.nextN;puz.nextN=0;try{localStorage.setItem(PUZ_KEY,String(puz.n))}catch(e){}paintLevels();puzBuild();say('Arma el rompecabezas')}
+  else if(mem.on&&mem.done&&mem.nextN){mem.n=mem.nextN;mem.nextN=0;try{localStorage.setItem(MEM_KEY,String(mem.n))}catch(e){}paintMemLv();memStart()}};
+$('#party-home').onclick=()=>{closeParty();if(dots.on)openDotsList();else if(puz.on)openPuzList();else if(mem.on)memStart();else showHome()};
 $('#party-save').onclick=savePicture;
 $('#party').addEventListener('pointerdown',e=>{if(e.target.id==='party')closeParty()});
 $('#finish').onclick=celebrate;
@@ -1079,6 +1080,7 @@ function sfx(kind){
   else if(kind==='ok'){tone(a,659.25,t,.14,.14);tone(a,987.77,t+.08,.24,.12)}
   else if(kind==='sello'){tone(a,1318.5,t,.28,.08,'sine');tone(a,1975.5,t+.05,.32,.05,'sine')}
   else if(kind==='error'){tone(a,233.08,t,.22,.12,'sine',185)}
+  else if(kind==='boing'){tone(a,220,t,.3,.14,'sine',520);tone(a,330,t+.12,.28,.08,'sine',700)}
 }
 /* música de fondo: melodía pentatónica suave que se inventa sola; apagada de fábrica */
 const MEL=[261.63,293.66,329.63,392,440,523.25,587.33,659.25],BASS=[130.81,110,87.31,98];
@@ -1191,7 +1193,7 @@ function finishDots(){const f=dots.f;dots.done=true;dots.drag=null;dots.reveal=0
 function dotsParty(f){
   let i;do{i=Math.floor(Math.random()*PRAISE.length)}while(i===lastPraise&&PRAISE.length>1);lastPraise=i;
   const c=newCanvas(440),x=c.getContext('2d');x.drawImage(dcv,0,0,440,440);$('#party-img').src=c.toDataURL('image/jpeg',.88);
-  $('#party-t').textContent=PRAISE[i];$('#party-s').textContent=`Uniste los ${f.p.length} puntos y apareció ${f.say}.`;
+  $('#party-t').textContent=PRAISE[i];$('#party-s').textContent=`Uniste los ${f.p.length} puntos y apareció ${f.say}.`;setTimeout(()=>partyFx('puntos-'+f.id));
   $('#party-more').textContent='Ver mi dibujo';$('#party-save').hidden=true;$('#party-home').textContent='Otro dibujo';
   const p=$('#party');partyFocus=document.activeElement;p.hidden=false;
   const pf=$('#party-fx');pf.width=Math.round(innerWidth*dpr);pf.height=Math.round(innerHeight*dpr);
@@ -1356,12 +1358,141 @@ function puzFinish(){const d=puz.d,n=puz.n;puz.done=true;puz.glow=0;state.done[`
 function puzParty(d){let i;do{i=Math.floor(Math.random()*PRAISE.length)}while(i===lastPraise&&PRAISE.length>1);lastPraise=i;
   const c=newCanvas(440),x=c.getContext('2d');x.drawImage(puz.img,0,0,440,440);$('#party-img').src=c.toDataURL('image/jpeg',.88);
   const next=puz.n<4?puz.n+1:0;
-  $('#party-t').textContent=PRAISE[i];$('#party-s').textContent=`Armaste las ${puz.n*puz.n} piezas.`+(next?` ¿Pruebas con ${next*next}?`:'');
+  $('#party-t').textContent=PRAISE[i];$('#party-s').textContent=`Armaste las ${puz.n*puz.n} piezas.`+(next?` ¿Pruebas con ${next*next}?`:'');setTimeout(()=>partyFx(d.id));
   $('#party-more').textContent=next?`Probar con ${next*next} piezas`:'Ver mi rompecabezas';$('#party-save').hidden=true;$('#party-home').textContent='Otro rompecabezas';
   puz.nextN=next;
   const p=$('#party');partyFocus=document.activeElement;p.hidden=false;
   const pf=$('#party-fx');pf.width=Math.round(innerWidth*dpr);pf.height=Math.round(innerHeight*dpr);
   confetti(pf,200);tada();setTimeout(()=>say(PRAISE[i]),900);$('#party-more').focus()}
+
+/* ---------- stickers ---------- */
+const STK_KEY='pinta-y-brilla-stickers',MEM_LV=[4,6,8];
+const stk={a:new Set(),v:new Set()};
+const stkKeyOf=k=>{const m=/^puz-(.+)-[234]$/.exec(k);return m?m[1]:k};
+(function(){let raw=null;try{raw=JSON.parse(localStorage.getItem(STK_KEY)||'null')}catch(e){}
+  const ok=v=>typeof v==='string'&&ID_RE.test(v);
+  if(raw&&typeof raw==='object'){for(const k of (Array.isArray(raw.a)?raw.a:[]).slice(0,400))if(ok(k))stk.a.add(k);
+    for(const k of (Array.isArray(raw.v)?raw.v:[]).slice(0,400))if(ok(k))stk.v.add(k)}
+  /* primera vez con stickers: lo que ya hizo cuenta como ganado (y sale como nuevo en el álbum) */
+  else Object.keys(state.done).forEach(k=>stk.a.add(stkKeyOf(k)))})();
+function stkStore(){try{localStorage.setItem(STK_KEY,JSON.stringify({a:[...stk.a],v:[...stk.v]}))}catch(e){}}
+function stkEarned(key){if(/^(puntos|mem)-/.test(key))return!!state.done[key];
+  return!!(state.done[key]||[2,3,4].some(n=>state.done[`puz-${key}-${n}`]))}
+function stkItems(){const out=[];
+  DRAWINGS.filter(d=>!d.custom&&!/^(letra|num)-/.test(d.id)).forEach(d=>out.push({key:d.id,d,name:d.name,cat:d.cat}));
+  DOT_FIGS.forEach(f=>out.push({key:'puntos-'+f.id,f,name:f.name,cat:'puntos'}));
+  MEM_LV.forEach(n=>out.push({key:'mem-'+n,n,name:`Memoria de ${n} parejas`,cat:'trofeos'}));
+  return out}
+const stkCache={};
+function stkSrc(key){if(stkCache[key])return stkCache[key];
+  if(key.startsWith('puntos-')){const f=DOT_FIGS.find(q=>'puntos-'+q.id===key);if(!f)return'';
+    const c=newCanvas(240),x=c.getContext('2d'),s=240/400*.84;x.setTransform(s,0,0,s,240*.08,240*.08);x.lineJoin=x.lineCap='round';
+    x.save();x.strokeStyle='#FFFFFF';x.lineWidth=44;figPath(x,f);x.stroke();x.fillStyle='#FFFFFF';x.fill();x.restore();drawFigure(x,f,1);
+    return stkCache[key]=c.toDataURL('image/png')}
+  if(key.startsWith('mem-')){const n=+key.slice(4),c=newCanvas(240),x=c.getContext('2d'),col={4:'#2BB3A3',6:'#2F6FD6',8:'#9B6BD6'}[n]||'#2BB3A3';
+    x.lineJoin='round';x.lineWidth=8;x.strokeStyle='#FFFFFF';
+    const rib=(dx,fill)=>{x.beginPath();x.moveTo(120+dx*.2,120);x.lineTo(120+dx,226);x.lineTo(120+dx*.55,208);x.lineTo(120+dx*.1,232);x.lineTo(120-dx*.15,128);x.closePath();x.fillStyle=fill;x.fill();x.lineWidth=12;x.stroke();x.lineWidth=4;x.strokeStyle='#26235C';x.stroke();x.strokeStyle='#FFFFFF'};
+    rib(-62,'#E8424C');rib(62,col);
+    x.beginPath();x.arc(120,100,86,0,Math.PI*2);x.fillStyle='#FFFFFF';x.fill();
+    x.beginPath();x.arc(120,100,74,0,Math.PI*2);x.fillStyle='#FFD23F';x.fill();x.lineWidth=5;x.strokeStyle='#26235C';x.stroke();
+    x.beginPath();x.arc(120,100,58,0,Math.PI*2);x.strokeStyle='rgba(38,35,92,.35)';x.lineWidth=3;x.stroke();
+    x.fillStyle='#26235C';x.textAlign='center';x.textBaseline='middle';x.font='900 64px Sniglet, Nunito, system-ui, sans-serif';x.fillText(String(n),120,92);
+    x.font='900 20px Nunito, system-ui, sans-serif';x.fillText('pares',120,132);
+    return stkCache[key]=c.toDataURL('image/png')}
+  return'dibujos/sticker/'+key+'.webp'}
+function stkNew(){let k=0;stk.a.forEach(a=>{if(!stk.v.has(a))k++});return k}
+function paintStkCard(){const it=DRAWINGS.length?stkItems():[],got=it.filter(o=>stkEarned(o.key)).length;
+  $('#go-stk small').textContent=it.length?`${got} de ${it.length}`:'Colecciónalos';
+  const nb=$('#stk-dot'),n=stkNew();nb.hidden=!n;nb.textContent=n>9?'9+':String(n)}
+/* al terminar algo: el dibujo salta y, si es la primera vez, aparece su sticker */
+function partyFx(key){const im=$('#party-img');im.classList.remove('alive');void im.offsetWidth;im.classList.add('alive');
+  const box=$('#party-stk');box.hidden=true;box.classList.remove('in');
+  setTimeout(()=>sfx('boing'),250);
+  if(!key||stk.a.has(key)||!stkEarned(key))return;
+  stk.a.add(key);stkStore();paintStkCard();
+  $('#party-stk-img').src=stkSrc(key);box.hidden=false;
+  $('#party-s').textContent+=' ¡Y ganaste un sticker!';
+  setTimeout(()=>{box.classList.add('in');sfx('sello')},1000)}
+const albEl=$('#alb');let albOn=false;
+function openAlbum(){$('#home').hidden=true;$('#editor').hidden=true;albEl.hidden=false;albOn=true;renderAlbum();say('Mis stickers')}
+function leaveAlbum(){albOn=false;stopVoice();albEl.hidden=true;$('#home').hidden=false;paintStkCard()}
+function renderAlbum(){const box=$('#alb-list');box.innerHTML='';
+  if(loadState==='loading'){const g=mk('div','grid');for(let i=0;i<5;i++)g.append(mk('div','skel'));box.append(g);return}
+  const items=stkItems(),got=items.filter(o=>stkEarned(o.key));
+  $('#alb-prog').textContent=`${got.length} / ${items.length}`;
+  const groups=[...CATS.filter(c=>!['todos','obras','mios','letras'].includes(c[0])).map(c=>[c[0],c[1],c[2]]),['puntos','Unir puntos','#8EC5FF'],['trofeos','Trofeos','#FFD23F']];
+  groups.forEach(([cat,title,color])=>{const list=items.filter(o=>o.cat===cat);if(!list.length)return;
+    const sec=mk('section','apage'),h=mk('h2','ahead');h.style.setProperty('--c',color);
+    h.append(Object.assign(mk('span'),{textContent:title}),Object.assign(mk('small'),{textContent:`${list.filter(o=>stkEarned(o.key)).length} / ${list.length}`}));
+    const g=mk('div','agrid');
+    list.forEach(o=>{const has=stkEarned(o.key),b=mk('button','stk'+(has?'':' off'));
+      const im=mk('img');im.alt='';im.decoding='async';im.loading='lazy';im.src=stkSrc(o.key);b.append(im);
+      if(has&&!stk.v.has(o.key)){b.classList.add('new');b.append(mk('span','snew','¡Nuevo!'))}
+      const locked=o.d&&isLocked(o.d);if(!has&&locked)b.append(mk('span','lockb',LOCK_SVG));
+      b.setAttribute('aria-label',has?o.name:locked?`${o.name}, bloqueado`:`Sticker escondido: ${o.name}`);
+      b.onclick=()=>{
+        if(has){b.classList.remove('wig');void b.offsetWidth;b.classList.add('wig');sfx('sello');say(o.name);return}
+        if(locked){askUnlock();return}
+        const how=o.d?`Pinta el dibujo de ${o.name} o arma su rompecabezas para ganarlo`:o.f?`Une los puntos de la figura ${o.name} para ganarlo`:`Gana la memoria de ${o.n} parejas`;
+        toast(how);say(how)};
+      g.append(b)});
+    sec.append(h,g);box.append(sec)});
+  items.forEach(o=>{if(stkEarned(o.key)){stk.a.add(o.key);stk.v.add(o.key)}});stkStore()}
+$('#go-stk').onclick=openAlbum;$('#alb-back').onclick=leaveAlbum;
+
+/* ---------- memoria ---------- */
+const MEM_KEY='pinta-y-brilla-mem',memEl=$('#mem'),mgrid=$('#mem-grid'),mstage=$('#mem-stage');
+const mem={on:false,n:4,cards:[],first:null,lock:false,tries:0,found:0,done:false,nextN:0,token:0};
+try{const v=+localStorage.getItem(MEM_KEY);if(MEM_LV.includes(v))mem.n=v}catch(e){}
+function paintMemLv(){document.querySelectorAll('#mem-lv button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.n===mem.n))}
+function openMem(){$('#home').hidden=true;$('#editor').hidden=true;memEl.hidden=false;mem.on=true;paintMemLv();memStart();say('Memoria. Encuentra las parejas')}
+function leaveMem(){mem.on=false;mem.token++;stopVoice();memEl.hidden=true;$('#home').hidden=false;paintStkCard()}
+function memBack(){if(!$('#party').hidden){closeParty();return}leaveMem()}
+function memStart(){const tk=++mem.token,n=mem.n;
+  const pool=puzList().filter(d=>!isLocked(d));
+  if(pool.length<n){mgrid.innerHTML='';$('#mem-hint').textContent=loadState==='loading'?'Preparando…':'No se pudieron cargar los dibujos';return}
+  for(let k=pool.length-1;k>0;k--){const r=Math.floor(Math.random()*(k+1));[pool[k],pool[r]]=[pool[r],pool[k]]}
+  const pick=pool.slice(0,n),deck=[...pick,...pick].map(d=>({d,up:false,ok:false,el:null}));
+  for(let k=deck.length-1;k>0;k--){const r=Math.floor(Math.random()*(k+1));[deck[k],deck[r]]=[deck[r],deck[k]]}
+  Object.assign(mem,{cards:deck,first:null,lock:true,tries:0,found:0,done:false,nextN:0});
+  mgrid.innerHTML='';
+  deck.forEach((c,k)=>{const b=mk('button','mcard up'),inn=mk('span','mi'),fr=mk('span','mf'),bk=mk('span','mb');
+    const im=mk('img');im.alt='';im.decoding='async';im.src=puzSrc(c.d);fr.append(im);inn.append(bk,fr);b.append(inn);
+    b.setAttribute('aria-label',`Carta ${k+1}`);b.onclick=()=>memFlip(c);c.el=b;mgrid.append(b)});
+  memSize();memProg();$('#mem-hint').textContent='¡Mira bien dónde está cada uno!';
+  setTimeout(()=>{if(tk!==mem.token)return;mem.cards.forEach(c=>c.el.classList.remove('up'));mem.lock=false;
+    $('#mem-hint').textContent='Toca dos cartas para encontrar las parejas'},n===4?1600:n===6?2000:2400)}
+function memProg(){const p=$('#mem-prog');p.hidden=false;p.textContent=`${mem.found} / ${mem.n}`}
+function memSize(){if(!mem.on||!mem.cards.length)return;const W=mstage.clientWidth-4,H=mstage.clientHeight-4,N=mem.cards.length,gap=10;
+  let best=0,bc=2;for(let c=2;c<=8;c++){const r=Math.ceil(N/c),s=Math.min((W-gap*(c-1))/c,(H-gap*(r-1))/r);if(s>best){best=s;bc=c}}
+  const s=Math.max(48,Math.floor(Math.min(best,200)));mgrid.style.gridTemplateColumns=`repeat(${bc},${s}px)`;mgrid.style.setProperty('--cs',s+'px')}
+new ResizeObserver(memSize).observe(mstage);
+function memFlip(c){if(mem.lock||c.up||c.ok||mem.done)return;c.up=true;c.el.classList.add('up');c.el.setAttribute('aria-label',c.d.name);sfx('pop');
+  if(!mem.first){mem.first=c;return}
+  const a=mem.first;mem.first=null;mem.tries++;
+  if(a.d.id===c.d.id){a.ok=c.ok=true;mem.found++;memProg();
+    setTimeout(()=>{a.el.classList.add('ok');c.el.classList.add('ok');sfx('ok');say(c.d.say||c.d.name)},250);
+    if(mem.found===mem.n)memFinish();else $('#mem-hint').textContent=`¡Pareja de ${c.d.name}!`}
+  else{mem.lock=true;$('#mem-hint').textContent='No son iguales. ¡Intenta otra vez!';
+    setTimeout(()=>{a.up=c.up=false;a.el.classList.remove('up');c.el.classList.remove('up');a.el.setAttribute('aria-label','Carta');c.el.setAttribute('aria-label','Carta');mem.lock=false},950)}}
+function memFinish(){const n=mem.n,tk=mem.token;mem.done=true;state.done['mem-'+n]=true;save();
+  $('#mem-hint').textContent=`¡Encontraste las ${n} parejas!`;
+  setTimeout(()=>{if(tk!==mem.token||!mem.on)return;
+    let i;do{i=Math.floor(Math.random()*PRAISE.length)}while(i===lastPraise&&PRAISE.length>1);lastPraise=i;
+    const c=newCanvas(440),x=c.getContext('2d');x.fillStyle='#FFF6E3';x.fillRect(0,0,440,440);
+    const shown=mem.cards.filter((q,k,arr)=>arr.findIndex(z=>z.d.id===q.d.id)===k).slice(0,4);
+    shown.forEach((q,k)=>{const im=q.el.querySelector('img');try{x.drawImage(im,(k%2)*220+10,Math.floor(k/2)*220+10,200,200)}catch(e){}});
+    $('#party-img').src=c.toDataURL('image/jpeg',.88);
+    const next=MEM_LV[MEM_LV.indexOf(n)+1]||0;mem.nextN=next;
+    $('#party-t').textContent=PRAISE[i];$('#party-s').textContent=`Encontraste las ${n} parejas en ${mem.tries} intentos.`;
+    $('#party-more').textContent=next?`Probar con ${next} parejas`:'Ver las cartas';$('#party-save').hidden=true;$('#party-home').textContent='Jugar otra vez';
+    const p=$('#party');partyFocus=document.activeElement;p.hidden=false;
+    const pf=$('#party-fx');pf.width=Math.round(innerWidth*dpr);pf.height=Math.round(innerHeight*dpr);
+    confetti(pf,200);tada();partyFx('mem-'+n);setTimeout(()=>say(PRAISE[i]),900);$('#party-more').focus()},1100)}
+$('#go-mem').onclick=openMem;$('#mem-back').onclick=memBack;
+document.querySelectorAll('#mem-lv button').forEach(b=>b.onclick=()=>{const n=+b.dataset.n;if(n===mem.n&&!mem.done&&mem.tries)return;mem.n=n;
+  try{localStorage.setItem(MEM_KEY,String(n))}catch(e){}paintMemLv();sfx('pop');memStart()});
+if(/[?&]prueba\b/.test(location.search))Object.assign(window.__t||(window.__t={}),{mem,stk});
 
 /* ---------- efectos ---------- */
 let toastT;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2200)}
@@ -1389,6 +1520,6 @@ function resize(){
 }
 new ResizeObserver(resize).observe(stage);
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(req);
-renderGrid();loadCustom();loadCatalog();
+renderGrid();loadCustom();loadCatalog();paintStkCard();
 })();
 if('serviceWorker' in navigator&&location.protocol!=='file:'&&!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform())){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}

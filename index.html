@@ -36,9 +36,13 @@
         <span class="qart"><svg viewBox="0 0 46 46" fill="none" stroke-linecap="round" stroke-width="3.5"><path d="M8 30c5-12 10-12 14-3s8 5 15-13" stroke="#22E6FF" class="glow-c"/><path d="M11 13c4 2 8 2 12-1" stroke="#FF3EA5" class="glow-p"/></svg></span>
         <span><b>Pizarra neón</b><small>Trazos que brillan</small></span>
       </button>
-      <button class="qcard wide" id="go-dots">
+      <button class="qcard" id="go-dots">
         <span class="qart"><svg viewBox="0 0 46 46" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 33 17 11l11 16" stroke="#2F6FD6" stroke-width="3.2"/><path d="M28 27l9-12" stroke="#2F6FD6" stroke-width="3.2" stroke-dasharray="1 5.5"/><g fill="#FFD23F" stroke="#26235C" stroke-width="2"><circle cx="9" cy="33" r="3.6"/><circle cx="17" cy="11" r="3.6"/><circle cx="28" cy="27" r="3.6"/><circle cx="37" cy="15" r="3.6"/></g></svg></span>
         <span><b>Unir puntos</b><small>1, 2, 3… ¿qué aparece?</small></span>
+      </button>
+      <button class="qcard" id="go-puz">
+        <span class="qart"><svg viewBox="0 0 46 46" stroke="#26235C" stroke-width="2.2" stroke-linejoin="round"><path d="M6 8h11a4.5 4.5 0 1 1 7 0h0v8.5a4.5 4.5 0 1 0 0 7V31H6Z" fill="#FF8A3D"/><path d="M24 16.5a4.5 4.5 0 1 1 0 7V31h8.5a4.5 4.5 0 1 0 7 0V8H24Z" fill="#2BB3A3" transform="translate(2 4)"/></svg></span>
+        <span><b>Rompecabezas</b><small>Arma las piezas</small></span>
       </button>
     </div>
     <div class="cats" id="cats" role="tablist" aria-label="Categorías"></div>
@@ -85,6 +89,18 @@
     <div class="dlist" id="dots-list"><div class="grid" id="dots-grid"></div></div>
   </main>
   <p class="hint dhint" id="dots-hint" aria-live="polite"></p>
+</section>
+<section id="puz" class="screen editor" hidden>
+  <header class="etop">
+    <button class="ibtn" id="puz-back" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="etitle"><b id="puz-name">Rompecabezas</b><span class="eprog" id="puz-prog" hidden></span></div>
+    <div class="seg" id="puz-lv" role="group" aria-label="Cantidad de piezas"><button data-n="2" aria-label="4 piezas">4</button><button data-n="3" aria-label="9 piezas">9</button><button data-n="4" aria-label="16 piezas">16</button></div>
+  </header>
+  <main class="stage" id="puz-stage">
+    <canvas id="pcv" aria-label="Rompecabezas: arrastra las piezas al tablero" hidden></canvas>
+    <div class="dlist" id="puz-list"><div class="grid" id="puz-grid"></div></div>
+  </main>
+  <p class="hint dhint" id="puz-hint" aria-live="polite"></p>
 </section>
 <div class="party" id="party" role="dialog" aria-modal="true" aria-labelledby="party-t" hidden>
   <canvas id="party-fx" aria-hidden="true"></canvas>

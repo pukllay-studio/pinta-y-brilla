@@ -1,4 +1,4 @@
-# Pinta y Brilla
+# Pukllay: Colorea y Juega
 
 Juego de colorear para niños. Funciona sin internet y se instala en el celular o la tablet como una app, con su ícono en la pantalla de inicio.
 

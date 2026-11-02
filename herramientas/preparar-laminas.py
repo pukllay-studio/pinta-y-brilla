@@ -1,4 +1,4 @@
-"""Prepara láminas nuevas para Pinta y Brilla.
+"""Prepara láminas nuevas para Pukllay: Colorea y Juega.
 
 Toma las imágenes de una carpeta (por defecto Documentos/laminas-nuevas), las limpia
 (fondo blanco, sin grises, sin puntitos sueltos, huecos pequeños cerrados), las deja en

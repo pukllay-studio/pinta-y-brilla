@@ -484,6 +484,7 @@ function renderGrid(){
     const nm=mk('span','nm');nm.textContent=d.name;
     b.append(im,nm);b.onclick=()=>openEditor('colorear',d);card.append(tape,b);
     if(state.done[d.id])card.append(mk('span','badge','★'));
+    if(isLocked(d)){card.classList.add('locked');card.append(mk('span','lockb',LOCK_SVG));b.setAttribute('aria-label',d.name+', bloqueado');b.onclick=askUnlock}
     if(d.custom){const del=mk('button','del','✕');del.setAttribute('aria-label','Quitar '+d.name);let t;
       del.onclick=e=>{e.stopPropagation();if(!del.classList.contains('armed')){del.classList.add('armed');del.textContent='¿Quitar?';
         t=setTimeout(()=>{del.classList.remove('armed');del.textContent='✕'},2600);return}clearTimeout(t);removeCustom(d)};
@@ -524,7 +525,7 @@ async function loadCatalog(){
       if(!e||!ID_RE.test(e.id)||typeof e.name!=='string'||!/^[a-z0-9-]{1,40}\.png$/.test(e.file)||!CAT_COLOR[e.cat]||['todos','mios','obras'].includes(e.cat))continue;
       /* las láminas incluidas numeran con la paleta fija NUMS (pal:null) */
       const n=cleanNums({pal:stdPal,seeds:Array.isArray(e.numeros)?e.numeros:[]});if(n)n.pal=null;
-      out.push({id:e.id,name:e.name.slice(0,40),say:typeof e.say==='string'?e.say.slice(0,60):null,cat:e.cat,src:'dibujos/'+e.file,nums:n});
+      out.push({id:e.id,name:e.name.slice(0,40),say:typeof e.say==='string'?e.say.slice(0,60):null,cat:e.cat,src:'dibujos/'+e.file,nums:n,premium:e.pack==='premium'});
     }
     DRAWINGS=out.concat(DRAWINGS.filter(d=>d.custom));loadState='ok';
   }catch(e){loadState='error'}
@@ -602,6 +603,7 @@ async function getPrepared(d){
   if(prepCache.size>PREP_MAX)prepCache.delete(prepCache.keys().next().value);return R;
 }
 async function openEditor(mode,d){
+  if(d&&isLocked(d)){askUnlock();return}
   const tok=++ed.token;
   ed.on=true;ed.mode=mode;ed.d=d;ed.R=null;dirtyWork=false;zoom.s=1;zoom.x=zoom.y=0;zoom.pinch=null;applyZoom();active=null;layerKey='';hiKey='';disarm();
   $('#home').hidden=true;$('#editor').hidden=false;
@@ -922,6 +924,46 @@ function openVoices(){setMenu(false);loadVoices();renderVoices();voicesFocus=doc
 function closeVoices(){$('#voices').hidden=true;if(voicesFocus&&voicesFocus.focus)voicesFocus.focus()}
 $('#voicebtn').onclick=openVoices;
 
+/* ---------- desbloquear todo: compra única con Google Play Billing ----------
+   Las láminas marcadas "premium" en dibujos.json se abren con la compra "desbloquear_todo".
+   En la app Android se confirma con Google Play al abrir (si hubo reembolso, se vuelve a bloquear).
+   La web no vende nada: muestra el aviso de la app. */
+const PRODUCT_ID='desbloquear_todo',PREM_KEY='pinta-y-brilla-premium';
+const LOCK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>';
+const BILL=plug('NativePurchases');
+let premium=false,priceText='',buying=false;
+try{premium=localStorage.getItem(PREM_KEY)==='1'}catch(e){}
+const isLocked=d=>!!(d&&d.premium&&!premium);
+function setPremium(v){if(premium===v)return;premium=v;try{v?localStorage.setItem(PREM_KEY,'1'):localStorage.removeItem(PREM_KEY)}catch(e){}paintShop();if(!ed.on)renderGrid()}
+const owned=list=>(list||[]).some(t=>t&&t.productIdentifier===PRODUCT_ID&&(t.purchaseState===undefined||String(t.purchaseState)==='1'||t.purchaseState==='PURCHASED'));
+async function checkPurchases(){
+  if(!BILL)return;
+  try{const {purchases}=await BILL.getPurchases({productType:'inapp'});setPremium(owned(purchases))}catch(e){}  /* sin respuesta de Play: se mantiene lo guardado */
+  try{const {products}=await BILL.getProducts({productIdentifiers:[PRODUCT_ID],productType:'inapp'});
+    const p=products&&products[0];if(p&&typeof p.priceString==='string'){priceText=p.priceString.slice(0,24);paintShop()}}catch(e){}
+}
+function paintShop(){
+  const t=$('#pshop-t'),sub=$('#pshop-sub'),buy=$('#pz-buy'),res=$('#pz-restore');
+  const total=DRAWINGS.filter(d=>!d.custom&&d.cat!=='letras').length,free=DRAWINGS.filter(d=>!d.custom&&d.cat!=='letras'&&!d.premium).length;
+  if(premium){t.textContent='Todo desbloqueado';sub.textContent='Gracias por apoyar a Pukllay Studio. Ya tienes todas las láminas.';buy.hidden=true;res.hidden=true;return}
+  t.textContent='Todas las láminas';buy.hidden=false;res.hidden=!BILL;
+  sub.textContent=`${free||15} láminas gratis de ${total||30}. Con un solo pago desbloqueas todas y las que lleguen después.`;
+  if(!BILL){buy.textContent='Disponible en la app de Google Play';buy.disabled=true}
+  else{buy.disabled=buying;buy.textContent=buying?'Abriendo Google Play…':priceText?`Desbloquear todo · ${priceText}`:'Desbloquear todo'}
+}
+function askUnlock(){toast('Pide a un adulto que lo desbloquee');say('Pide ayuda a un adulto para desbloquear más dibujos');openParents(true)}
+$('#pz-buy').onclick=async()=>{
+  if(!BILL||buying||premium)return;buying=true;paintShop();
+  try{const t=await BILL.purchaseProduct({productIdentifier:PRODUCT_ID,productType:'inapp'});
+    if(owned([t])){setPremium(true);toast('¡Listo! Todo desbloqueado');sfx('ok')}
+    else toast('Tu pago está pendiente. Se desbloqueará cuando Google lo confirme.');
+  }catch(e){if(!/cancel/i.test(String(e&&e.message)))toast('No se pudo completar la compra. Inténtalo otra vez.')}
+  buying=false;paintShop();
+};
+$('#pz-restore').onclick=async()=>{if(!BILL)return;const before=premium;await checkPurchases();
+  toast(premium?(before?'Ya estaba desbloqueado':'¡Compra restaurada!'):'No encontramos una compra con esta cuenta de Google')};
+if(BILL){checkPurchases();try{BILL.addListener('transactionUpdated',()=>checkPurchases())}catch(e){}}
+
 /* ---------- zona para padres (candado con una suma) ---------- */
 let gateFocus=null,resetT=0;
 function newGate(){
@@ -929,14 +971,15 @@ function newGate(){
   while(opts.size<3){const v=r+[-3,-2,-1,1,2,3][Math.floor(Math.random()*6)];opts.add(v)}
   $('#gate-q').textContent=`${a} + ${b}`;const box=$('#gate-opts');box.innerHTML='';
   [...opts].sort(()=>Math.random()-.5).forEach(v=>{const btn=mk('button','pbtn');btn.textContent=v;
-    btn.onclick=()=>{if(v===r){$('#gate').hidden=true;$('#pzone').hidden=false;paintSnd();$('#pz-sound').focus()}
+    btn.onclick=()=>{if(v===r){$('#gate').hidden=true;$('#pzone').hidden=false;paintSnd();paintShop();(gateShop&&!premium?$('#pz-buy'):$('#pz-sound')).focus()}
       else{toast('Esa no es. Prueba otra suma.');newGate();box.firstChild.focus()}};box.append(btn)});
 }
-function openParents(){gateFocus=document.activeElement;newGate();$('#gate').hidden=false;$('#pzone').hidden=true;disarmReset();
+let gateShop=false;
+function openParents(shop){gateShop=shop===true;gateFocus=document.activeElement;newGate();paintShop();$('#gate').hidden=false;$('#pzone').hidden=true;disarmReset();
   $('#pgate').hidden=false;$('#gate-opts').firstChild.focus()}
 function closeParents(){$('#pgate').hidden=true;disarmReset();if(gateFocus&&gateFocus.focus)gateFocus.focus()}
 function disarmReset(){clearTimeout(resetT);const b=$('#pz-reset');b.classList.remove('armed');b.firstChild.textContent='Borrar todo el progreso'}
-$('#parents').onclick=openParents;
+$('#parents').onclick=()=>openParents(false);
 $('#pgate-close').onclick=closeParents;
 $('#pgate').addEventListener('pointerdown',e=>{if(e.target.id==='pgate')closeParents()});
 $('#pz-sound').onclick=()=>setSound(!ui.sound);
@@ -969,6 +1012,7 @@ if(APP){
     else if(dots.on)dotsBack();else if(ed.on)showHome();else APP.exitApp();
   });
   APP.addListener('pause',()=>{stopVoice();stopMusic();save()});
+  APP.addListener('resume',()=>{if(BILL)checkPurchases()});
 }
 $('#voices-ok').onclick=closeVoices;
 $('#voices').addEventListener('pointerdown',e=>{if(e.target.id==='voices')closeVoices()});

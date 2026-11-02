@@ -214,6 +214,7 @@ def main():
         e.update({'name': nombre, 'cat': categ, 'file': f'{did}.png', 'numeros': sem})
         e.pop('say', None)
         if did not in por_id:
+            e['pack'] = 'premium'   # las láminas nuevas son parte de "desbloquear todo"; quita esta línea en dibujos.json para dejar una gratis
             cat['dibujos'].append(e); por_id[did] = e
         hechas.append((f.name, did, len(sem), avisos, did in LISTA))
     # orden: por categoría como en el juego, y dentro, como en la lista

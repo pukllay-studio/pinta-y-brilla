@@ -1,0 +1,19 @@
+@font-face{font-family:"Nunito";font-weight:600;font-display:swap;src:url("fonts/nunito-latin-600-normal.woff2") format("woff2")}
+@font-face{font-family:"Nunito";font-weight:800;font-display:swap;src:url("fonts/nunito-latin-800-normal.woff2") format("woff2")}
+@font-face{font-family:"Sniglet";font-weight:800;font-display:swap;src:url("fonts/sniglet-latin-800-normal.woff2") format("woff2")}
+:root{--bg:#EEF0FF;--surface:#FFFFFF;--ink:#26235C;--muted:#5D5A86;--line:#DADDF6;--accent:#E5482A;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#17163A;--surface:#24234F;--ink:#F2F1FF;--muted:#B4B2DE;--line:#3A3970;--accent:#FF7452;color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:600 17px/1.6 "Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+  padding:32px max(16px,env(safe-area-inset-left,0px)) 56px max(16px,env(safe-area-inset-right,0px))}
+main{max-width:680px;margin:0 auto;background:var(--surface);border:2.5px solid var(--ink);border-radius:22px;box-shadow:0 5px 0 var(--ink);padding:28px clamp(18px,5vw,40px) 36px}
+header{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+header img{border-radius:14px;flex:0 0 auto}
+h1{font-family:"Sniglet","Nunito",system-ui,sans-serif;font-weight:800;font-size:clamp(1.6rem,5vw,2.1rem);line-height:1.05;margin:0;text-wrap:balance}
+h2{font-family:"Sniglet","Nunito",system-ui,sans-serif;font-weight:800;font-size:1.2rem;margin:28px 0 6px}
+.sub{margin:4px 0 0;color:var(--muted);font-size:.92rem}
+.lead{font-weight:800;font-size:1.08rem;border-left:5px solid var(--accent);padding:4px 0 4px 14px;margin:20px 0}
+p,li{max-width:65ch;text-wrap:pretty}
+ul{padding-left:1.2em}
+strong{font-weight:800}

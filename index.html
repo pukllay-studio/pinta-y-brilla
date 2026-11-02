@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Pinta y Brilla</title>
+<meta name="description" content="Juego de colorear para niños: láminas, pincel, brillo, sellos, pintar por números y pizarra neón.">
+<meta name="theme-color" content="#EEF0FF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#17163A" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pinta y Brilla">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preload" href="fonts/sniglet-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<section id="home" class="screen home">
+  <div class="hin">
+    <header class="brand">
+      <span class="logo" aria-hidden="true"></span>
+      <div><h1>Pinta y Brilla</h1><p class="sub">Elige un dibujo y dale color</p></div>
+      <button class="ibtn" id="parents" aria-label="Zona para padres"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/><circle cx="12" cy="15.5" r="1.3" fill="currentColor"/></svg></button>
+    </header>
+    <div class="quick">
+      <button class="qcard" id="go-libre">
+        <span class="qart"><svg viewBox="0 0 46 46" fill="none" stroke-linecap="round" stroke-width="4"><path d="M8 32c6-14 10-14 14-4s8 6 14-14" stroke="#E8424C"/><path d="M10 14c5 2 9 2 14-2" stroke="#2BB3A3"/><circle cx="34" cy="34" r="4" fill="#FFD23F" stroke="#26235C" stroke-width="2"/></svg></span>
+        <span><b>Dibujo libre</b><small>Hoja en blanco</small></span>
+      </button>
+      <button class="qcard neon" id="go-neon">
+        <span class="qart"><svg viewBox="0 0 46 46" fill="none" stroke-linecap="round" stroke-width="3.5"><path d="M8 30c5-12 10-12 14-3s8 5 15-13" stroke="#22E6FF" class="glow-c"/><path d="M11 13c4 2 8 2 12-1" stroke="#FF3EA5" class="glow-p"/></svg></span>
+        <span><b>Pizarra neón</b><small>Trazos que brillan</small></span>
+      </button>
+      <button class="qcard wide" id="go-dots">
+        <span class="qart"><svg viewBox="0 0 46 46" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 33 17 11l11 16" stroke="#2F6FD6" stroke-width="3.2"/><path d="M28 27l9-12" stroke="#2F6FD6" stroke-width="3.2" stroke-dasharray="1 5.5"/><g fill="#FFD23F" stroke="#26235C" stroke-width="2"><circle cx="9" cy="33" r="3.6"/><circle cx="17" cy="11" r="3.6"/><circle cx="28" cy="27" r="3.6"/><circle cx="37" cy="15" r="3.6"/></g></svg></span>
+        <span><b>Unir puntos</b><small>1, 2, 3… ¿qué aparece?</small></span>
+      </button>
+    </div>
+    <div class="cats" id="cats" role="tablist" aria-label="Categorías"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+  <input type="file" id="filein" accept="image/png,image/jpeg,image/webp" hidden>
+</section>
+
+<section id="editor" class="screen editor" hidden>
+  <header class="etop">
+    <button class="ibtn" id="back" aria-label="Volver a los dibujos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="etitle"><b id="ename">Gato</b><span class="eprog" id="eprog" hidden></span></div>
+    <div class="seg" id="seg"><button data-m="colorear">Colorear</button><button data-m="numeros">Números</button></div>
+    <button class="ibtn" id="undo" aria-label="Deshacer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6 4 11l5 5"/><path d="M4 11h10a5 5 0 0 1 0 10h-3"/></svg></button>
+    <button class="ibtn finish" id="finish" aria-label="Terminé"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.6l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8Z" fill="#FFD23F" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>¡Terminé!</span></button>
+    <div class="more-wrap">
+      <button class="ibtn" id="more" aria-label="Más opciones" aria-haspopup="menu" aria-expanded="false"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2.3"/><circle cx="12" cy="12" r="2.3"/><circle cx="19" cy="12" r="2.3"/></svg></button>
+      <div class="menu" id="menu" role="menu" hidden>
+        <button class="mitem" id="savepic" role="menuitem" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></svg><span>Guardar imagen</span></button>
+        <button class="mitem" id="snd" role="menuitem"></button>
+        <button class="mitem" id="mus" role="menuitem"></button>
+        <button class="mitem" id="voicebtn" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.6"/><path d="M2.8 20c.6-3.6 3.2-5.6 6.2-5.6s5.6 2 6.2 5.6"/><path d="M17 6.5a4 4 0 0 1 0 5.5M19.6 4a7.5 7.5 0 0 1 0 10.5"/></svg><span>Elegir voz</span></button>
+        <button class="mitem" id="clear" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 7V4.5h4V7M6.5 7l1 13h9l1-13M10 11v5M14 11v5"/></svg><span>Borrar todo</span></button>
+      </div>
+    </div>
+  </header>
+  <main class="stage" id="stage">
+    <div class="paper" id="paper"><div class="zoomer" id="zoomer"><canvas id="cv" aria-label="Hoja para colorear"></canvas><canvas id="fx" aria-hidden="true"></canvas></div><button class="zreset" id="zreset" hidden aria-label="Ver la lámina completa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 20 20M7.5 10.5h6"/></svg>Ver todo</button><div class="busy" id="busy" hidden>Preparando…</div></div>
+  </main>
+  <section class="panel" id="panel">
+    <div class="tools" id="tools"></div>
+    <div class="swatches" id="swatches"></div>
+    <button class="ptoggle" id="ptoggle" aria-controls="panel"></button>
+    <div class="opts" id="opts"></div>
+  </section>
+</section>
+<section id="dots" class="screen editor" hidden>
+  <header class="etop">
+    <button class="ibtn" id="dots-back" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="etitle"><b id="dots-name">Unir puntos</b><span class="eprog" id="dots-prog" hidden></span></div>
+  </header>
+  <main class="stage" id="dots-stage">
+    <div class="paper" id="dots-paper" hidden><canvas id="dcv" aria-label="Une los puntos en orden"></canvas></div>
+    <div class="dlist" id="dots-list"><div class="grid" id="dots-grid"></div></div>
+  </main>
+  <p class="hint dhint" id="dots-hint" aria-live="polite"></p>
+</section>
+<div class="party" id="party" role="dialog" aria-modal="true" aria-labelledby="party-t" hidden>
+  <canvas id="party-fx" aria-hidden="true"></canvas>
+  <div class="pcard">
+    <svg class="pstar" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6l12.6 25.6 28.2 4.1-20.4 19.9 4.8 28.1L50 70.4 24.8 83.7l4.8-28.1L9.2 35.7l28.2-4.1Z" fill="#FFD23F" stroke="#26235C" stroke-width="5" stroke-linejoin="round"/><path d="M37 47c3 4 7 4 10 0M53 47c3 4 7 4 10 0" fill="none" stroke="#26235C" stroke-width="4" stroke-linecap="round"/><path d="M42 57c5 6 11 6 16 0" fill="none" stroke="#26235C" stroke-width="4" stroke-linecap="round"/></svg>
+    <h2 id="party-t">¡Muy bien!</h2>
+    <p id="party-s"></p>
+    <img id="party-img" alt="Tu dibujo terminado">
+    <div class="pacts">
+      <button class="pbtn" id="party-more">Seguir pintando</button>
+      <button class="pbtn go" id="party-home">Otro dibujo</button>
+      <button class="pbtn" id="party-save" hidden>Guardar imagen</button>
+    </div>
+  </div>
+</div>
+<div class="party" id="voices" role="dialog" aria-modal="true" aria-labelledby="voices-t" hidden>
+  <div class="pcard vcard">
+    <h2 id="voices-t">Elige una voz</h2>
+    <p id="voices-note"></p>
+    <div class="vlist" id="vlist" role="radiogroup" aria-labelledby="voices-t"></div>
+    <button class="pbtn go" id="voices-ok">Listo</button>
+  </div>
+</div>
+<div class="party" id="pgate" role="dialog" aria-modal="true" aria-labelledby="pgate-t" hidden>
+  <div class="pcard vcard">
+    <h2 id="pgate-t">Para mamá y papá</h2>
+    <div class="pzone" id="gate">
+      <p>Para entrar, toca el resultado:</p>
+      <p class="gq" id="gate-q"></p>
+      <div class="gopts" id="gate-opts"></div>
+    </div>
+    <div class="pzone" id="pzone" hidden>
+      <button class="switch prow" id="pz-sound" role="switch"><span>Voz y sonidos</span><span class="track"></span></button>
+      <button class="switch prow" id="pz-music" role="switch"><span>Música de fondo</span><span class="track"></span></button>
+      <button class="switch prow" id="pz-voice"><span>Elegir voz</span><span aria-hidden="true">›</span></button>
+      <button class="switch prow danger" id="pz-reset"><span>Borrar todo el progreso</span></button>
+      <p class="pnote">Pinta y Brilla no tiene anuncios ni compras, y no recoge ningún dato. Los dibujos se guardan solo en este equipo.</p>
+      <p class="pver">Versión 1.0.0</p>
+    </div>
+    <button class="pbtn go" id="pgate-close">Cerrar</button>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>

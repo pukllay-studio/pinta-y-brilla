@@ -560,6 +560,8 @@ $('#filein').addEventListener('change',async e=>{
   try{im=await loadImg(url)}catch(err){URL.revokeObjectURL(url);toast('Esa imagen no se pudo abrir');return}
   URL.revokeObjectURL(url);
   if(im.naturalWidth<200||im.naturalHeight<200){toast('La imagen es muy pequeña (mínimo 200 px)');return}
+  /* imágenes gigantes (más de 8000 px) pueden colgar un celular de gama baja */
+  if(im.naturalWidth>8000||im.naturalHeight>8000){toast('La imagen es demasiado grande (máximo 8000 px)');return}
   if(im.naturalWidth>8000||im.naturalHeight>8000){toast('La imagen es demasiado grande');return}
   /* limpieza: escala de grises con niveles ajustados, para que el gris de un JPG se vuelva blanco */
   const c=newCanvas(N),x=c.getContext('2d',{willReadFrequently:true});x.fillStyle='#FFFFFF';x.fillRect(0,0,N,N);

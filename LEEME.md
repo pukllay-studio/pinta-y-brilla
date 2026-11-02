@@ -105,7 +105,7 @@ Si prefieres tu propia voz, graba archivos MP3 con los mismos nombres que aparec
 
 ## Política de privacidad
 
-`privacidad.html` es la página que pide Google Play. Ya está completa con la marca **Pukllay Studio** y el correo **pukllay.studio24@gmail.com**. Al publicar la carpeta, queda en `https://<cuenta>.github.io/pinta-y-brilla/privacidad.html`.
+`privacidad.html` es la página que pide Google Play. Ya está completa con la marca **Pukllay Studio** y el correo **pukllay.studio24@gmail.com**. Al publicar la carpeta, queda en `https://pukllay-studio.github.io/pinta-y-brilla/privacidad.html`.
 
 ## Para llevarlo a Google Play
 

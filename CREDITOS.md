@@ -13,3 +13,7 @@ Fotos de Wikimedia Commons usadas en el Rompecabezas y la Memoria, recortadas al
 | Pulpo | [Octopus in the New England Aquarium.jpg](https://commons.wikimedia.org/wiki/File:Octopus_in_the_New_England_Aquarium.jpg) | Betty Wills (Atsme) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | Conejo | [Bunny rabbit at Alligator Bay, Beauvoir, France.jpg](https://commons.wikimedia.org/wiki/File:Bunny_rabbit_at_Alligator_Bay,_Beauvoir,_France.jpg) | William Warby | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0) |
 | Llama | [Llama on Machu Picchu.jpg](https://commons.wikimedia.org/wiki/File:Llama_on_Machu_Picchu.jpg) | Alexandre Buisse (Nattfodd) | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
+
+# Créditos de los sonidos
+
+Los efectos y la música de `sonidos/` son originales. `herramientas/generar-sonidos.py` los sintetiza sin samples de terceros, y no requieren atribución.

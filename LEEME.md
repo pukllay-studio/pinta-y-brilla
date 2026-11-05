@@ -103,6 +103,7 @@ Si prefieres tu propia voz, graba archivos MP3 con los mismos nombres que aparec
 | `fonts/` | Tipografías incluidas (licencia OFL), sin cargar nada de Google |
 | `_headers` | Cabeceras de seguridad para Netlify o Cloudflare Pages |
 | `herramientas/` | `generar-voz.py`, la lista de frases (`frases.json`), `preparar-laminas.py`, `colorear-rompecabezas.py` y `hacer-stickers.py`; no hacen falta para jugar |
+| `sonidos/` | Efectos y 3 temas de música en OGG, creados con `herramientas/generar-sonidos.py`. Si un archivo no carga, el juego usa tonos sintetizados |
 | `voz/` | (Opcional) audios grabados que crea `generar-voz.py` |
 
 ## Política de privacidad

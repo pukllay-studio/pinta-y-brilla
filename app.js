@@ -605,6 +605,7 @@ async function getPrepared(d){
 async function openEditor(mode,d){
   if(d&&isLocked(d)){askUnlock();return}
   const tok=++ed.token;
+  $('#paper').style.setProperty('--frame',mode==='neon'?'#22E6FF':(d&&CAT_COLOR[d.cat])||'#FFC93C');
   ed.on=true;ed.mode=mode;ed.d=d;ed.R=null;dirtyWork=false;zoom.s=1;zoom.x=zoom.y=0;zoom.pinch=null;applyZoom();active=null;layerKey='';hiKey='';disarm();
   $('#home').hidden=true;$('#editor').hidden=false;
   if(mode!=='numeros'&&!TOOLSET[mode].includes(ui.tool))ui.tool=TOOLSET[mode][0];
@@ -1163,7 +1164,7 @@ function dotsBack(){if(!$('#party').hidden){closeParty();return}if(dots.f)openDo
 function leaveDots(){dots.on=false;dots.f=null;cancelAnimationFrame(dots.anim);stopVoice();dotsEl.hidden=true;$('#home').hidden=false;renderGrid()}
 $('#go-dots').onclick=()=>{openDotsList();say('Unir puntos')};
 $('#dots-back').onclick=dotsBack;
-function sizeDots(){if(!dots.f)return;const s=Math.max(160,Math.floor(Math.min(dstage.clientWidth,dstage.clientHeight-8)));
+function sizeDots(){if(!dots.f)return;const s=Math.max(160,Math.floor(Math.min(dstage.clientWidth-24,dstage.clientHeight-30)));
   dpaper.style.width=dpaper.style.height=s+'px';const px=Math.round(s*dpr);if(dcv.width!==px){dcv.width=dcv.height=px}drawDots(performance.now())}
 new ResizeObserver(sizeDots).observe(dstage);
 function dotsLoop(){cancelAnimationFrame(dots.anim);dots.last=performance.now();
@@ -1252,7 +1253,7 @@ function renderPuzList(){const box=$('#puz-list');box.innerHTML='';
     const g=mk('div','grid');items.forEach(d=>g.append(puzCard(d)));sec.append(g);box.append(sec)})}
 function showPuzScreen(){$('#home').hidden=true;$('#editor').hidden=true;puzEl.hidden=false;puz.on=true}
 function openPuzList(){showPuzScreen();cancelAnimationFrame(puz.anim);popStop();puz.d=null;puz.token++;puz.pieces=[];puz.drag=null;
-  $('#puz-name').textContent='Rompecabezas';$('#puz-prog').hidden=true;pcv.hidden=true;$('#puz-list').hidden=false;
+  $('#puz-name').textContent='Rompecabezas';$('#puz-prog').hidden=true;$('#puz-peek').hidden=true;pcv.hidden=true;$('#puz-list').hidden=false;
   $('#puz-hint').textContent='Elige cuántas piezas y luego un dibujo';paintLevels();renderPuzList()}
 async function openPuz(d){if(isLocked(d)){askUnlock();return}
   showPuzScreen();const tk=++puz.token;Object.assign(puz,{d,img:null,pieces:[],drag:null,done:false,glow:0,nextN:0});
@@ -1260,7 +1261,10 @@ async function openPuz(d){if(isLocked(d)){askUnlock();return}
   $('#puz-hint').textContent='Preparando…';puzDraw();
   let img;try{img=await puzLoad(d)}catch(e){if(tk!==puz.token)return;toast('No se pudo abrir. Intenta otra vez');openPuzList();return}
   if(tk!==puz.token||!puz.on)return;puz.img=img;puzBuild();
-  $('#puz-hint').textContent='Arrastra cada pieza a su lugar';say('Arma el rompecabezas')}
+  $('#puz-hint').textContent='Arrastra cada pieza a su lugar';$('#puz-peek').hidden=false;say('Arma el rompecabezas')}
+function puzPeek(){if(!puz.img||puz.done)return;clearTimeout(puz.peekT);puz.peek=true;puzDraw();sfx('pop');
+  puz.peekT=setTimeout(()=>{puz.peek=false;puzDraw()},1600)}
+$('#puz-peek').onclick=puzPeek;
 function puzBack(){if(!$('#party').hidden){closeParty();return}if(popOn){popStop();return}if(puz.d)openPuzList();else leavePuz()}
 function leavePuz(){puz.on=false;puz.d=null;puz.token++;cancelAnimationFrame(puz.anim);popStop();stopVoice();puzEl.hidden=true;$('#home').hidden=false;renderGrid()}
 $('#go-puz').onclick=()=>{openPuzList();say('Rompecabezas')};
@@ -1289,9 +1293,10 @@ function piecePath(x,p,ox,oy,cw,ch){const{i,j}=p,[C,R]=puzDims(puz.n),E=puz.E,m=
   x.closePath()}
 function puzLayout(){const W=pstage.clientWidth,H=pstage.clientHeight;if(W<50||H<50)return null;
   const tall=H>W*1.1,gap=12;let B,bx,by,tray;
-  if(tall){B=Math.floor(Math.min(W-16,H*.56));bx=(W-B)/2;by=6;tray={x:6,y:by+B+gap,w:W-12,h:H-(by+B+gap)-4}}
-  else{B=Math.floor(Math.min(H-12,W*.56));by=(H-B)/2;bx=Math.max(8,(W-B*1.95)/2);tray={x:bx+B+gap,y:6,w:W-bx-B-gap-6,h:H-12}}
-  const[C,R]=puzDims(puz.n),cw=B/C,ch=B/R,pad=Math.ceil(Math.min(cw,ch)*.34);return{W,H,B,bx,by,cw,ch,pad,tray}}
+  const F=12;   /* ancho del marco de color alrededor del tablero */
+  if(tall){B=Math.floor(Math.min(W-16-F*2,H*.56-F*2));bx=(W-B)/2;by=6+F;tray={x:6,y:by+B+F+gap,w:W-12,h:H-(by+B+F+gap)-4}}
+  else{B=Math.floor(Math.min(H-12-F*2,W*.56));by=(H-B)/2;bx=Math.max(8+F,(W-B*1.95)/2);tray={x:bx+B+F+gap,y:6,w:W-bx-B-F-gap-6,h:H-12}}
+  const[C,R]=puzDims(puz.n),cw=B/C,ch=B/R,pad=Math.ceil(Math.min(cw,ch)*.4);return{W,H,B,bx,by,cw,ch,pad,tray,F}}
 const cellX=(L,p)=>L.bx+(p.j+.5)*L.cw,cellY=(L,p)=>L.by+(p.i+.5)*L.ch;
 function puzSlots(L,count){const t=L.tray;
   /* prueba cada número de columnas y se queda con el que deja las piezas más grandes */
@@ -1322,24 +1327,28 @@ new ResizeObserver(()=>{if(puz.on&&puz.d)puzSize(false)}).observe(pstage);
 function puzSprites(L){const{cw,ch,pad}=L,sw=cw+pad*2,sh=ch+pad*2,pw=Math.ceil(sw*dpr),ph=Math.ceil(sh*dpr),img=puz.img,k=img.naturalWidth/L.B,ky=img.naturalHeight/L.B;
   puz.pieces.forEach(p=>{let cv=p.spr;if(!cv||cv.width!==pw||cv.height!==ph){cv=document.createElement('canvas');cv.width=pw;cv.height=ph}
     const x=cv.getContext('2d');x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,pw,ph);x.setTransform(dpr,0,0,dpr,0,0);
+    x.save();x.shadowColor='rgba(38,35,92,.32)';x.shadowBlur=5;x.shadowOffsetY=3;piecePath(x,p,pad,pad,cw,ch);x.fillStyle='#FFFFFF';x.fill();x.restore();
     piecePath(x,p,pad,pad,cw,ch);x.save();x.clip();
     x.drawImage(img,(p.j*cw-pad)*k,(p.i*ch-pad)*ky,sw*k,sh*ky,0,0,sw,sh);x.restore();
-    x.lineJoin='round';piecePath(x,p,pad,pad,cw,ch);x.strokeStyle='rgba(38,35,92,.55)';x.lineWidth=2.4;x.stroke();
-    x.strokeStyle='rgba(255,255,255,.85)';x.lineWidth=1;x.stroke();p.spr=cv})}
+    x.lineJoin='round';piecePath(x,p,pad,pad,cw,ch);x.strokeStyle='rgba(38,35,92,.6)';x.lineWidth=2.6;x.stroke();
+    x.strokeStyle='rgba(255,255,255,.9)';x.lineWidth=1.2;x.stroke();p.spr=cv})}
 function rr(x,X,Y,w,h,r){x.beginPath();x.moveTo(X+r,Y);x.arcTo(X+w,Y,X+w,Y+h,r);x.arcTo(X+w,Y+h,X,Y+h,r);x.arcTo(X,Y+h,X,Y,r);x.arcTo(X,Y,X+w,Y,r);x.closePath()}
 function puzDraw(){const L=puz.L,x=pcx;if(!pcv.width)return;
   x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,pcv.width,pcv.height);if(!L||!puz.img)return;x.setTransform(dpr,0,0,dpr,0,0);
-  const{bx,by,B,cw,ch,pad}=L;
-  /* tablero: hoja con la imagen apenas visible y las siluetas de las piezas */
-  x.save();x.shadowColor='rgba(38,35,92,.18)';x.shadowOffsetY=4;rr(x,bx-5,by-5,B+10,B+10,16);x.fillStyle='#FFFFFF';x.fill();x.restore();
-  rr(x,bx-5,by-5,B+10,B+10,16);x.strokeStyle='#26235C';x.lineWidth=2.5;x.stroke();
-  if(!puz.done){x.save();x.globalAlpha=puz.n<=2?.32:puz.n===3?.24:.18;x.drawImage(puz.img,bx,by,B,B);x.restore();
+  const{bx,by,B,cw,ch,pad,F,tray}=L,frame=CAT_COLOR[puz.d&&puz.d.cat]||'#FFC93C';
+  /* bandeja donde esperan las piezas */
+  rr(x,tray.x,tray.y,tray.w,tray.h,22);x.fillStyle='rgba(255,255,255,.5)';x.fill();x.strokeStyle='rgba(38,35,92,.12)';x.lineWidth=2;x.stroke();
+  /* tablero: marco de color del mundo, hoja blanca con la imagen apenas visible y las siluetas de las piezas */
+  rr(x,bx-F,by-F+5,B+F*2,B+F*2,24);x.fillStyle='#26235C';x.fill();
+  rr(x,bx-F,by-F,B+F*2,B+F*2,24);x.fillStyle=frame;x.fill();x.strokeStyle='#26235C';x.lineWidth=2.5;x.stroke();
+  rr(x,bx-2,by-2,B+4,B+4,12);x.fillStyle='#FFFFFF';x.fill();x.strokeStyle='rgba(38,35,92,.45)';x.lineWidth=2;x.stroke();
+  if(!puz.done){x.save();x.globalAlpha=puz.peek?.9:puz.n<=2?.32:puz.n===3?.24:.18;x.drawImage(puz.img,bx,by,B,B);x.restore();
     x.save();x.setLineDash([5,6]);x.strokeStyle='rgba(38,35,92,.28)';x.lineWidth=1.5;
     puz.pieces.forEach(p=>{if(!p.placed){piecePath(x,p,bx+p.j*cw,by+p.i*ch,cw,ch);x.stroke()}});x.restore()}
   const sw=cw+pad*2,sh=ch+pad*2,draw=(p,shadow)=>{const w=sw*p.s,h=sh*p.s;
     if(shadow){x.save();x.shadowColor='rgba(38,35,92,.35)';x.shadowBlur=14;x.shadowOffsetY=8}
     x.drawImage(p.spr,p.x-w/2,p.y-h/2,w,h);if(shadow)x.restore()};
-  if(puz.done){x.drawImage(puz.img,bx,by,B,B);
+  if(puz.done){x.save();rr(x,bx,by,B,B,10);x.clip();x.drawImage(puz.img,bx,by,B,B);x.restore();
     if(puz.glow>0){x.save();x.globalAlpha=Math.max(0,1-puz.glow)*.6;x.fillStyle='#FFFFFF';x.fillRect(bx,by,B,B);x.restore()}
     return}
   puz.pieces.forEach(p=>{if(p.placed)draw(p,false)});
@@ -1452,7 +1461,7 @@ function stkSrc(key){if(stkCache[key])return stkCache[key];
     x.beginPath();x.arc(120,100,86,0,Math.PI*2);x.fillStyle='#FFFFFF';x.fill();
     x.beginPath();x.arc(120,100,74,0,Math.PI*2);x.fillStyle='#FFD23F';x.fill();x.lineWidth=5;x.strokeStyle='#26235C';x.stroke();
     x.beginPath();x.arc(120,100,58,0,Math.PI*2);x.strokeStyle='rgba(38,35,92,.35)';x.lineWidth=3;x.stroke();
-    x.fillStyle='#26235C';x.textAlign='center';x.textBaseline='middle';x.font='900 64px Sniglet, Nunito, system-ui, sans-serif';x.fillText(String(n),120,92);
+    x.fillStyle='#26235C';x.textAlign='center';x.textBaseline='middle';x.font='64px "Lilita One", Nunito, system-ui, sans-serif';x.fillText(String(n),120,92);
     x.font='900 20px Nunito, system-ui, sans-serif';x.fillText('pares',120,132);
     return stkCache[key]=c.toDataURL('image/png')}
   return'dibujos/sticker/'+key+'.webp'}
@@ -1567,7 +1576,7 @@ function confetti(target=fx,count=120){
 const stage=$('#stage'),paper=$('#paper');
 function resize(){
   if(!ed.on)return;
-  const s=Math.max(160,Math.floor(Math.min(stage.clientWidth,stage.clientHeight-8)));
+  const s=Math.max(160,Math.floor(Math.min(stage.clientWidth-24,stage.clientHeight-30)));
   paper.style.width=paper.style.height=s+'px';
   /* con zoom se dibuja con más píxeles para que las líneas no se vean borrosas (con tope para no gastar memoria) */
   const cap=(navigator.deviceMemory||4)<=2?1200:1600,base=cv.clientWidth*dpr,px=Math.round(Math.max(base,Math.min(cap,base*zoom.s)));

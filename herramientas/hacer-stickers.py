@@ -8,6 +8,10 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageFilter
 from scipy import ndimage as ndi
+import importlib.util
+_spec = importlib.util.spec_from_file_location('auto', Path(__file__).with_name('colorear-rompecabezas.py'))
+auto = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(auto)
 
 LINE_T = 140
 LADO = 320
@@ -68,7 +72,11 @@ def main():
         col = dib / 'color' / f"{e['id']}.webp"
         if not col.exists():
             continue
-        st = sticker(Image.open(col), mascara(dib / e['file']))
+        fuente = Image.open(col)
+        # si la imagen a color es una propia (laminas-color), el recorte de la lámina no calza: se usa el pintado automático
+        if (raiz.parent / 'laminas-color').is_dir() and any((raiz.parent / 'laminas-color').glob(e['id'] + '.*')):
+            fuente = auto.pintar(dib / e['file'], e['numeros'], e.get('cat'))
+        st = sticker(fuente, mascara(dib / e['file']))
         st.save(salida / f"{e['id']}.webp", 'WEBP', quality=82, method=6)
         hechos += 1
     print(f'listo: {hechos} stickers en {salida}')

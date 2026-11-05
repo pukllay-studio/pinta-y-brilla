@@ -64,7 +64,7 @@ const byId=id=>DRAWINGS.find(d=>d.id===id);
 const KEY='pinta-y-brilla-v3';
 let state={fills:{},strokes:{},done:{},nums:{},when:{}};
 /* miniaturas: id del dibujo (coloreado), n~id (por números), libre y neon */
-const THUMB_RE=/^(n~)?[a-z0-9-]{1,40}$/;
+const THUMB_RE=/^(g~)?(n~)?[a-z0-9-]{1,40}$/;
 const ui={cat:'todos',tool:'cubeta',brush:'pincel',color:0,neon:6,size:2,tex:'solido',stamp:'estrella',clip:true,num:1,sound:true,music:false,compact:true,voice:''};
 const PAINT_TOOLS=new Set(['brillo','arco','sello','goma',...BRUSHES.map(b=>b[0])]);
 const TOOLS_OK=new Set(Object.keys(TOOL_NAMES)),BRUSH_OK=new Set(BRUSHES.map(b=>b[0]));
@@ -587,9 +587,9 @@ $('#filein').addEventListener('change',async e=>{
 });
 async function removeCustom(d){
   DRAWINGS=DRAWINGS.filter(x=>x.id!==d.id);prepCache.delete(d.id);
-  ['c:','n:'].forEach(p=>{delete state.fills[p+d.id];delete state.strokes[p+d.id]});delete state.nums[d.id];delete state.done[d.id];delete thumbs[d.id];delete thumbs['n~'+d.id];delete state.when[d.id];delete state.when['n~'+d.id];
+  ['c:','n:'].forEach(p=>{delete state.fills[p+d.id];delete state.strokes[p+d.id]});delete state.nums[d.id];delete state.done[d.id];delete thumbs[d.id];delete thumbs['n~'+d.id];delete thumbs['g~'+d.id];delete thumbs['g~n~'+d.id];delete state.when[d.id];delete state.when['n~'+d.id];
   try{URL.revokeObjectURL(d.src)}catch(e){}
-  try{await idb.del('imgs',d.id);await idb.del('thumbs',d.id);await idb.del('thumbs','n~'+d.id)}catch(e){}
+  try{await idb.del('imgs',d.id);await idb.del('thumbs',d.id);await idb.del('thumbs','n~'+d.id);await idb.del('thumbs','g~'+d.id);await idb.del('thumbs','g~n~'+d.id)}catch(e){}
   save();renderGrid();toast('Dibujo quitado');
 }
 
@@ -625,9 +625,12 @@ function storeThumb(){
   if(!ed.on||cv.width<4||(ed.d&&!ed.R))return;
   const id=ed.mode==='colorear'?ed.d.id:ed.mode==='numeros'?'n~'+ed.d.id:ed.mode,k=key();
   const has=Object.keys(state.fills[k]||{}).length||(state.strokes[k]||[]).length;
-  if(!has){delete state.when[id];if(thumbs[id]){delete thumbs[id];idb.del('thumbs',id).catch(()=>{})}return}
+  if(!has){delete state.when[id];if(thumbs[id]){delete thumbs[id];idb.del('thumbs',id).catch(()=>{})}if(thumbs['g~'+id]){delete thumbs['g~'+id];idb.del('thumbs','g~'+id).catch(()=>{})}return}
   render();const c=newCanvas(220),x=c.getContext('2d');x.imageSmoothingQuality='high';x.drawImage(cv,0,0,220,220);
   const url=c.toDataURL('image/jpeg',.82);thumbs[id]=url;idb.put('thumbs',url,id).catch(()=>{});
+  /* versión grande para armarla como rompecabezas */
+  const g=newCanvas(720),gx=g.getContext('2d');gx.imageSmoothingQuality='high';gx.drawImage(cv,0,0,720,720);
+  const big=g.toDataURL('image/jpeg',.85);thumbs['g~'+id]=big;idb.put('thumbs',big,'g~'+id).catch(()=>{});
   if(dirtyWork){state.when[id]=Date.now();dirtyWork=false}else if(!state.when[id])state.when[id]=Date.now();save();
 }
 function showHome(){storeThumb();ed.on=false;ed.token++;active=null;setMenu(false);stopVoice();
@@ -1208,28 +1211,47 @@ const dotsUp=()=>{dots.drag=null};dcv.addEventListener('pointerup',dotsUp);dcv.a
 
 /* ---------- rompecabezas ---------- */
 const PUZ_KEY='pinta-y-brilla-puz',puzEl=$('#puz'),pcv=$('#pcv'),pcx=pcv.getContext('2d'),pstage=$('#puz-stage');
+const PUZ_LV=[1,2,3,4];
+/* nivel → columnas × filas (el 1 es de 2 piezas para los más chiquitos) */
+const puzDims=n=>n===1?[2,1]:[n,n],puzCount=n=>{const[c,r]=puzDims(n);return c*r};
 const puz={on:false,d:null,n:2,img:null,pieces:[],drag:null,done:false,anim:0,L:null,token:0,glow:0};
-try{const v=+localStorage.getItem(PUZ_KEY);if([2,3,4].includes(v))puz.n=v}catch(e){}
+try{const v=+localStorage.getItem(PUZ_KEY);if(PUZ_LV.includes(v))puz.n=v}catch(e){}
 const puzImgs={},puzList=()=>DRAWINGS.filter(d=>!d.custom&&!/^(letra|num)-/.test(d.id)).sort((a,b)=>isLocked(a)-isLocked(b));
-const puzSrc=d=>'dibujos/color/'+d.id+'.webp';
-function puzLoad(d){if(puzImgs[d.id])return puzImgs[d.id];
-  return puzImgs[d.id]=new Promise((ok,bad)=>{const im=new Image();im.decoding='async';im.onload=()=>ok(im);im.onerror=()=>{delete puzImgs[d.id];bad(new Error('img'))};im.src=puzSrc(d)})}
+const puzSrc=d=>d.obra?d.src:'dibujos/color/'+d.id+'.webp';
+/* obras del niño con imagen grande guardada: se arman como rompecabezas */
+function puzObras(){return Object.entries(state.when).filter(([k])=>thumbs['g~'+k]).sort((a,b)=>b[1]-a[1]).slice(0,24).map(([k])=>{
+  const base=DRAWINGS.find(d=>d.id===k.replace(/^n~/,'')),name=base?base.name:'Mi dibujo';
+  return{id:'obra-'+k.replace('~','-'),obra:true,name,say:base&&base.say,src:thumbs['g~'+k],cat:'obras'}})}
+function puzLoad(d){const key=d.obra?d.id+'|'+d.src.length:d.id;if(puzImgs[key])return puzImgs[key];
+  return puzImgs[key]=new Promise((ok,bad)=>{const im=new Image();im.decoding='async';im.onload=()=>ok(im);im.onerror=()=>{delete puzImgs[key];bad(new Error('img'))};im.src=puzSrc(d)})}
 function paintLevels(){document.querySelectorAll('#puz-lv button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.n===puz.n))}
-function renderPuzList(){const g=$('#puz-grid');g.innerHTML='';
-  if(loadState==='loading'){for(let i=0;i<5;i++)g.append(mk('div','skel'));return}
+const puzHasAny=id=>PUZ_LV.some(n=>state.done[`puz-${id}-${n}`]);
+function puzCard(d){const card=mk('div','card'),b=mk('button','open');b.setAttribute('aria-label',`Rompecabezas de ${d.name}, ${puzCount(puz.n)} piezas`);
+  const tape=mk('span','tape');tape.style.background=CAT_COLOR[d.cat]||'#C7B8FF';
+  const im=mk('img','thumb');im.alt='';im.decoding='async';im.loading='lazy';im.src=puzSrc(d);
+  const nm=mk('span','nm');nm.textContent=d.name;b.append(im,nm);b.onclick=()=>openPuz(d);card.append(tape,b);
+  if(!d.obra){const pips=mk('span','pips');pips.setAttribute('aria-hidden','true');
+    PUZ_LV.forEach(n=>pips.append(mk('i',state.done[`puz-${d.id}-${n}`]?'on':null)));card.append(pips)}
+  if(isLocked(d)){card.classList.add('locked');card.append(mk('span','lockb',LOCK_SVG));b.setAttribute('aria-label',d.name+', bloqueado');b.onclick=askUnlock}
+  return card}
+function renderPuzList(){const box=$('#puz-list');box.innerHTML='';
+  if(loadState==='loading'){const g=mk('div','grid');for(let i=0;i<5;i++)g.append(mk('div','skel'));box.append(g);return}
   const list=puzList();
-  if(!list.length){const s=mk('div','state'),p=mk('p');p.textContent='No se pudieron cargar los rompecabezas. Revisa la conexión y vuelve a intentar.';
-    const r=mk('button','act');r.textContent='Reintentar';r.onclick=()=>{loadState='loading';renderPuzList();loadCatalog()};s.append(p,r);g.append(s);return}
-  list.forEach(d=>{const card=mk('div','card'),b=mk('button','open');b.setAttribute('aria-label',`Rompecabezas de ${d.name}, ${puz.n*puz.n} piezas`);
-    const tape=mk('span','tape');tape.style.background=CAT_COLOR[d.cat]||'#C7B8FF';
-    const im=mk('img','thumb');im.alt='';im.decoding='async';im.loading='lazy';im.src=puzSrc(d);
-    const nm=mk('span','nm');nm.textContent=d.name;b.append(im,nm);b.onclick=()=>openPuz(d);card.append(tape,b);
-    const pips=mk('span','pips');pips.setAttribute('aria-hidden','true');
-    [2,3,4].forEach(n=>pips.append(mk('i',state.done[`puz-${d.id}-${n}`]?'on':null)));card.append(pips);
-    if(isLocked(d)){card.classList.add('locked');card.append(mk('span','lockb',LOCK_SVG));b.setAttribute('aria-label',d.name+', bloqueado');b.onclick=askUnlock}
-    g.append(card)})}
+  if(!list.length){const g=mk('div','grid'),s=mk('div','state'),p=mk('p');p.textContent='No se pudieron cargar los rompecabezas. Revisa la conexión y vuelve a intentar.';
+    const r=mk('button','act');r.textContent='Reintentar';r.onclick=()=>{loadState='loading';renderPuzList();loadCatalog()};s.append(p,r);g.append(s);box.append(g);return}
+  /* cada categoría es un mundo con su avance */
+  const worlds=[['obras','Mis obras','#FF8FB8',puzObras()],...CATS.filter(c=>!['todos','obras','mios','letras'].includes(c[0])).map(c=>[c[0],c[1],c[2],list.filter(d=>d.cat===c[0])])];
+  worlds.forEach(([cat,title,color,items])=>{if(!items.length)return;
+    const sec=mk('section','apage pworld'),h=mk('h2','ahead');h.style.setProperty('--c',color);
+    const done=cat==='obras'?0:items.filter(d=>puzHasAny(d.id)).length;
+    h.append(Object.assign(mk('span'),{textContent:title}));
+    if(cat!=='obras'){const pr=mk('small');pr.textContent=`${done} / ${items.length}`;h.append(pr)}
+    sec.append(h);
+    if(cat!=='obras'){const bar=mk('div','wbar');bar.setAttribute('aria-hidden','true');const f=mk('i');f.style.width=(done/items.length*100)+'%';f.style.background=color;bar.append(f);sec.append(bar)}
+    else{const p=mk('p','wsub');p.textContent='Los dibujos que pintaste, convertidos en rompecabezas';sec.append(p)}
+    const g=mk('div','grid');items.forEach(d=>g.append(puzCard(d)));sec.append(g);box.append(sec)})}
 function showPuzScreen(){$('#home').hidden=true;$('#editor').hidden=true;puzEl.hidden=false;puz.on=true}
-function openPuzList(){showPuzScreen();cancelAnimationFrame(puz.anim);puz.d=null;puz.token++;puz.pieces=[];puz.drag=null;
+function openPuzList(){showPuzScreen();cancelAnimationFrame(puz.anim);popStop();puz.d=null;puz.token++;puz.pieces=[];puz.drag=null;
   $('#puz-name').textContent='Rompecabezas';$('#puz-prog').hidden=true;pcv.hidden=true;$('#puz-list').hidden=false;
   $('#puz-hint').textContent='Elige cuántas piezas y luego un dibujo';paintLevels();renderPuzList()}
 async function openPuz(d){if(isLocked(d)){askUnlock();return}
@@ -1239,49 +1261,51 @@ async function openPuz(d){if(isLocked(d)){askUnlock();return}
   let img;try{img=await puzLoad(d)}catch(e){if(tk!==puz.token)return;toast('No se pudo abrir. Intenta otra vez');openPuzList();return}
   if(tk!==puz.token||!puz.on)return;puz.img=img;puzBuild();
   $('#puz-hint').textContent='Arrastra cada pieza a su lugar';say('Arma el rompecabezas')}
-function puzBack(){if(!$('#party').hidden){closeParty();return}if(puz.d)openPuzList();else leavePuz()}
-function leavePuz(){puz.on=false;puz.d=null;puz.token++;cancelAnimationFrame(puz.anim);stopVoice();puzEl.hidden=true;$('#home').hidden=false;renderGrid()}
+function puzBack(){if(!$('#party').hidden){closeParty();return}if(popOn){popStop();return}if(puz.d)openPuzList();else leavePuz()}
+function leavePuz(){puz.on=false;puz.d=null;puz.token++;cancelAnimationFrame(puz.anim);popStop();stopVoice();puzEl.hidden=true;$('#home').hidden=false;renderGrid()}
 $('#go-puz').onclick=()=>{openPuzList();say('Rompecabezas')};
 $('#puz-back').onclick=puzBack;
 document.querySelectorAll('#puz-lv button').forEach(b=>b.onclick=()=>{const n=+b.dataset.n;if(n===puz.n&&!puz.done)return;puz.n=n;
   try{localStorage.setItem(PUZ_KEY,String(n))}catch(e){}paintLevels();sfx('pop');
-  if(puz.d&&puz.img)puzBuild();else renderPuzList()});
+  if(puz.d&&puz.img){popStop();puzBuild()}else renderPuzList()});
 
 /* forma de cada pieza: bordes con pestañas que encajan con la vecina (+1 hacia abajo/derecha, -1 al revés) */
 const TAB=[[.34,0],[.40,0,.42,.06,.39,.12],[.34,.22,.42,.31,.5,.31],[.58,.31,.66,.22,.61,.12],[.58,.06,.60,0,.66,0]];
-function edgeTo(x,ax,ay,bx,by,nx,ny,dir,c){
+function edgeTo(x,ax,ay,bx,by,nx,ny,dir,m){
   if(!dir){x.lineTo(bx,by);return}
-  const P=(t,h)=>[ax+(bx-ax)*t+nx*h*c*dir,ay+(by-ay)*t+ny*h*c*dir];
-  /* la curva es simétrica: sirve igual en los dos sentidos del recorrido */
+  /* la pestaña mide lo mismo aunque el borde sea largo: se centra en el borde */
+  const len=Math.hypot(bx-ax,by-ay)||1,sc=m/len;
+  const P=(t,h)=>{const u=.5+(t-.5)*sc;return[ax+(bx-ax)*u+nx*h*m*dir,ay+(by-ay)*u+ny*h*m*dir]};
   x.lineTo(...P(TAB[0][0],TAB[0][1]));
   for(let k=1;k<5;k++){const s=TAB[k];x.bezierCurveTo(...P(s[0],s[1]),...P(s[2],s[3]),...P(s[4],s[5]))}
   x.lineTo(bx,by)}
-function piecePath(x,p,ox,oy,c){const{i,j}=p,n=puz.n,E=puz.E;
-  const top=i?E.h[i][j]:0,bot=i<n-1?E.h[i+1][j]:0,lef=j?E.v[i][j]:0,rig=j<n-1?E.v[i][j+1]:0;
+function piecePath(x,p,ox,oy,cw,ch){const{i,j}=p,[C,R]=puzDims(puz.n),E=puz.E,m=Math.min(cw,ch);
+  const top=i?E.h[i][j]:0,bot=i<R-1?E.h[i+1][j]:0,lef=j?E.v[i][j]:0,rig=j<C-1?E.v[i][j+1]:0;
   x.beginPath();x.moveTo(ox,oy);
-  edgeTo(x,ox,oy,ox+c,oy,0,1,top,c);
-  edgeTo(x,ox+c,oy,ox+c,oy+c,1,0,rig,c);
-  edgeTo(x,ox+c,oy+c,ox,oy+c,0,1,bot,c);
-  edgeTo(x,ox,oy+c,ox,oy,1,0,lef,c);
+  edgeTo(x,ox,oy,ox+cw,oy,0,1,top,m);
+  edgeTo(x,ox+cw,oy,ox+cw,oy+ch,1,0,rig,m);
+  edgeTo(x,ox+cw,oy+ch,ox,oy+ch,0,1,bot,m);
+  edgeTo(x,ox,oy+ch,ox,oy,1,0,lef,m);
   x.closePath()}
 function puzLayout(){const W=pstage.clientWidth,H=pstage.clientHeight;if(W<50||H<50)return null;
   const tall=H>W*1.1,gap=12;let B,bx,by,tray;
   if(tall){B=Math.floor(Math.min(W-16,H*.56));bx=(W-B)/2;by=6;tray={x:6,y:by+B+gap,w:W-12,h:H-(by+B+gap)-4}}
   else{B=Math.floor(Math.min(H-12,W*.56));by=(H-B)/2;bx=Math.max(8,(W-B*1.95)/2);tray={x:bx+B+gap,y:6,w:W-bx-B-gap-6,h:H-12}}
-  const c=B/puz.n,pad=Math.ceil(c*.34);return{W,H,B,bx,by,c,pad,tray}}
-function puzSlots(L,count){const t=L.tray,ratio=t.w/Math.max(1,t.h);
-  let cols=Math.max(1,Math.round(Math.sqrt(count*ratio)));let rows=Math.ceil(count/cols);
-  while(cols>1&&Math.ceil(count/(cols-1))*(t.w/(cols-1))<=t.h*1.05&&(cols-1)*rows>=count)cols--;rows=Math.ceil(count/cols);
-  const sw=t.w/cols,sh=t.h/rows,s=Math.max(.42,Math.min(1,Math.min(sw,sh)/(L.c*1.45)));
+  const[C,R]=puzDims(puz.n),cw=B/C,ch=B/R,pad=Math.ceil(Math.min(cw,ch)*.34);return{W,H,B,bx,by,cw,ch,pad,tray}}
+const cellX=(L,p)=>L.bx+(p.j+.5)*L.cw,cellY=(L,p)=>L.by+(p.i+.5)*L.ch;
+function puzSlots(L,count){const t=L.tray;
+  /* prueba cada número de columnas y se queda con el que deja las piezas más grandes */
+  let best=null;for(let cols=1;cols<=count;cols++){const rows=Math.ceil(count/cols),sw=t.w/cols,sh=t.h/rows,s=Math.min(1,sw/(L.cw*1.4),sh/(L.ch*1.4));if(!best||s>best.s+1e-6)best={cols,sw,sh,s}}
+  const{cols,sw,sh}=best,s=Math.max(.36,best.s);
   return{s,at:k=>[t.x+sw*(k%cols+.5),t.y+sh*(Math.floor(k/cols)+.5)]}}
-function puzBuild(){const n=puz.n;cancelAnimationFrame(puz.anim);puz.done=false;puz.drag=null;puz.glow=0;
+function puzBuild(){const[C,R]=puzDims(puz.n);cancelAnimationFrame(puz.anim);puz.done=false;puz.drag=null;puz.glow=0;
   const rnd=()=>Math.random()<.5?1:-1;
-  puz.E={h:Array.from({length:n},()=>Array.from({length:n},rnd)),v:Array.from({length:n},()=>Array.from({length:n},rnd))};
-  const ps=[];for(let i=0;i<n;i++)for(let j=0;j<n;j++)ps.push({i,j,x:0,y:0,s:1,ts:1,placed:false,slot:0,spr:null});
+  puz.E={h:Array.from({length:R},()=>Array.from({length:C},rnd)),v:Array.from({length:R},()=>Array.from({length:C},rnd))};
+  const ps=[];for(let i=0;i<R;i++)for(let j=0;j<C;j++)ps.push({i,j,x:0,y:0,s:1,ts:1,placed:false,slot:0,spr:null});
   const order=ps.map((_,k)=>k);for(let k=order.length-1;k>0;k--){const r=Math.floor(Math.random()*(k+1));[order[k],order[r]]=[order[r],order[k]]}
   order.forEach((k,z)=>{ps[k].slot=z});
   puz.pieces=order.map(k=>ps[k]);   /* orden de dibujo = orden en la bandeja */
-  const pr=$('#puz-prog');pr.hidden=false;pr.textContent=`0 / ${n*n}`;
+  const pr=$('#puz-prog');pr.hidden=false;pr.textContent=`0 / ${C*R}`;
   $('#puz-hint').textContent='Arrastra cada pieza a su lugar';
   puzSize(true)}
 function puzSize(fresh){if(!puz.on)return;const L=puzLayout();if(!L)return;
@@ -1289,32 +1313,32 @@ function puzSize(fresh){if(!puz.on)return;const L=puzLayout();if(!L)return;
   if(pcv.width!==pw||pcv.height!==ph){pcv.width=pw;pcv.height=ph}
   const old=puz.L;puz.L=L;
   if(puz.img&&puz.pieces.length){
-    const sameGeom=old&&old.c===L.c;if(!sameGeom||fresh)puzSprites(L);
+    const sameGeom=old&&old.cw===L.cw&&old.ch===L.ch;if(!sameGeom||fresh)puzSprites(L);
     const S=puzSlots(L,puz.pieces.length);puz.trayS=S.s;
-    puz.pieces.forEach(p=>{if(p.placed){p.x=L.bx+(p.j+.5)*L.c;p.y=L.by+(p.i+.5)*L.c;p.s=p.ts=1}
+    puz.pieces.forEach(p=>{if(p.placed){p.x=cellX(L,p);p.y=cellY(L,p);p.s=p.ts=1}
       else if(fresh||!old||p!==puz.drag?.p){const[sx,sy]=S.at(p.slot);p.hx=sx;p.hy=sy;p.x=sx;p.y=sy;p.s=p.ts=S.s}})}
   puzDraw()}
 new ResizeObserver(()=>{if(puz.on&&puz.d)puzSize(false)}).observe(pstage);
-function puzSprites(L){const c=L.c,pad=L.pad,side=c+pad*2,px=Math.ceil(side*dpr),img=puz.img,iw=img.naturalWidth;
-  puz.pieces.forEach(p=>{const cv=p.spr&&p.spr.width===px?p.spr:newCanvas(px),x=cv.getContext('2d');
-    x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,px,px);x.setTransform(dpr,0,0,dpr,0,0);
-    piecePath(x,p,pad,pad,c);x.save();x.clip();
-    const k=iw/L.B;x.drawImage(img,(p.j*c-pad)*k,(p.i*c-pad)*k,side*k,side*k,0,0,side,side);x.restore();
-    x.lineJoin='round';piecePath(x,p,pad,pad,c);x.strokeStyle='rgba(38,35,92,.55)';x.lineWidth=2.4;x.stroke();
+function puzSprites(L){const{cw,ch,pad}=L,sw=cw+pad*2,sh=ch+pad*2,pw=Math.ceil(sw*dpr),ph=Math.ceil(sh*dpr),img=puz.img,k=img.naturalWidth/L.B,ky=img.naturalHeight/L.B;
+  puz.pieces.forEach(p=>{let cv=p.spr;if(!cv||cv.width!==pw||cv.height!==ph){cv=document.createElement('canvas');cv.width=pw;cv.height=ph}
+    const x=cv.getContext('2d');x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,pw,ph);x.setTransform(dpr,0,0,dpr,0,0);
+    piecePath(x,p,pad,pad,cw,ch);x.save();x.clip();
+    x.drawImage(img,(p.j*cw-pad)*k,(p.i*ch-pad)*ky,sw*k,sh*ky,0,0,sw,sh);x.restore();
+    x.lineJoin='round';piecePath(x,p,pad,pad,cw,ch);x.strokeStyle='rgba(38,35,92,.55)';x.lineWidth=2.4;x.stroke();
     x.strokeStyle='rgba(255,255,255,.85)';x.lineWidth=1;x.stroke();p.spr=cv})}
 function rr(x,X,Y,w,h,r){x.beginPath();x.moveTo(X+r,Y);x.arcTo(X+w,Y,X+w,Y+h,r);x.arcTo(X+w,Y+h,X,Y+h,r);x.arcTo(X,Y+h,X,Y,r);x.arcTo(X,Y,X+w,Y,r);x.closePath()}
 function puzDraw(){const L=puz.L,x=pcx;if(!pcv.width)return;
   x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,pcv.width,pcv.height);if(!L||!puz.img)return;x.setTransform(dpr,0,0,dpr,0,0);
-  const{bx,by,B,c,pad}=L;
+  const{bx,by,B,cw,ch,pad}=L;
   /* tablero: hoja con la imagen apenas visible y las siluetas de las piezas */
   x.save();x.shadowColor='rgba(38,35,92,.18)';x.shadowOffsetY=4;rr(x,bx-5,by-5,B+10,B+10,16);x.fillStyle='#FFFFFF';x.fill();x.restore();
   rr(x,bx-5,by-5,B+10,B+10,16);x.strokeStyle='#26235C';x.lineWidth=2.5;x.stroke();
-  if(!puz.done){x.save();x.globalAlpha=puz.n===2?.32:puz.n===3?.24:.18;x.drawImage(puz.img,bx,by,B,B);x.restore();
+  if(!puz.done){x.save();x.globalAlpha=puz.n<=2?.32:puz.n===3?.24:.18;x.drawImage(puz.img,bx,by,B,B);x.restore();
     x.save();x.setLineDash([5,6]);x.strokeStyle='rgba(38,35,92,.28)';x.lineWidth=1.5;
-    puz.pieces.forEach(p=>{if(!p.placed){piecePath(x,p,bx+p.j*c,by+p.i*c,c);x.stroke()}});x.restore()}
-  const side=c+pad*2,draw=(p,shadow)=>{const w=side*p.s;
+    puz.pieces.forEach(p=>{if(!p.placed){piecePath(x,p,bx+p.j*cw,by+p.i*ch,cw,ch);x.stroke()}});x.restore()}
+  const sw=cw+pad*2,sh=ch+pad*2,draw=(p,shadow)=>{const w=sw*p.s,h=sh*p.s;
     if(shadow){x.save();x.shadowColor='rgba(38,35,92,.35)';x.shadowBlur=14;x.shadowOffsetY=8}
-    x.drawImage(p.spr,p.x-w/2,p.y-w/2,w,w);if(shadow)x.restore()};
+    x.drawImage(p.spr,p.x-w/2,p.y-h/2,w,h);if(shadow)x.restore()};
   if(puz.done){x.drawImage(puz.img,bx,by,B,B);
     if(puz.glow>0){x.save();x.globalAlpha=Math.max(0,1-puz.glow)*.6;x.fillStyle='#FFFFFF';x.fillRect(bx,by,B,B);x.restore()}
     return}
@@ -1322,9 +1346,9 @@ function puzDraw(){const L=puz.L,x=pcx;if(!pcv.width)return;
   puz.pieces.forEach(p=>{if(!p.placed&&p!==puz.drag?.p)draw(p,false)});
   if(puz.drag)draw(puz.drag.p,true)}
 function puzTick(){cancelAnimationFrame(puz.anim);let last=performance.now();
-  const step=t=>{if(!puz.on)return;const dt=Math.min(64,t-last)/1000;last=t;let busy=false;const k=reduceMotion()?1:Math.min(1,dt*14);
+  const step=t=>{if(!puz.on)return;const dt=Math.min(64,t-last)/1000;last=t;let busy=false;const k=reduceMotion()?1:Math.min(1,dt*14),L=puz.L;
     puz.pieces.forEach(p=>{if(p===puz.drag?.p){if(Math.abs(p.s-1)>.005){p.s+=(1-p.s)*k;busy=true}return}
-      const tx=p.placed?puz.L.bx+(p.j+.5)*puz.L.c:p.gx??p.x,ty=p.placed?puz.L.by+(p.i+.5)*puz.L.c:p.gy??p.y;
+      const tx=p.placed?cellX(L,p):p.gx??p.x,ty=p.placed?cellY(L,p):p.gy??p.y;
       if(Math.abs(p.x-tx)>.4||Math.abs(p.y-ty)>.4||Math.abs(p.s-p.ts)>.005){p.x+=(tx-p.x)*k;p.y+=(ty-p.y)*k;p.s+=(p.ts-p.s)*k;busy=true}
       else{p.x=tx;p.y=ty;p.s=p.ts;p.gx=p.gy=undefined}});
     if(puz.done&&puz.glow<1){puz.glow=Math.min(1,puz.glow+dt*1.6);busy=true}
@@ -1332,7 +1356,7 @@ function puzTick(){cancelAnimationFrame(puz.anim);let last=performance.now();
   puz.anim=requestAnimationFrame(step)}
 const pPt=e=>{const r=pcv.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};
 function puzHit(pt){const L=puz.L;for(let k=puz.pieces.length-1;k>=0;k--){const p=puz.pieces[k];if(p.placed)continue;
-    const r=L.c*p.s*.62+10;if(Math.abs(pt[0]-p.x)<r&&Math.abs(pt[1]-p.y)<r)return p}return null}
+    const rx=L.cw*p.s*.62+10,ry=L.ch*p.s*.62+10;if(Math.abs(pt[0]-p.x)<rx&&Math.abs(pt[1]-p.y)<ry)return p}return null}
 pcv.addEventListener('pointerdown',e=>{if(!puz.d||!puz.img||puz.done||puz.drag)return;e.preventDefault();
   const pt=pPt(e),p=puzHit(pt);if(!p)return;try{pcv.setPointerCapture(e.pointerId)}catch(_){}
   puz.pieces.splice(puz.pieces.indexOf(p),1);puz.pieces.push(p);p.gx=p.gy=undefined;
@@ -1340,11 +1364,11 @@ pcv.addEventListener('pointerdown',e=>{if(!puz.d||!puz.img||puz.done||puz.drag)r
 pcv.addEventListener('pointermove',e=>{const d=puz.drag;if(!d||e.pointerId!==d.id)return;const pt=pPt(e),L=puz.L;
   d.p.x=Math.max(0,Math.min(L.W,pt[0]+d.dx));d.p.y=Math.max(0,Math.min(L.H,pt[1]+d.dy))});
 function puzDrop(e){const d=puz.drag;if(!d||e.pointerId!==d.id)return;puz.drag=null;const p=d.p,L=puz.L;
-  const tx=L.bx+(p.j+.5)*L.c,ty=L.by+(p.i+.5)*L.c;
-  if(Math.hypot(p.x-tx,p.y-ty)<L.c*.36){p.placed=true;p.ts=1;
+  const tx=cellX(L,p),ty=cellY(L,p);
+  if(Math.hypot(p.x-tx,p.y-ty)<Math.min(L.cw,L.ch)*.36){p.placed=true;p.ts=1;
     /* las piezas puestas van al fondo para que no tapen a las sueltas */
     puz.pieces.splice(puz.pieces.indexOf(p),1);puz.pieces.unshift(p);
-    const left=puz.pieces.filter(q=>!q.placed).length,tot=puz.n*puz.n;$('#puz-prog').textContent=`${tot-left} / ${tot}`;sfx('ok');
+    const left=puz.pieces.filter(q=>!q.placed).length,tot=puz.pieces.length;$('#puz-prog').textContent=`${tot-left} / ${tot}`;sfx('ok');
     if(!left)puzFinish();else if(left===1)$('#puz-hint').textContent='¡Falta una!';else $('#puz-hint').textContent=`¡Bien! Faltan ${left}`}
   else{const onBoard=p.x>L.bx&&p.x<L.bx+L.B&&p.y>L.by&&p.y<L.by+L.B;
     if(onBoard){p.gx=p.hx;p.gy=p.hy;p.ts=puz.trayS;sfx('error');$('#puz-hint').textContent='Esa va en otro lugar. Mira la forma'}
@@ -1352,23 +1376,55 @@ function puzDrop(e){const d=puz.drag;if(!d||e.pointerId!==d.id)return;puz.drag=n
   puzTick()}
 pcv.addEventListener('pointerup',puzDrop);
 if(/[?&]prueba\b/.test(location.search))window.__t={puz,pcv};pcv.addEventListener('pointercancel',puzDrop);
-function puzFinish(){const d=puz.d,n=puz.n;puz.done=true;puz.glow=0;state.done[`puz-${d.id}-${n}`]=true;save();
+function puzFinish(){const d=puz.d,n=puz.n,tk=puz.token;puz.done=true;puz.glow=0;if(!d.obra){state.done[`puz-${d.id}-${n}`]=true;save()}
   $('#puz-hint').textContent=`¡Armaste ${d.say||d.name}!`;setTimeout(()=>say(`¡Muy bien! Es ${d.say||d.name}`),350);puzTick();
-  setTimeout(()=>{if(puz.d===d&&puz.on&&puz.done)puzParty(d)},1400)}
+  setTimeout(()=>{if(tk!==puz.token||!puz.on||!puz.done)return;$('#puz-hint').textContent='¡Revienta los globos!';
+    popSurprise(()=>{if(tk===puz.token&&puz.on&&puz.done)puzParty(d)})},1500)}
 function puzParty(d){let i;do{i=Math.floor(Math.random()*PRAISE.length)}while(i===lastPraise&&PRAISE.length>1);lastPraise=i;
   const c=newCanvas(440),x=c.getContext('2d');x.drawImage(puz.img,0,0,440,440);$('#party-img').src=c.toDataURL('image/jpeg',.88);
-  const next=puz.n<4?puz.n+1:0;
-  $('#party-t').textContent=PRAISE[i];$('#party-s').textContent=`Armaste las ${puz.n*puz.n} piezas.`+(next?` ¿Pruebas con ${next*next}?`:'');setTimeout(()=>partyFx(d.id));
-  $('#party-more').textContent=next?`Probar con ${next*next} piezas`:'Ver mi rompecabezas';$('#party-save').hidden=true;$('#party-home').textContent='Otro rompecabezas';
+  const next=PUZ_LV[PUZ_LV.indexOf(puz.n)+1]||0,np=next?puzCount(next):0;
+  $('#party-t').textContent=PRAISE[i];$('#party-s').textContent=`Armaste las ${puzCount(puz.n)} piezas.`+(next?` ¿Pruebas con ${np}?`:'');setTimeout(()=>partyFx(d.obra?null:d.id));
+  $('#party-more').textContent=next?`Probar con ${np} piezas`:'Ver mi rompecabezas';$('#party-save').hidden=true;$('#party-home').textContent='Otro rompecabezas';
   puz.nextN=next;
   const p=$('#party');partyFocus=document.activeElement;p.hidden=false;
   const pf=$('#party-fx');pf.width=Math.round(innerWidth*dpr);pf.height=Math.round(innerHeight*dpr);
   confetti(pf,200);tada();setTimeout(()=>say(PRAISE[i]),900);$('#party-more').focus()}
 
+/* ---------- sorpresa: globos para reventar ---------- */
+const popCv=$('#pop'),popX=popCv.getContext('2d');let popOn=false,popRaf=0,popEnd=null,popTimer=0;
+const POP_COLORS=['#E8424C','#FFD23F','#6CC24A','#2F6FD6','#FF8A3D','#9B6BD6','#FF8FB8','#2BB3A3'];
+function popStop(){if(!popOn)return;popOn=false;cancelAnimationFrame(popRaf);clearTimeout(popTimer);popCv.hidden=true;const cb=popEnd;popEnd=null;if(cb)cb()}
+function popSurprise(cb){if(reduceMotion()){cb();return}
+  popOn=true;popEnd=cb;popCv.hidden=false;const W=innerWidth,H=innerHeight;popCv.width=Math.round(W*dpr);popCv.height=Math.round(H*dpr);
+  popCv.style.width=W+'px';popCv.style.height=H+'px';
+  const n=8,balls=[],bits=[];
+  for(let k=0;k<n;k++){const r=Math.max(30,Math.min(52,W*.085));
+    balls.push({x:W*(.1+.8*((k+.5)/n))+(Math.random()-.5)*W*.06,y:H+r*1.4+Math.random()*H*.5,r,vy:H*(.13+Math.random()*.07),ph:Math.random()*6,c:POP_COLORS[k%POP_COLORS.length],gone:false})}
+  say('¡Revienta los globos!');let last=performance.now(),popped=0;
+  const draw=t=>{if(!popOn)return;const dt=Math.min(64,t-last)/1000;last=t;const x=popX;
+    x.setTransform(dpr,0,0,dpr,0,0);x.clearRect(0,0,W,H);
+    let alive=0;
+    balls.forEach(b=>{if(b.gone)return;b.y-=b.vy*dt;b.ph+=dt*2;const bx=b.x+Math.sin(b.ph)*10;b.cx=bx;
+      if(b.y<-b.r*2.6){b.gone=true;return}alive++;
+      x.strokeStyle='rgba(38,35,92,.55)';x.lineWidth=2;x.beginPath();x.moveTo(bx,b.y+b.r*1.15);x.quadraticCurveTo(bx+8*Math.sin(b.ph*1.3),b.y+b.r*1.7,bx,b.y+b.r*2.3);x.stroke();
+      x.fillStyle=b.c;x.beginPath();x.ellipse(bx,b.y,b.r*.86,b.r,0,0,Math.PI*2);x.fill();
+      x.lineWidth=3;x.strokeStyle='#26235C';x.stroke();
+      x.beginPath();x.moveTo(bx-6,b.y+b.r*1.12);x.lineTo(bx+6,b.y+b.r*1.12);x.lineTo(bx,b.y+b.r*.96);x.closePath();x.fillStyle=b.c;x.fill();x.stroke();
+      x.fillStyle='rgba(255,255,255,.55)';x.beginPath();x.ellipse(bx-b.r*.32,b.y-b.r*.38,b.r*.16,b.r*.28,-.5,0,Math.PI*2);x.fill()});
+    for(let k=bits.length-1;k>=0;k--){const q=bits[k];q.t+=dt;if(q.t>.6){bits.splice(k,1);continue}
+      q.x+=q.vx*dt;q.y+=q.vy*dt;q.vy+=600*dt;x.globalAlpha=1-q.t/.6;x.fillStyle=q.c;x.beginPath();x.arc(q.x,q.y,q.s,0,Math.PI*2);x.fill();x.globalAlpha=1}
+    if(!alive&&!bits.length){popStop();return}
+    popRaf=requestAnimationFrame(draw)};
+  popCv.onpointerdown=e=>{if(!popOn)return;e.preventDefault();const r=popCv.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;
+    for(const b of balls){if(b.gone||b.cx==null)continue;if(Math.hypot(px-b.cx,py-b.y)<b.r*1.15){b.gone=true;popped++;sfx('pop');
+      for(let k=0;k<14;k++){const a=Math.random()*Math.PI*2,v=120+Math.random()*220;bits.push({x:b.cx,y:b.y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-80,s:3+Math.random()*4,c:k%3?b.c:'#FFD23F',t:0})}
+      if(popped===n)setTimeout(()=>sfx('ok'),120);break}}};
+  popTimer=setTimeout(popStop,14000);popRaf=requestAnimationFrame(draw)}
+
 /* ---------- stickers ---------- */
 const STK_KEY='pinta-y-brilla-stickers',MEM_LV=[4,6,8];
 const stk={a:new Set(),v:new Set()};
-const stkKeyOf=k=>{const m=/^puz-(.+)-[234]$/.exec(k);return m?m[1]:k};
+const stkKeyOf=k=>{const m=/^puz-(.+)-[1234]$/.exec(k);return m?m[1]:k};
 (function(){let raw=null;try{raw=JSON.parse(localStorage.getItem(STK_KEY)||'null')}catch(e){}
   const ok=v=>typeof v==='string'&&ID_RE.test(v);
   if(raw&&typeof raw==='object'){for(const k of (Array.isArray(raw.a)?raw.a:[]).slice(0,400))if(ok(k))stk.a.add(k);
@@ -1377,7 +1433,7 @@ const stkKeyOf=k=>{const m=/^puz-(.+)-[234]$/.exec(k);return m?m[1]:k};
   else Object.keys(state.done).forEach(k=>stk.a.add(stkKeyOf(k)))})();
 function stkStore(){try{localStorage.setItem(STK_KEY,JSON.stringify({a:[...stk.a],v:[...stk.v]}))}catch(e){}}
 function stkEarned(key){if(/^(puntos|mem)-/.test(key))return!!state.done[key];
-  return!!(state.done[key]||[2,3,4].some(n=>state.done[`puz-${key}-${n}`]))}
+  return!!(state.done[key]||[1,2,3,4].some(n=>state.done[`puz-${key}-${n}`]))}
 function stkItems(){const out=[];
   DRAWINGS.filter(d=>!d.custom&&!/^(letra|num)-/.test(d.id)).forEach(d=>out.push({key:d.id,d,name:d.name,cat:d.cat}));
   DOT_FIGS.forEach(f=>out.push({key:'puntos-'+f.id,f,name:f.name,cat:'puntos'}));
@@ -1446,9 +1502,9 @@ const mem={on:false,n:4,cards:[],first:null,lock:false,tries:0,found:0,done:fals
 try{const v=+localStorage.getItem(MEM_KEY);if(MEM_LV.includes(v))mem.n=v}catch(e){}
 function paintMemLv(){document.querySelectorAll('#mem-lv button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.n===mem.n))}
 function openMem(){$('#home').hidden=true;$('#editor').hidden=true;memEl.hidden=false;mem.on=true;paintMemLv();memStart();say('Memoria. Encuentra las parejas')}
-function leaveMem(){mem.on=false;mem.token++;stopVoice();memEl.hidden=true;$('#home').hidden=false;paintStkCard()}
-function memBack(){if(!$('#party').hidden){closeParty();return}leaveMem()}
-function memStart(){const tk=++mem.token,n=mem.n;
+function leaveMem(){mem.on=false;mem.token++;popStop();stopVoice();memEl.hidden=true;$('#home').hidden=false;paintStkCard()}
+function memBack(){if(!$('#party').hidden){closeParty();return}if(popOn){popStop();return}leaveMem()}
+function memStart(){popStop();const tk=++mem.token,n=mem.n;
   const pool=puzList().filter(d=>!isLocked(d));
   if(pool.length<n){mgrid.innerHTML='';$('#mem-hint').textContent=loadState==='loading'?'Preparando…':'No se pudieron cargar los dibujos';return}
   for(let k=pool.length-1;k>0;k--){const r=Math.floor(Math.random()*(k+1));[pool[k],pool[r]]=[pool[r],pool[k]]}
@@ -1477,7 +1533,7 @@ function memFlip(c){if(mem.lock||c.up||c.ok||mem.done)return;c.up=true;c.el.clas
     setTimeout(()=>{a.up=c.up=false;a.el.classList.remove('up');c.el.classList.remove('up');a.el.setAttribute('aria-label','Carta');c.el.setAttribute('aria-label','Carta');mem.lock=false},950)}}
 function memFinish(){const n=mem.n,tk=mem.token;mem.done=true;state.done['mem-'+n]=true;save();
   $('#mem-hint').textContent=`¡Encontraste las ${n} parejas!`;
-  setTimeout(()=>{if(tk!==mem.token||!mem.on)return;
+  setTimeout(()=>{if(tk!==mem.token||!mem.on)return;$('#mem-hint').textContent='¡Revienta los globos!';popSurprise(()=>{if(tk!==mem.token||!mem.on)return;
     let i;do{i=Math.floor(Math.random()*PRAISE.length)}while(i===lastPraise&&PRAISE.length>1);lastPraise=i;
     const c=newCanvas(440),x=c.getContext('2d');x.fillStyle='#FFF6E3';x.fillRect(0,0,440,440);
     const shown=mem.cards.filter((q,k,arr)=>arr.findIndex(z=>z.d.id===q.d.id)===k).slice(0,4);
@@ -1488,11 +1544,11 @@ function memFinish(){const n=mem.n,tk=mem.token;mem.done=true;state.done['mem-'+
     $('#party-more').textContent=next?`Probar con ${next} parejas`:'Ver las cartas';$('#party-save').hidden=true;$('#party-home').textContent='Jugar otra vez';
     const p=$('#party');partyFocus=document.activeElement;p.hidden=false;
     const pf=$('#party-fx');pf.width=Math.round(innerWidth*dpr);pf.height=Math.round(innerHeight*dpr);
-    confetti(pf,200);tada();partyFx('mem-'+n);setTimeout(()=>say(PRAISE[i]),900);$('#party-more').focus()},1100)}
+    confetti(pf,200);tada();partyFx('mem-'+n);setTimeout(()=>say(PRAISE[i]),900);$('#party-more').focus()})},1100)}
 $('#go-mem').onclick=openMem;$('#mem-back').onclick=memBack;
 document.querySelectorAll('#mem-lv button').forEach(b=>b.onclick=()=>{const n=+b.dataset.n;if(n===mem.n&&!mem.done&&mem.tries)return;mem.n=n;
   try{localStorage.setItem(MEM_KEY,String(n))}catch(e){}paintMemLv();sfx('pop');memStart()});
-if(/[?&]prueba\b/.test(location.search))Object.assign(window.__t||(window.__t={}),{mem,stk});
+if(/[?&]prueba\b/.test(location.search))Object.assign(window.__t||(window.__t={}),{mem,stk,popStop,popState:()=>popOn});
 
 /* ---------- efectos ---------- */
 let toastT;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2200)}

@@ -102,11 +102,11 @@
   <header class="etop">
     <button class="ibtn" id="puz-back" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
     <div class="etitle"><b id="puz-name">Rompecabezas</b><span class="eprog" id="puz-prog" hidden></span></div>
-    <div class="seg" id="puz-lv" role="group" aria-label="Cantidad de piezas"><button data-n="2" aria-label="4 piezas">4</button><button data-n="3" aria-label="9 piezas">9</button><button data-n="4" aria-label="16 piezas">16</button></div>
+    <div class="seg" id="puz-lv" role="group" aria-label="Cantidad de piezas"><button data-n="1" aria-label="2 piezas">2</button><button data-n="2" aria-label="4 piezas">4</button><button data-n="3" aria-label="9 piezas">9</button><button data-n="4" aria-label="16 piezas">16</button></div>
   </header>
   <main class="stage" id="puz-stage">
     <canvas id="pcv" aria-label="Rompecabezas: arrastra las piezas al tablero" hidden></canvas>
-    <div class="dlist" id="puz-list"><div class="grid" id="puz-grid"></div></div>
+    <div class="dlist" id="puz-list"></div>
   </main>
   <p class="hint dhint" id="puz-hint" aria-live="polite"></p>
 </section>
@@ -126,6 +126,7 @@
   </header>
   <main class="stage albstage"><div class="alist" id="alb-list"></div></main>
 </section>
+<canvas id="pop" aria-label="Globos: tócalos para reventarlos" hidden></canvas>
 <div class="party" id="party" role="dialog" aria-modal="true" aria-labelledby="party-t" hidden>
   <canvas id="party-fx" aria-hidden="true"></canvas>
   <div class="pcard">

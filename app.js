@@ -2,6 +2,41 @@
 const $=s=>document.querySelector(s);
 const mk=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e};
 const newCanvas=(w,h=w)=>{const c=document.createElement('canvas');c.width=w;c.height=h;return c};
+/* ---------- idioma: español o inglés ---------- */
+const LANG_KEY='pinta-y-brilla-lang';
+const LANG=(()=>{let v=null;try{v=localStorage.getItem(LANG_KEY)}catch(e){}
+  if(v==='es'||v==='en')return v;return /^es\b/i.test(navigator.language||'es')?'es':'en'})();
+const EN={"ui":{" ¡Y ganaste un sticker!":" And you earned a sticker!"," · necesita internet":" · needs internet"," ¿Pruebas con ${np}?":" Want to try ${np}?","${f.name}, ${f.p.length} puntos":"${f.name}, ${f.p.length} dots","${f.p.length} puntos":"${f.p.length} dots","${free||15} láminas gratis de ${total||30}. Con un solo pago desbloqueas todas y las que lleguen después.":"${free||15} free pages out of ${total||30}. With one payment, unlock them all, plus any that come later.","${got} de ${it.length}":"${got} of ${it.length}","${o.name}, bloqueado":"${o.name}, locked",", bloqueado":", locked","0 / ${f.p.length}":"0 / ${f.p.length}","1, 2, 3… ¿qué aparece?":"1, 2, 3… what will appear?","15 láminas gratis. Con un solo pago desbloqueas todas y las que lleguen después.":"15 free pages. With one payment, unlock them all, plus any that come later.","16 piezas":"16 pieces","2 piezas":"2 pieces","4 parejas":"4 pairs","4 piezas":"4 pieces","6 parejas":"6 pairs","8 parejas":"8 pairs","9 piezas":"9 pieces","<span>${ui.music?'Música: sí':'Música: no'}<\/span>":"<span>${ui.music?'Música: sí':'Música: no'}<\/span>","<span>${ui.sound?'Voz y sonidos: sí':'Voz y sonidos: no'}<\/span>":"<span>${ui.sound?'Voz y sonidos: sí':'Voz y sonidos: no'}<\/span>","Abriendo Google Play…":"Opening Google Play…","Agregar dibujo":"Add drawing","Arcoíris":"Rainbow","Arma el rompecabezas":"Build the puzzle","Arma las piezas":"Put the pieces together","Armaste las ${puzCount(puz.n)} piezas.":"You built all ${puzCount(puz.n)} pieces.","Arrastra cada pieza a su lugar":"Drag each piece to its place","Auto":"Car","Aún no agregaste dibujos. Toca \"Agregar dibujo\" y elige una imagen de líneas negras sobre fondo blanco.":"You haven't added any drawings yet. Tap \"Add drawing\" and choose an image with black lines on a white background.","Barco":"Boat","Borrar todo":"Erase all","Borrar todo el progreso":"Erase all progress","Básica":"Basic","Búho":"Owl","Calabaza":"Pumpkin","Cantidad de parejas":"Number of pairs","Cantidad de piezas":"Number of pieces","Carta ${k+1}":"Card ${k+1}","Casita":"Little house","Categorías":"Categories","Cerrar":"Close","Cohete":"Rocket","Colecciónalos":"Collect them all","Colorea, arma y juega":"Color, build, and play","Colorear":"Coloring","Colorear ":"Coloring ","Conejo":"Rabbit","Corazón":"Heart","Crayón":"Crayon","Crear números con mi coloreado":"Create numbers from my coloring","Créditos de las fotos":"Photo credits","Cupcake":"Cupcake","Desbloquear todo":"Unlock all","Desbloquear todo · ${priceText}":"Unlock all · ${priceText}","Deshacer":"Undo","Dibujo guardado":"Drawing saved","Dibujo libre":"Free drawing","Dibujo quitado":"Drawing removed","Dibujo sorpresa de ${f.p.length} puntos":"Surprise drawing with ${f.p.length} dots","Dinosaurio":"Dinosaur","Disponible en la app de Google Play":"Available on Google Play","Dona":"Donut","Elegir voz":"Choose voice","Elige cuántas piezas y luego un dibujo":"Choose how many pieces, then a drawing","Elige una voz":"Choose a voice","Elige uno y une los puntos en orden: 1, 2, 3…":"Pick one and connect the dots in order: 1, 2, 3…","Encontraste las ${n} parejas en ${mem.tries} intentos.":"You found all ${n} pairs in ${mem.tries} tries.","Encuentra las parejas":"Find the pairs","Esa imagen no parece un dibujo para colorear":"That image doesn't look like a coloring drawing","Esa imagen no se pudo abrir":"That image couldn't be opened","Esa no es. Prueba otra suma.":"That's not it. Try another sum.","Esa va en otro lugar. Mira la forma":"That one goes somewhere else. Look at the shape","Esa zona es el ${n}":"That area is ${n}","Ese es el ${i+1}. Busca el ${dots.next+1}":"That's ${i+1}. Find ${dots.next+1}","España":"Spain","Estados Unidos":"United States","Este dibujo aún no tiene números. Píntalo en \"Colorear\" con la cubeta y luego crea los números desde aquí.":"This drawing doesn't have numbers yet. Color it in \"Coloring\" with the bucket, then create the numbers from here.","Este navegador no tiene voces en español.":"This browser doesn't have English voices.","Fantasma":"Ghost","Flor":"Flower","Gana la memoria de ${o.n} parejas":"Win the ${o.n}-pair memory game","Ganaste una estrella por ${ed.d.name}.":"You earned a star for ${ed.d.name}.","Gatito con sombrero":"Kitten with hat","Gato":"Cat","Globo":"Balloon","Globos: tócalos para reventarlos":"Balloons: tap them to pop them","Gracias por apoyar a Pukllay Studio. Ya tienes todas las láminas.":"Thanks for supporting Pukllay Studio. You now have all the pages.","Grosor ":"Thickness ","Guardar imagen":"Save image","Guardar o compartir el dibujo":"Save or share the drawing","Helado":"Ice Cream","Hoja en blanco":"Blank page","Hoja limpia":"Clean page","Hoja para colorear":"Coloring page","Hongo":"Mushroom","Jugar otra vez":"Play again","La imagen es demasiado grande":"The image is too large","La imagen es demasiado grande (máximo 8000 px)":"The image is too large (maximum 8000 px)","La imagen es muy pequeña (mínimo 200 px)":"The image is too small (minimum 200 px)","La imagen pesa más de 10 MB":"The image is over 10 MB","La más natural · funciona sin internet":"The most natural · works offline","Las fotos del rompecabezas y la memoria vienen de Wikimedia Commons, con licencias libres para uso comercial.":"The puzzle and memory photos come from Wikimedia Commons, under free licenses for commercial use.","Latinoamérica":"Latin America","Letras y números":"Letters & numbers","Listo":"Done","Listo. Ahora a pintar por números":"Done. Now let's paint by numbers","Listo: ${seeds.length} zonas con ${pal.length} colores":"Done: ${seeds.length} areas with ${pal.length} colors","Listo: el progreso quedó en cero":"Done: progress has been reset to zero","Llama":"Llama","Los dibujos que pintaste, convertidos en rompecabezas":"The drawings you colored, turned into puzzles","Lápiz":"Pencil","Mariquita":"Ladybug","Memoria":"Memory","Memoria de ${n} parejas":"${n}-pair memory game","Memoria. Encuentra las parejas":"Memory. Find the pairs","Mi dibujo":"My drawing","Mi dibujo ":"My drawing ","Mis dibujos":"My drawings","Mis obras":"My artwork","Mis stickers":"My stickers","Mostrar pinceles y opciones":"Show brushes and options","Murciélago":"Bat","Muy bien. Ahora el ${dots.next+1}":"Great. Now ${dots.next+1}","Más opciones":"More options","México":"Mexico","Música de fondo":"Background music","No encontramos una compra con esta cuenta de Google":"We couldn't find a purchase on this Google account","No hay dibujos en esta categoría.":"There are no drawings in this category.","No hay nada que deshacer":"There's nothing to undo","No queda espacio para guardar. Borra algún dibujo.":"No space left to save. Delete a drawing.","No se pudieron cargar los dibujos":"Couldn't load the drawings","No se pudo abrir este dibujo":"Couldn't open this drawing","No se pudo abrir. Intenta otra vez":"Couldn't open it. Try again","No se pudo completar la compra. Inténtalo otra vez.":"The purchase couldn't be completed. Try again.","No se pudo guardar la imagen":"Couldn't save the image","No son iguales. ¡Intenta otra vez!":"They don't match. Try again!","Número ${n}, ${name}":"Number ${n}, ${name}","Números":"Numbers","Ocultar pinceles y opciones":"Hide brushes and options","Otro dibujo":"Another drawing","Otro rompecabezas":"Another puzzle","PNG o JPG de líneas negras sobre blanco":"PNG or JPG with black lines on white","Paleta":"Palette","Para entrar, toca el resultado:":"To enter, tap the answer:","Para mamá y papá":"For moms and dads","Perro":"Dog","Perú":"Peru","Pez":"Fish","Pide a un adulto que lo desbloquee":"Ask a grown-up to unlock it","Pide ayuda a un adulto para desbloquear más dibujos":"Ask a grown-up to help unlock more drawings","Pinta al menos dos zonas con la cubeta":"Color at least two areas with the bucket","Pinta el dibujo de ${o.name} o arma su rompecabezas para ganarlo":"Color the ${o.name} drawing or build its puzzle to win it","Pinta las zonas con el <b>${ui.num}<\/b> · ${rq2.filter(i=>f[i]).length} de ${rq2.length}":"Color the areas with <b>${ui.num}<\/b> · ${rq2.filter(i=>f[i]).length} of ${rq2.length}","Pista: ver la imagen":"Hint: see the picture","Pizarra neón":"Neon board","Plumón":"Marker","Por números":"By numbers","Preparando…":"Getting ready…","Primero pinta un poquito":"First, color a little","Probar con ${next} parejas":"Try ${next} pairs","Probar con ${np} piezas":"Try ${np} pieces","Pukllay":"Pukllay","Pukllay no tiene anuncios y no recoge ningún dato. Los pagos los procesa Google Play. Los dibujos se guardan solo en este equipo.":"Pukllay has no ads and collects no data. Payments are processed by Google Play. Drawings are saved only on this device.","Pulpo":"Octopus","Quitar ":"Remove ","Rehacer números":"Redo numbers","Rompecabezas":"Puzzle","Rompecabezas de ${d.name}, ${puzCount(puz.n)} piezas":"${d.name} puzzle, ${puzCount(puz.n)} pieces","Rompecabezas: arrastra las piezas al tablero":"Puzzle: drag the pieces to the board","Se agregó, pero no se podrá guardar al cerrar":"Added, but it can't be saved when closed","Seguir pintando":"Keep coloring","Seguir pintando ":"Keep coloring ","Sello ":"Stamp ","Sol":"Sun","Sticker escondido: ${o.name}":"Hidden sticker: ${o.name}","Sticker nuevo":"New sticker","Sólido":"Solid","Terminaste ${ed.d.name} otra vez.":"You finished ${ed.d.name} again.","Terminé":"I'm done","Tiene demasiadas partes oscuras. Usa líneas negras sobre fondo blanco.":"It has too many dark areas. Use black lines on a white background.","Tipo de pincel":"Brush type","Toca dos cartas para encontrar las parejas":"Tap two cards to find the pairs","Toca el 1 para empezar":"Tap 1 to start","Toca el uno para empezar":"Tap the one to start","Toca otra vez para borrar":"Tap again to erase","Toca una voz para escucharla. Las marcadas como \"Natural\" suenan menos robóticas.":"Tap a voice to hear it. Voices marked \"Natural\" sound less robotic.","Todas las láminas":"All pages","Todo desbloqueado":"Everything unlocked","Torta":"Cake","Tortuga":"Turtle","Trazos que brillan":"Glowing strokes","Tren":"Train","Tu dibujo está listo.":"Your drawing is ready.","Tu dibujo terminado":"Your finished drawing","Tu pago está pendiente. Se desbloqueará cuando Google lo confirme.":"Your payment is pending. It will unlock once Google confirms it.","Une los puntos de la figura ${o.name} para ganarlo":"Connect the dots of the ${o.name} figure to win it","Une los puntos en orden":"Connect the dots in order","Unir puntos":"Connect the dots","Uniste los ${f.p.length} puntos y apareció ${f.say}.":"You connected the ${f.p.length} dots and ${f.say} appeared.","Usa una imagen PNG, JPG o WebP":"Use a PNG, JPG, or WebP image","Vehículos":"Vehicles","Ver la lámina completa":"See the full page","Ver las cartas":"See the cards","Ver mi dibujo":"See my drawing","Ver mi rompecabezas":"See my puzzle","Ver todo":"See all","Versión 1.0.0":"Version 1.0.0","Volver":"Back","Volver a los dibujos":"Back to drawings","Voz activada":"Voice on","Voz grabada":"Recorded voice","Voz y sonidos":"Voice & sounds","Ya estaba desbloqueado":"Already unlocked","Ya lo compré: restaurar":"I already bought it: restore","Zona para padres":"Parents' area","amarillo neón":"neon yellow","azul neón":"neon blue","cian neón":"neon cyan","coral neón":"neon coral","hsl(${(s.seed+i*5)%360} 92% ${s.g?62:56}%)":"hsl(${(s.seed+i*5)%360} 92% ${s.g?62:56}%)","lima neón":"neon lime","limón":"lemon","marrón":"brown","naranja neón":"neon orange","rosa neón":"neon pink","translate(${zoom.x}px,${zoom.y}px) scale(${zoom.s})":"translate(${zoom.x}px,${zoom.y}px) scale(${zoom.s})","un corazón":"a heart","un árbol":"a tree","verde neón":"neon green","violeta neón":"neon violet","¡Armaste ${d.say||d.name}!":"You made ${d.say||d.name}!","¡Bien! Faltan ${left}":"Nice! ${left} to go","¡Compra restaurada!":"Purchase restored!","¡Encontraste las ${n} parejas!":"You found all ${n} pairs!","¡Eres un gran artista!":"You're a great artist!","¡Es ${f.say}!":"It's ${f.say}!","¡Excelente trabajo!":"Excellent work!","¡Falta una!":"One left!","¡Hola! Vamos a pintar juntos":"Hi! Let's color together","¡Listo! Todo desbloqueado":"Done! Everything unlocked","¡Lo hiciste genial!":"You did awesome!","¡Mira bien dónde está cada uno!":"Look carefully at where each one goes!","¡Muy bien!":"Great job!","¡Muy bien! Es ${d.say||d.name}":"Great! It's ${d.say||d.name}","¡Muy bien, campeón del color!":"Great job, color champion!","¡Nuevo!":"New!","¡Pareja de ${c.d.name}!":"Pair of ${c.d.name}!","¡Qué colores tan bonitos!":"What pretty colors!","¡Revienta los globos!":"Pop the balloons!","¡Te quedó precioso!":"It looks beautiful!","¡Terminé!":"I finished!","¡Wow, qué obra de arte!":"Wow, what a work of art!","¿Quitar?":"Remove?","¿Qué será?":"What could it be?","¿Seguro? Toca otra vez":"Are you sure? Tap again","Árbol":"Tree","Todos":"All","Animales":"Animals","Naturaleza":"Nature","Dulces":"Sweets","Halloween":"Halloween","Cometa":"Kite","una cometa":"a kite","Casa":"House","una casa":"a house","un helado":"an ice cream","Gatito":"Kitten","un gatito":"a kitten","un barco":"a boat","Estrella":"Star","una estrella":"a star","un cohete":"a rocket","un pez":"a fish","pares":"pairs","sombras":"shadows","colores":"colors","Sombras":"Shadows","Colores":"Colors","¿De quién es?":"Whose is it?","Toca el color":"Tap the color","Cantidad de figuras":"Number of shapes","Cantidad de dibujos":"Number of pictures","${n} figuras":"${n} shapes","${n} dibujos":"${n} pictures","Sombras. ¿De quién es cada sombra?":"Shadows. Whose shadow is this?","Arrastra cada dibujo a su sombra":"Drag each picture to its shadow","Busca la sombra que tiene su misma forma":"Find the shadow with the same shape","¡Juntaste las ${n} sombras!":"You matched all ${n} shadows!","Juntaste las ${n} figuras con su sombra.":"You matched ${n} shapes with their shadows.","Probar con ${n} figuras":"Try ${n} shapes","Probar con ${n} dibujos":"Try ${n} pictures","Otra ronda":"Another round","Colores. Toca el color que te pido":"Colors. Tap the color I say","Toca algo ${c}":"Tap something ${c}","¡Sí! ${name} es ${c}":"Yes! ${name} is ${c}!","Ese es ${a}. Busca algo ${c}":"That one is ${a}. Find something ${c}","Encontraste los ${n} colores.":"You found all ${n} colors.","Sombras de ${n} figuras":"Shadows with ${n} shapes","Colores con ${n} dibujos":"Colors with ${n} pictures","Idioma: Español":"Language: English","Música: sí":"Music: on","Música: no":"Music: off","Voz y sonidos: sí":"Voice & sounds: on","Voz y sonidos: no":"Voice & sounds: off","rojo":"red","naranja":"orange","amarillo":"yellow","verde":"green","azul":"blue","morado":"purple","rosado":"pink","celeste":"light blue","blanco":"white","gris":"gray","negro":"black","coral":"coral","lima":"lime","verde bosque":"forest green","turquesa":"turquoise","azul marino":"navy blue","lila":"lilac","fucsia":"fuchsia","durazno":"peach"},"names":{"gato":{"name":"Cat","say":null},"perro":{"name":"Dog","say":null},"pez":{"name":"Fish","say":null},"dino":{"name":"Dinosaur","say":null},"tortuga":{"name":"Turtle","say":null},"buho":{"name":"Owl","say":null},"mariquita":{"name":"Ladybug","say":null},"pulpo":{"name":"Octopus","say":null},"conejo":{"name":"Rabbit","say":null},"llama":{"name":"Llama","say":null},"auto":{"name":"Car","say":null},"cohete":{"name":"Rocket","say":null},"barco":{"name":"Boat","say":null},"globo":{"name":"Balloon","say":null},"tren":{"name":"Train","say":null},"flor":{"name":"Flower","say":null},"casita":{"name":"Little House","say":null},"arcoiris":{"name":"Rainbow","say":null},"hongo":{"name":"Mushroom","say":null},"sol":{"name":"Sun","say":null},"arbol":{"name":"Tree","say":null},"helado":{"name":"Ice Cream","say":null},"cupcake":{"name":"Cupcake","say":null},"dona":{"name":"Donut","say":null},"torta":{"name":"Cake","say":null},"paleta":{"name":"Lollipop","say":null},"calabaza":{"name":"Pumpkin","say":null},"fantasma":{"name":"Ghost","say":null},"gatito-bruja":{"name":"Kitten with Hat","say":null},"murcielago":{"name":"Bat","say":null},"letra-a":{"name":"A","say":"The letter a"},"letra-b":{"name":"B","say":"The letter b"},"letra-c":{"name":"C","say":"The letter c"},"letra-d":{"name":"D","say":"The letter d"},"letra-e":{"name":"E","say":"The letter e"},"letra-f":{"name":"F","say":"The letter f"},"letra-g":{"name":"G","say":"The letter g"},"letra-h":{"name":"H","say":"The letter h"},"letra-i":{"name":"I","say":"The letter i"},"letra-j":{"name":"J","say":"The letter j"},"letra-k":{"name":"K","say":"The letter k"},"letra-l":{"name":"L","say":"The letter l"},"letra-m":{"name":"M","say":"The letter m"},"letra-n":{"name":"N","say":"The letter n"},"letra-o":{"name":"O","say":"The letter o"},"letra-p":{"name":"P","say":"The letter p"},"letra-q":{"name":"Q","say":"The letter q"},"letra-r":{"name":"R","say":"The letter r"},"letra-s":{"name":"S","say":"The letter s"},"letra-t":{"name":"T","say":"The letter t"},"letra-u":{"name":"U","say":"The letter u"},"letra-v":{"name":"V","say":"The letter v"},"letra-w":{"name":"W","say":"The letter w"},"letra-x":{"name":"X","say":"The letter x"},"letra-y":{"name":"Y","say":"The letter y"},"letra-z":{"name":"Z","say":"The letter z"},"letra-enie":{"name":"Ñ","say":"The letter eñe"},"num-1":{"name":"1 Star","say":"One. One star."},"num-2":{"name":"2 Hearts","say":"Two. Two hearts."},"num-3":{"name":"3 Apples","say":"Three. Three apples."},"num-4":{"name":"4 Balls","say":"Four. Four balls."},"num-5":{"name":"5 Stars","say":"Five. Five stars."},"num-6":{"name":"6 Hearts","say":"Six. Six hearts."},"num-7":{"name":"7 Apples","say":"Seven. Seven apples."},"num-8":{"name":"8 Balls","say":"Eight. Eight balls."},"num-9":{"name":"9 Stars","say":"Nine. Nine stars."},"num-10":{"name":"10 Hearts","say":"Ten. Ten hearts."}},"dots":{"Cometa":{"name":"Kite","say":"a kite"},"Casa":{"name":"House","say":"a house"},"Helado":{"name":"Ice Cream","say":"an ice cream"},"Gatito":{"name":"Kitten","say":"a kitten"},"Barco":{"name":"Boat","say":"a boat"},"Estrella":{"name":"Star","say":"a star"},"Cohete":{"name":"Rocket","say":"a rocket"},"Pez":{"name":"Fish","say":"a fish"},"Corazón":{"name":"Heart","say":"a heart"},"Árbol":{"name":"Tree","say":"a tree"}}};
+const I18N=(()=>{if(LANG!=='en'||!EN)return null;
+  const exact=new Map(),pats=[];
+  for(const [k,v] of Object.entries(EN.ui||{})){if(typeof v!=='string')continue;const kk=k.trim();
+    if(!kk.includes('${')){exact.set(kk,v.trim());continue}
+    if(!/\p{L}{2}/u.test(kk.replace(/\$\{[^}]+\}/g,'')))continue;
+    /* plantilla: "${n} piezas" → /^(.+?) piezas$/ y se rellenan los huecos por nombre */
+    const names=[];const esc=kk.split(/(\$\{[^}]+\})/).map(p=>{if(/^\$\{/.test(p)){names.push(p);return'([\\s\\S]+?)'}return p.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}).join('');
+    pats.push({re:new RegExp('^'+esc+'$'),names,out:v.trim()})}
+  pats.sort((a,b)=>b.re.source.length-a.re.source.length);
+  return{exact,pats}})();
+function tr(s){if(!I18N||typeof s!=='string')return s;const t=s.trim();if(!t)return s;
+  const lead=s.slice(0,s.indexOf(t)),tail=s.slice(s.indexOf(t)+t.length);
+  let r=I18N.exact.get(t);
+  if(r==null)for(const p of I18N.pats){const m=p.re.exec(t);if(!m)continue;
+    r=p.out;p.names.forEach((n,i)=>{r=r.split(n).join(tr(m[i+1]))});break}
+  return r==null?s:lead+r+tail}
+function trNode(root){if(!I18N)return;
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentNode&&/^(SCRIPT|STYLE)$/.test(n.parentNode.nodeName)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+  const list=[];while(w.nextNode())list.push(w.currentNode);
+  list.forEach(n=>{const v=tr(n.nodeValue);if(v!==n.nodeValue)n.nodeValue=v});
+  if(root.querySelectorAll)[root,...root.querySelectorAll('[aria-label],[title],[alt],[placeholder]')].forEach(el=>{
+    for(const a of ['aria-label','title','alt','placeholder']){const v=el.getAttribute&&el.getAttribute(a);if(v){const t=tr(v);if(t!==v)el.setAttribute(a,t)}}})}
+if(I18N){document.documentElement.lang='en';trNode(document.body);
+  /* lo que el juego escribe después (avisos, pistas, títulos) también se traduce */
+  new MutationObserver(ms=>{for(const m of ms){
+    if(m.type==='characterData'){const v=tr(m.target.nodeValue);if(v!==m.target.nodeValue)m.target.nodeValue=v}
+    else if(m.type==='attributes'){const el=m.target,v=el.getAttribute(m.attributeName);if(v){const t=tr(v);if(t!==v)el.setAttribute(m.attributeName,t)}}
+    else m.addedNodes.forEach(n=>{if(n.nodeType===3){const v=tr(n.nodeValue);if(v!==n.nodeValue)n.nodeValue=v}else if(n.nodeType===1)trNode(n)})}})
+  .observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['aria-label','title','alt','placeholder']})}
+const trName=(id,name,say)=>{const x=I18N&&EN.names&&EN.names[id];return x?{name:x.name||name,say:x.say||null}:{name,say}};
 const NEON_BG='#0B0B1A', INK='#1E1C45';
 /* Todas las láminas se trabajan en un cuadrado de N×N píxeles; los trazos se guardan en unidades 0–400 */
 const N=1024, UPX=N/400, LINE_T=140;
@@ -160,7 +195,7 @@ const norm=t=>String(t).trim().toLowerCase();
 const CLIP_RE=/^[a-z0-9-]{1,80}\.(mp3|ogg|m4a|wav)$/;
 let voices=[],voice=null,clips={},hasClips=false,curAudio=null,sayTok=0;
 function scoreVoice(v){
-  if(!/^es([-_]|$)/i.test(v.lang))return -999;const n=v.name;let s=0;
+  if(!new RegExp('^'+LANG+'([-_]|$)','i').test(v.lang))return -999;const n=v.name;let s=0;
   if(/natural|neural|online|premium|enhanced|mejorad|siri/i.test(n))s+=50;
   if(/google/i.test(n))s+=30;
   if(/^es[-_]PE/i.test(v.lang))s+=12;else if(/^es[-_](419|MX|US|CO|AR|CL|EC|BO|VE)/i.test(v.lang))s+=8;else if(/^es[-_]ES/i.test(v.lang))s+=2;
@@ -184,14 +219,14 @@ fetch('voz/voz.json',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(j=>{
   for(const [t,f] of Object.entries(j.clips))if(typeof t==='string'&&t.length<=120&&typeof f==='string'&&CLIP_RE.test(f))clips[norm(t)]=f;
   hasClips=Object.keys(clips).length>0;
 }).catch(()=>{});
-const useClips=()=>hasClips&&(ui.voice===''||ui.voice==='grabada');
+const useClips=()=>LANG==='es'&&hasClips&&(ui.voice===''||ui.voice==='grabada');
 function stopVoice(){sayTok++;if(TTS)TTS.stop().catch(()=>{});else try{speechSynthesis.cancel()}catch(e){}if(curAudio){try{curAudio.pause()}catch(e){}curAudio=null}}
 function speak(text){
-  if(TTS){const o={text,lang:voice?voice.lang:'es-US',rate:.95,pitch:1,volume:1,category:'ambient'};if(voice&&voice._idx!=null)o.voice=voice._idx;TTS.speak(o).catch(()=>{});return}
-  try{const u=new SpeechSynthesisUtterance(text);u.lang=voice?voice.lang:'es-419';if(voice)u.voice=voice;u.rate=.95;u.pitch=1;speechSynthesis.speak(u)}catch(e){}}
+  if(TTS){const o={text,lang:voice?voice.lang:(LANG==='en'?'en-US':'es-US'),rate:.95,pitch:1,volume:1,category:'ambient'};if(voice&&voice._idx!=null)o.voice=voice._idx;TTS.speak(o).catch(()=>{});return}
+  try{const u=new SpeechSynthesisUtterance(text);u.lang=voice?voice.lang:(LANG==='en'?'en-US':'es-419');if(voice)u.voice=voice;u.rate=.95;u.pitch=1;speechSynthesis.speak(u)}catch(e){}}
 /* t puede ser un texto o una lista de partes (["3","rojo"]) que se dicen seguidas */
 function say(t){
-  if(!ui.sound||!t)return;const parts=(Array.isArray(t)?t:[t]).map(String);stopVoice();const tok=sayTok;
+  if(!ui.sound||!t)return;const parts=(Array.isArray(t)?t:[t]).map(String).map(tr);stopVoice();const tok=sayTok;
   if(useClips()&&parts.every(p=>clips[norm(p)])){
     let i=0;const next=()=>{if(tok!==sayTok||i>=parts.length)return;const a=new Audio('voz/'+clips[norm(parts[i++])]);curAudio=a;
       a.onended=next;a.onerror=next;a.play().catch(()=>{if(tok===sayTok)speak(parts.slice(i-1).join(', '))})};
@@ -525,11 +560,11 @@ async function loadCatalog(){
       if(!e||!ID_RE.test(e.id)||typeof e.name!=='string'||!/^[a-z0-9-]{1,40}\.png$/.test(e.file)||!CAT_COLOR[e.cat]||['todos','mios','obras'].includes(e.cat))continue;
       /* las láminas incluidas numeran con la paleta fija NUMS (pal:null) */
       const n=cleanNums({pal:stdPal,seeds:Array.isArray(e.numeros)?e.numeros:[]});if(n)n.pal=null;
-      out.push({id:e.id,name:e.name.slice(0,40),say:typeof e.say==='string'?e.say.slice(0,60):null,cat:e.cat,src:'dibujos/'+e.file,nums:n,premium:e.pack==='premium'});
+      const tn=trName(e.id,e.name.slice(0,40),typeof e.say==='string'?e.say.slice(0,60):null);out.push({id:e.id,name:tn.name,say:tn.say,cat:e.cat,src:'dibujos/'+e.file,nums:n,premium:e.pack==='premium'});
     }
     DRAWINGS=out.concat(DRAWINGS.filter(d=>d.custom));loadState='ok';
   }catch(e){loadState='error'}
-  renderGrid();if(puz.on&&!puz.d)renderPuzList();if(albOn)renderAlbum();if(mem.on&&!mem.cards.length)memStart();paintStkCard();
+  renderGrid();if(puz.on&&!puz.d)renderPuzList();if(albOn)renderAlbum();if(mem.on&&!mem.cards.length)memStart();try{if(sha.on&&!sha.items.length)shaStart();if(col.on&&!col.cur)colStart()}catch(e){}paintStkCard();
 }
 async function loadCustom(){
   try{
@@ -852,7 +887,7 @@ const moreBtn=$('#more'),menu=$('#menu');
 function setMenu(open){menu.hidden=!open;moreBtn.setAttribute('aria-expanded',open);if(!open)disarm()}
 moreBtn.onclick=e=>{e.stopPropagation();setMenu(menu.hidden);if(!menu.hidden){const f=menu.querySelector('.mitem:not([hidden])');if(f)f.focus()}};
 document.addEventListener('pointerdown',e=>{if(!menu.hidden&&!e.target.closest('.more-wrap'))setMenu(false)});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('#voices').hidden)closeVoices();else if(!$('#pgate').hidden)closeParents();else if(!$('#party').hidden)closeParty();else if(!menu.hidden){setMenu(false);moreBtn.focus()}else if(dots.on)dotsBack();else if(puz.on)puzBack();else if(mem.on)memBack();else if(albOn)leaveAlbum()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('#voices').hidden)closeVoices();else if(!$('#pgate').hidden)closeParents();else if(!$('#party').hidden)closeParty();else if(!menu.hidden){setMenu(false);moreBtn.focus()}else if(dots.on)dotsBack();else if(puz.on)puzBack();else if(mem.on)memBack();else if(sha.on)shaBack();else if(col.on)colBack();else if(albOn)leaveAlbum()}});
 const clearBtn=$('#clear'),clearIcon=clearBtn.innerHTML;let armed=false,armT;
 function disarm(){armed=false;clearTimeout(armT);clearBtn.innerHTML=clearIcon;clearBtn.classList.remove('armed')}
 clearBtn.onclick=()=>{
@@ -988,6 +1023,7 @@ $('#pgate-close').onclick=closeParents;
 $('#pgate').addEventListener('pointerdown',e=>{if(e.target.id==='pgate')closeParents()});
 $('#pz-sound').onclick=()=>setSound(!ui.sound);
 $('#pz-music').onclick=()=>setMusic(!ui.music);
+$('#pz-lang').onclick=()=>{try{localStorage.setItem(LANG_KEY,LANG==='es'?'en':'es')}catch(e){}location.reload()};
 $('#pz-voice').onclick=()=>{$('#pgate').hidden=true;disarmReset();openVoices();voicesFocus=$('#parents')};
 $('#pz-reset').onclick=()=>{
   const b=$('#pz-reset');
@@ -1013,7 +1049,7 @@ if(APP){
   /* botón Atrás de Android: cierra lo que esté abierto antes de salir de la app */
   APP.addListener('backButton',()=>{
     if(!$('#voices').hidden)closeVoices();else if(!$('#pgate').hidden)closeParents();else if(!$('#party').hidden)closeParty();else if(!menu.hidden)setMenu(false);
-    else if(dots.on)dotsBack();else if(puz.on)puzBack();else if(mem.on)memBack();else if(albOn)leaveAlbum();else if(ed.on)showHome();else APP.exitApp();
+    else if(dots.on)dotsBack();else if(puz.on)puzBack();else if(mem.on)memBack();else if(sha.on)shaBack();else if(col.on)colBack();else if(albOn)leaveAlbum();else if(ed.on)showHome();else APP.exitApp();
   });
   APP.addListener('pause',()=>{stopVoice();stopMusic();save()});
   APP.addListener('resume',()=>{if(BILL)checkPurchases()});
@@ -1059,10 +1095,10 @@ function celebrate(){
   $('#party-more').focus();
 }
 function closeParty(){$('#party').hidden=true;stopVoice();if(partyFocus&&partyFocus.focus)partyFocus.focus()}
-$('#party-more').onclick=()=>{closeParty();
+$('#party-more').onclick=()=>{closeParty();if(sha.on){shaPartyMore();return}if(col.on){colPartyMore();return}
   if(puz.on&&puz.done&&puz.nextN){puz.n=puz.nextN;puz.nextN=0;try{localStorage.setItem(PUZ_KEY,String(puz.n))}catch(e){}paintLevels();puzBuild();say('Arma el rompecabezas')}
   else if(mem.on&&mem.done&&mem.nextN){mem.n=mem.nextN;mem.nextN=0;try{localStorage.setItem(MEM_KEY,String(mem.n))}catch(e){}paintMemLv();memStart()}};
-$('#party-home').onclick=()=>{closeParty();if(dots.on)openDotsList();else if(puz.on)openPuzList();else if(mem.on)memStart();else showHome()};
+$('#party-home').onclick=()=>{closeParty();if(sha.on)shaStart();else if(col.on)colStart();else if(dots.on)openDotsList();else if(puz.on)openPuzList();else if(mem.on)memStart();else showHome()};
 $('#party-save').onclick=savePicture;
 $('#party').addEventListener('pointerdown',e=>{if(e.target.id==='party')closeParty()});
 $('#finish').onclick=celebrate;
@@ -1392,7 +1428,7 @@ function puzFinish(){const d=puz.d,n=puz.n,tk=puz.token;puz.done=true;puz.glow=0
 function puzParty(d){let i;do{i=Math.floor(Math.random()*PRAISE.length)}while(i===lastPraise&&PRAISE.length>1);lastPraise=i;
   const c=newCanvas(440),x=c.getContext('2d');x.drawImage(puz.img,0,0,440,440);$('#party-img').src=c.toDataURL('image/jpeg',.88);
   const next=PUZ_LV[PUZ_LV.indexOf(puz.n)+1]||0,np=next?puzCount(next):0;
-  $('#party-t').textContent=PRAISE[i];$('#party-s').textContent=`Armaste las ${puzCount(puz.n)} piezas.`+(next?` ¿Pruebas con ${np}?`:'');setTimeout(()=>partyFx(d.obra?null:d.id));
+  $('#party-t').textContent=PRAISE[i];$('#party-s').textContent=tr(`Armaste las ${puzCount(puz.n)} piezas.`)+(next?tr(` ¿Pruebas con ${np}?`):'');setTimeout(()=>partyFx(d.obra?null:d.id));
   $('#party-more').textContent=next?`Probar con ${np} piezas`:'Ver mi rompecabezas';$('#party-save').hidden=true;$('#party-home').textContent='Otro rompecabezas';
   puz.nextN=next;
   const p=$('#party');partyFocus=document.activeElement;p.hidden=false;
@@ -1441,12 +1477,14 @@ const stkKeyOf=k=>{const m=/^puz-(.+)-[1234]$/.exec(k);return m?m[1]:k};
   /* primera vez con stickers: lo que ya hizo cuenta como ganado (y sale como nuevo en el álbum) */
   else Object.keys(state.done).forEach(k=>stk.a.add(stkKeyOf(k)))})();
 function stkStore(){try{localStorage.setItem(STK_KEY,JSON.stringify({a:[...stk.a],v:[...stk.v]}))}catch(e){}}
-function stkEarned(key){if(/^(puntos|mem)-/.test(key))return!!state.done[key];
+function stkEarned(key){if(/^(puntos|mem|sha|col)-/.test(key))return!!state.done[key];
   return!!(state.done[key]||[1,2,3,4].some(n=>state.done[`puz-${key}-${n}`]))}
 function stkItems(){const out=[];
   DRAWINGS.filter(d=>!d.custom&&!/^(letra|num)-/.test(d.id)).forEach(d=>out.push({key:d.id,d,name:d.name,cat:d.cat}));
   DOT_FIGS.forEach(f=>out.push({key:'puntos-'+f.id,f,name:f.name,cat:'puntos'}));
   MEM_LV.forEach(n=>out.push({key:'mem-'+n,n,name:`Memoria de ${n} parejas`,cat:'trofeos'}));
+  [3,4,6].forEach(n=>out.push({key:'sha-'+n,n,name:`Sombras de ${n} figuras`,cat:'trofeos'}));
+  [3,4,6].forEach(n=>out.push({key:'col-'+n,n,name:`Colores con ${n} dibujos`,cat:'trofeos'}));
   return out}
 const stkCache={};
 function stkSrc(key){if(stkCache[key])return stkCache[key];
@@ -1454,15 +1492,17 @@ function stkSrc(key){if(stkCache[key])return stkCache[key];
     const c=newCanvas(240),x=c.getContext('2d'),s=240/400*.84;x.setTransform(s,0,0,s,240*.08,240*.08);x.lineJoin=x.lineCap='round';
     x.save();x.strokeStyle='#FFFFFF';x.lineWidth=44;figPath(x,f);x.stroke();x.fillStyle='#FFFFFF';x.fill();x.restore();drawFigure(x,f,1);
     return stkCache[key]=c.toDataURL('image/png')}
-  if(key.startsWith('mem-')){const n=+key.slice(4),c=newCanvas(240),x=c.getContext('2d'),col={4:'#2BB3A3',6:'#2F6FD6',8:'#9B6BD6'}[n]||'#2BB3A3';
+  const MED={mem:['pares','#E8424C',{4:'#2BB3A3',6:'#2F6FD6',8:'#9B6BD6'}],sha:['sombras','#2F9E5B',{3:'#FFD23F',4:'#FF8A3D',6:'#9B6BD6'}],col:['colores','#E8424C',{3:'#6CC24A',4:'#2F6FD6',6:'#FF8FB8'}]};
+  const mg=MED[key.split('-')[0]];
+  if(mg){const n=+key.split('-')[1],c=newCanvas(240),x=c.getContext('2d'),col=mg[2][n]||'#2BB3A3';
     x.lineJoin='round';x.lineWidth=8;x.strokeStyle='#FFFFFF';
     const rib=(dx,fill)=>{x.beginPath();x.moveTo(120+dx*.2,120);x.lineTo(120+dx,226);x.lineTo(120+dx*.55,208);x.lineTo(120+dx*.1,232);x.lineTo(120-dx*.15,128);x.closePath();x.fillStyle=fill;x.fill();x.lineWidth=12;x.stroke();x.lineWidth=4;x.strokeStyle='#26235C';x.stroke();x.strokeStyle='#FFFFFF'};
-    rib(-62,'#E8424C');rib(62,col);
+    rib(-62,mg[1]);rib(62,col);
     x.beginPath();x.arc(120,100,86,0,Math.PI*2);x.fillStyle='#FFFFFF';x.fill();
     x.beginPath();x.arc(120,100,74,0,Math.PI*2);x.fillStyle='#FFD23F';x.fill();x.lineWidth=5;x.strokeStyle='#26235C';x.stroke();
     x.beginPath();x.arc(120,100,58,0,Math.PI*2);x.strokeStyle='rgba(38,35,92,.35)';x.lineWidth=3;x.stroke();
     x.fillStyle='#26235C';x.textAlign='center';x.textBaseline='middle';x.font='64px "Lilita One", Nunito, system-ui, sans-serif';x.fillText(String(n),120,92);
-    x.font='900 20px Nunito, system-ui, sans-serif';x.fillText('pares',120,132);
+    x.font='900 20px Nunito, system-ui, sans-serif';x.fillText(tr(mg[0]),120,132);
     return stkCache[key]=c.toDataURL('image/png')}
   return'dibujos/sticker/'+key+'.webp'}
 function stkNew(){let k=0;stk.a.forEach(a=>{if(!stk.v.has(a))k++});return k}
@@ -1476,7 +1516,7 @@ function partyFx(key){const im=$('#party-img');im.classList.remove('alive');void
   if(!key||stk.a.has(key)||!stkEarned(key))return;
   stk.a.add(key);stkStore();paintStkCard();
   $('#party-stk-img').src=stkSrc(key);box.hidden=false;
-  $('#party-s').textContent+=' ¡Y ganaste un sticker!';
+  $('#party-s').textContent=tr($('#party-s').textContent)+tr(' ¡Y ganaste un sticker!');
   setTimeout(()=>{box.classList.add('in');sfx('sello')},1000)}
 const albEl=$('#alb');let albOn=false;
 function openAlbum(){$('#home').hidden=true;$('#editor').hidden=true;albEl.hidden=false;albOn=true;renderAlbum();say('Mis stickers')}
@@ -1557,7 +1597,144 @@ function memFinish(){const n=mem.n,tk=mem.token;mem.done=true;state.done['mem-'+
 $('#go-mem').onclick=openMem;$('#mem-back').onclick=memBack;
 document.querySelectorAll('#mem-lv button').forEach(b=>b.onclick=()=>{const n=+b.dataset.n;if(n===mem.n&&!mem.done&&mem.tries)return;mem.n=n;
   try{localStorage.setItem(MEM_KEY,String(n))}catch(e){}paintMemLv();sfx('pop');memStart()});
-if(/[?&]prueba\b/.test(location.search))Object.assign(window.__t||(window.__t={}),{mem,stk,popStop,popState:()=>popOn});
+if(/[?&]prueba\b/.test(location.search))Object.assign(window.__t||(window.__t={}),{mem,stk,tr,LANG,popStop,popState:()=>popOn});
+
+/* ---------- sombras ---------- */
+const SHA_KEY='pinta-y-brilla-sha',SHA_LV=[3,4,6],shaEl=$('#sha'),shaStage=$('#sha-stage'),shaBoard=$('#sha-board'),shaSlots=$('#sha-slots'),shaTray=$('#sha-tray');
+const sha={on:false,n:3,items:[],placed:0,done:false,nextN:0,token:0,drag:null};
+try{const v=+localStorage.getItem(SHA_KEY);if(SHA_LV.includes(v))sha.n=v}catch(e){}
+function shaShuffle(a){for(let k=a.length-1;k>0;k--){const r=Math.floor(Math.random()*(k+1));[a[k],a[r]]=[a[r],a[k]]}return a}
+function paintShaLv(){document.querySelectorAll('#sha-lv button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.n===sha.n))}
+function openSha(){$('#home').hidden=true;$('#editor').hidden=true;shaEl.hidden=false;sha.on=true;paintShaLv();shaStart();say('Sombras. ¿De quién es cada sombra?')}
+function leaveSha(){sha.on=false;sha.token++;sha.drag=null;popStop();stopVoice();shaEl.hidden=true;$('#home').hidden=false;paintStkCard()}
+function shaBack(){if(!$('#party').hidden){closeParty();return}if(popOn){popStop();return}leaveSha()}
+function shaStart(){popStop();const tk=++sha.token,n=sha.n;sha.drag=null;
+  const pool=puzList().filter(d=>!isLocked(d));
+  shaSlots.textContent='';shaTray.textContent='';sha.items=[];
+  if(pool.length<n){$('#sha-hint').textContent=loadState==='loading'?'Preparando…':'No se pudieron cargar los dibujos';return}
+  const pick=shaShuffle(pool).slice(0,n);let order=pick.map((d,k)=>k);
+  for(let t=0;t<8;t++){shaShuffle(order);if(order.some((v,k)=>v!==k))break}
+  Object.assign(sha,{placed:0,done:false,nextN:0});
+  const items=pick.map(d=>({d,placed:false,tx:0,ty:0}));
+  items.forEach(it=>{const sl=mk('div','sha-slot'),im=mk('img','sha-sil');im.alt='';im.decoding='async';im.src='dibujos/sticker/'+it.d.id+'.webp';sl.append(im);it.slot=sl;shaSlots.append(sl)});
+  order.forEach(k=>{const it=items[k],cell=mk('div','sha-cell'),pc=mk('button','sha-pc'),im=mk('img');im.alt='';im.decoding='async';im.draggable=false;im.src='dibujos/sticker/'+it.d.id+'.webp';
+    pc.setAttribute('aria-label',it.d.name);pc.append(im);cell.append(pc);it.cell=cell;it.pc=pc;it.img=im;shaTray.append(cell);
+    pc.addEventListener('pointerdown',e=>shaDown(it,e));pc.addEventListener('pointermove',e=>shaMove(it,e));
+    pc.addEventListener('pointerup',e=>shaUp(it,e,false));pc.addEventListener('pointercancel',e=>shaUp(it,e,true));
+    pc.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();sfx('pop');say(it.d.say||it.d.name)}})});
+  sha.items=items;shaSize();shaProg();$('#sha-hint').textContent='Arrastra cada dibujo a su sombra'}
+function shaProg(){const p=$('#sha-prog');p.hidden=false;p.textContent=`${sha.placed} / ${sha.n}`}
+function shaSize(){if(!sha.on||!sha.items.length)return;const W=shaStage.clientWidth-28,H=shaStage.clientHeight-48,N=sha.items.length,gap=12,sep=22;
+  const fit=c=>{const r=Math.ceil(N/c);return Math.min(190,(W-gap*(c-1))/c,(H-sep-2*gap*(r-1))/(2*r))};
+  let best=0,bc=1;for(let c=1;c<=N;c++)best=Math.max(best,fit(c));
+  /* menos filas si el tamaño casi no cambia: las sombras arriba y los dibujos abajo se leen mejor */
+  for(let c=N;c>=1;c--)if(fit(c)>=best*.6){bc=c;break}
+  const s=Math.max(64,Math.floor(fit(bc)));shaBoard.style.setProperty('--s',s+'px');shaBoard.style.setProperty('--c',bc);
+  requestAnimationFrame(()=>sha.items.forEach(it=>{if(it.placed)shaPlace(it,false)}))}
+new ResizeObserver(shaSize).observe(shaStage);
+function shaCtr(el){const r=el.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2]}
+function shaPlace(it,anim){const[sx,sy]=shaCtr(it.slot),[cx,cy]=shaCtr(it.cell);it.tx=sx-cx;it.ty=sy-cy;
+  it.pc.style.transition=anim&&!reduceMotion()?'':'none';it.pc.style.transform=`translate(${it.tx}px,${it.ty}px)`}
+function shaDown(it,e){if(sha.done||it.placed||sha.drag||e.button>0)return;e.preventDefault();
+  try{it.pc.setPointerCapture(e.pointerId)}catch(_){}
+  sha.drag={it,id:e.pointerId,sx:e.clientX,sy:e.clientY,moved:false};it.pc.classList.add('drag');it.pc.style.transition='none'}
+function shaMove(it,e){const g=sha.drag;if(!g||g.it!==it||e.pointerId!==g.id)return;const dx=e.clientX-g.sx,dy=e.clientY-g.sy;
+  if(Math.abs(dx)+Math.abs(dy)>8)g.moved=true;it.pc.style.transform=`translate(${dx}px,${dy}px) scale(1.08)`}
+function shaUp(it,e,cancel){const g=sha.drag;if(!g||g.it!==it||e.pointerId!==g.id)return;sha.drag=null;
+  const pc=it.pc;pc.classList.remove('drag');pc.style.transition='';
+  try{pc.releasePointerCapture(e.pointerId)}catch(_){}
+  const back=()=>{pc.style.transform=''};
+  if(cancel){back();return}
+  if(!g.moved){back();sfx('pop');say(it.d.say||it.d.name);return}
+  const[px,py]=shaCtr(pc),[sx,sy]=shaCtr(it.slot),s=pc.offsetWidth;
+  if(Math.hypot(px-sx,py-sy)<s*.45){
+    it.placed=true;sha.placed++;pc.classList.add('in');it.slot.classList.add('filled');shaPlace(it,true);shaProg();
+    if(!reduceMotion()){pc.classList.add('pop');setTimeout(()=>pc.classList.remove('pop'),500)}
+    sfx('ok');say(it.d.say||it.d.name);
+    if(sha.placed===sha.n)shaFinish();else $('#sha-hint').textContent=`¡Muy bien! Es ${it.d.name}`}
+  else{back();sfx('error');$('#sha-hint').textContent='Busca la sombra que tiene su misma forma'}}
+function shaFinish(){const n=sha.n,tk=sha.token;sha.done=true;state.done['sha-'+n]=true;save();
+  $('#sha-hint').textContent=`¡Juntaste las ${n} sombras!`;
+  setTimeout(()=>{if(tk!==sha.token||!sha.on)return;$('#sha-hint').textContent='¡Revienta los globos!';popSurprise(()=>{if(tk!==sha.token||!sha.on)return;
+    let i;do{i=Math.floor(Math.random()*PRAISE.length)}while(i===lastPraise&&PRAISE.length>1);lastPraise=i;
+    const c=newCanvas(440),x=c.getContext('2d');x.fillStyle='#FFF6E3';x.fillRect(0,0,440,440);
+    const cols=n<=4?2:3,rows=Math.ceil(n/cols),cw=420/cols,ch=420/rows,sz=Math.min(cw,ch)-12;
+    sha.items.forEach((it,k)=>{try{x.drawImage(it.img,10+(k%cols)*cw+(cw-sz)/2,10+Math.floor(k/cols)*ch+(ch-sz)/2,sz,sz)}catch(e){}});
+    $('#party-img').src=c.toDataURL('image/jpeg',.88);
+    const next=SHA_LV[SHA_LV.indexOf(n)+1]||0;sha.nextN=next;
+    $('#party-t').textContent=PRAISE[i];$('#party-s').textContent=`Juntaste las ${n} figuras con su sombra.`;
+    $('#party-more').textContent=next?`Probar con ${next} figuras`:'Jugar otra vez';$('#party-save').hidden=true;$('#party-home').textContent='Otra ronda';
+    const p=$('#party');partyFocus=document.activeElement;p.hidden=false;
+    const pf=$('#party-fx');pf.width=Math.round(innerWidth*dpr);pf.height=Math.round(innerHeight*dpr);
+    confetti(pf,200);tada();partyFx('sha-'+n);setTimeout(()=>say(PRAISE[i]),900);$('#party-more').focus()})},1100)}
+function shaPartyMore(){if(sha.nextN){sha.n=sha.nextN;sha.nextN=0;try{localStorage.setItem(SHA_KEY,String(sha.n))}catch(e){}paintShaLv()}shaStart()}
+$('#go-sha').onclick=openSha;$('#sha-back').onclick=shaBack;
+document.querySelectorAll('#sha-lv button').forEach(b=>b.onclick=()=>{const n=+b.dataset.n;if(n===sha.n&&!sha.done&&!sha.placed)return;sha.n=n;
+  try{localStorage.setItem(SHA_KEY,String(n))}catch(e){}paintShaLv();sfx('pop');shaStart()});
+
+/* ---------- colores ---------- */
+const COL_OF={"gato":"naranja","perro":"marron","pez":"naranja","dino":"verde","tortuga":"verde","buho":"marron","mariquita":"rojo","llama":"amarillo","auto":"rojo","barco":"azul","tren":"azul","flor":"rosado","casita":"rojo","sol":"amarillo","helado":"rosado","cupcake":"rosado","torta":"rosado","paleta":"rojo","calabaza":"naranja","gatito-bruja":"morado","murcielago":"morado"};
+const COL_KEY='pinta-y-brilla-col',COL_LV=[3,4,6],COL_Q=5;
+const COL_HEX={rojo:'#E8424C',naranja:'#FF8A3D',amarillo:'#FFD23F',verde:'#6CC24A',azul:'#2F6FD6',morado:'#9B6BD6',rosado:'#FF8FB8',marron:'#8B5A3C'};
+const COL_NAME={rojo:'rojo',naranja:'naranja',amarillo:'amarillo',verde:'verde',azul:'azul',morado:'morado',rosado:'rosado',marron:'marrón'};
+const colEl=$('#col'),colStage=$('#col-stage'),colGrid=$('#col-grid'),colTop=$('#col-top');
+const col={on:false,n:3,k:3,q:0,cur:null,lock:false,done:false,nextN:0,token:0,got:[],usedC:[],usedD:[],byC:{}};
+try{const v=+localStorage.getItem(COL_KEY);if(COL_LV.includes(v))col.n=v}catch(e){}
+function paintColLv(){document.querySelectorAll('#col-lv button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.n===col.n))}
+function openCol(){$('#home').hidden=true;$('#editor').hidden=true;colEl.hidden=false;col.on=true;paintColLv();colStart();say('Colores. Toca el color que te pido')}
+function leaveCol(){col.on=false;col.token++;popStop();stopVoice();colEl.hidden=true;$('#home').hidden=false;paintStkCard()}
+function colBack(){if(!$('#party').hidden){closeParty();return}if(popOn){popStop();return}leaveCol()}
+function colProg(){const p=$('#col-prog');p.hidden=false;p.textContent=`${Math.min(col.q,COL_Q)} / ${COL_Q}`}
+function colStart(){popStop();const tk=++col.token;
+  const pool=puzList().filter(d=>!isLocked(d)&&COL_HEX[COL_OF[d.id]]),byC={};
+  pool.forEach(d=>(byC[COL_OF[d.id]]||(byC[COL_OF[d.id]]=[])).push(d));
+  const colors=Object.keys(byC);colGrid.textContent='';
+  $('#col-stars').textContent='';
+  if(colors.length<2){$('#col-say').textContent='';$('#col-hint').textContent=loadState==='loading'?'Preparando…':'No se pudieron cargar los dibujos';return}
+  Object.assign(col,{k:Math.min(col.n,colors.length),q:0,cur:null,lock:false,done:false,nextN:0,got:[],usedC:[],usedD:[],byC});
+  for(let k=0;k<COL_Q;k++){const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('viewBox','0 0 100 100');s.setAttribute('class','col-star');
+    const p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d','M50 6l12.6 25.6 28.2 4.1-20.4 19.9 4.8 28.1L50 70.4 24.8 83.7l4.8-28.1L9.2 35.7l28.2-4.1Z');s.append(p);$('#col-stars').append(s)}
+  colProg();colAsk(tk)}
+function colAsk(tk){if(tk!==col.token||!col.on)return;const colors=Object.keys(col.byC);
+  let cand=colors.filter(c=>!col.usedC.includes(c));if(!cand.length)cand=colors;
+  const target=cand[Math.floor(Math.random()*cand.length)];col.usedC.push(target);
+  const others=shaShuffle(colors.filter(c=>c!==target)).slice(0,col.k-1),list=[];
+  [target,...others].forEach(c=>{let arr=col.byC[c].filter(d=>!col.usedD.includes(d.id));if(!arr.length)arr=col.byC[c];
+    const d=arr[Math.floor(Math.random()*arr.length)];col.usedD.push(d.id);list.push({d,c})});
+  shaShuffle(list);col.cur={target,list};col.lock=false;colGrid.textContent='';
+  list.forEach(it=>{const b=mk('button','col-it'),im=mk('img');im.alt='';im.decoding='async';im.draggable=false;im.src='dibujos/sticker/'+it.d.id+'.webp';
+    b.setAttribute('aria-label',it.d.name);b.append(im);b.onclick=()=>colTap(it,b);it.el=b;it.img=im;colGrid.append(b)});
+  const nm=COL_NAME[target];$('#col-drop').style.setProperty('--c',COL_HEX[target]);$('#col-say').textContent=`Toca algo ${nm}`;
+  $('#col-hint').textContent=`Toca algo ${nm}`;colSize();say(`Toca algo ${nm}`)}
+function colSize(){if(!col.on||!col.cur)return;const W=colStage.clientWidth-8,H=colStage.clientHeight-colTop.offsetHeight-24,N=col.cur.list.length,gap=12;
+  let best=0,bc=1;for(let c=1;c<=N;c++){const r=Math.ceil(N/c),s=Math.min((W-gap*(c-1))/c,(H-gap*(r-1))/r);if(s>=best){best=s;bc=c}}
+  const s=Math.max(64,Math.floor(Math.min(best,220)));colGrid.style.gridTemplateColumns=`repeat(${bc},${s}px)`;colGrid.style.setProperty('--cs',s+'px')}
+new ResizeObserver(colSize).observe(colStage);
+function colTap(it,b){if(col.lock||col.done||!col.cur)return;const tk=col.token,t=col.cur.target,nm=COL_NAME[t];
+  if(it.c===t){col.lock=true;sfx('ok');if(!reduceMotion())b.classList.add('jump');
+    col.got.push({img:it.img,c:t});col.q++;colProg();const st=$('#col-stars').children[col.q-1];if(st)st.classList.add('on');
+    const msg=`¡Sí! ${it.d.name} es ${nm}`;$('#col-hint').textContent=msg;say(msg);
+    if(col.q>=COL_Q)colFinish();else setTimeout(()=>colAsk(tk),2000)}
+  else{sfx('error');if(!reduceMotion()){b.classList.remove('shake');void b.offsetWidth;b.classList.add('shake')}
+    const msg=`Ese es ${COL_NAME[it.c]}. Busca algo ${nm}`;$('#col-hint').textContent=msg;say(msg)}}
+function colFinish(){const K=col.k,tk=col.token;col.done=true;state.done['col-'+K]=true;save();
+  setTimeout(()=>{if(tk!==col.token||!col.on)return;$('#col-hint').textContent='¡Revienta los globos!';popSurprise(()=>{if(tk!==col.token||!col.on)return;
+    let i;do{i=Math.floor(Math.random()*PRAISE.length)}while(i===lastPraise&&PRAISE.length>1);lastPraise=i;
+    const c=newCanvas(440),x=c.getContext('2d');x.fillStyle='#FFF6E3';x.fillRect(0,0,440,440);
+    col.got.slice(0,6).forEach((g,k)=>{const cx=75+(k%3)*145,cy=120+Math.floor(k/3)*190;x.fillStyle=COL_HEX[g.c];x.beginPath();x.arc(cx,cy,64,0,Math.PI*2);x.fill();x.lineWidth=5;x.strokeStyle='#26235C';x.stroke();
+      try{x.drawImage(g.img,cx-48,cy-48,96,96)}catch(e){}});
+    $('#party-img').src=c.toDataURL('image/jpeg',.88);
+    const next=COL_LV[COL_LV.indexOf(col.n)+1]||0;col.nextN=next;
+    $('#party-t').textContent=PRAISE[i];$('#party-s').textContent=`Encontraste los ${COL_Q} colores.`;
+    $('#party-more').textContent=next?`Probar con ${next} dibujos`:'Jugar otra vez';$('#party-save').hidden=true;$('#party-home').textContent='Otra ronda';
+    const p=$('#party');partyFocus=document.activeElement;p.hidden=false;
+    const pf=$('#party-fx');pf.width=Math.round(innerWidth*dpr);pf.height=Math.round(innerHeight*dpr);
+    confetti(pf,200);tada();partyFx('col-'+K);setTimeout(()=>say(PRAISE[i]),900);$('#party-more').focus()})},1500)}
+function colPartyMore(){if(col.nextN){col.n=col.nextN;col.nextN=0;try{localStorage.setItem(COL_KEY,String(col.n))}catch(e){}paintColLv()}colStart()}
+$('#go-col').onclick=openCol;$('#col-back').onclick=colBack;
+document.querySelectorAll('#col-lv button').forEach(b=>b.onclick=()=>{const n=+b.dataset.n;if(n===col.n&&!col.done&&!col.q)return;col.n=n;
+  try{localStorage.setItem(COL_KEY,String(n))}catch(e){}paintColLv();sfx('pop');colStart()});
+if(/[?&]prueba\b/.test(location.search))Object.assign(window.__t||(window.__t={}),{sha,col});
 
 /* ---------- efectos ---------- */
 let toastT;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2200)}

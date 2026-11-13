@@ -112,7 +112,7 @@ h1{text-wrap:balance;font-family:var(--display);font-size:clamp(1.8rem,5vw,2.4re
 #dcv{display:block;width:100%;height:100%;touch-action:none}
 .dhint{text-align:center;min-height:1.5em}
 #dots .etitle b,#dots .eprog{display:inline-block}
-#puz .etitle b,#puz .eprog,#mem .etitle b,#mem .eprog,#alb .etitle b,#alb .eprog,#sha .etitle b,#sha .eprog,#col .etitle b,#col .eprog{display:inline-block}
+#puz .etitle b,#puz .eprog,#mem .etitle b,#mem .eprog,#alb .etitle b,#alb .eprog,#sha .etitle b,#sha .eprog,#col .etitle b,#col .eprog,#musica .etitle b,#musica .eprog,#lab .etitle b,#lab .eprog{display:inline-block}
 #mem-lv button{min-width:44px;font-variant-numeric:tabular-nums}
 .mgrid{display:grid;gap:10px;justify-content:center;align-content:center}
 .mcard{width:var(--cs,90px);height:var(--cs,90px);perspective:700px;border-radius:16px;touch-action:manipulation}
@@ -372,8 +372,8 @@ h1{text-wrap:balance;font-family:var(--display);font-size:clamp(1.8rem,5vw,2.4re
   .swatches .sw{flex:none;width:100%;max-width:44px}
   .ptoggle{display:none}
   .panel.compact .tools{display:grid}.panel.compact .opts{display:flex}
-  #puz,#dots,#mem,#alb,#sha,#col{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto}
-  #puz .dhint,#dots .dhint,#mem .dhint,#sha .dhint,#col .dhint{grid-column:1}
+  #puz,#dots,#mem,#alb,#sha,#col,#musica,#lab{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto}
+  #puz .dhint,#dots .dhint,#mem .dhint,#sha .dhint,#col .dhint,#musica .dhint,#lab .dhint{grid-column:1}
   .alist{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;align-items:start}
 }
 
@@ -428,3 +428,50 @@ h1{text-wrap:balance;font-family:var(--display);font-size:clamp(1.8rem,5vw,2.4re
 @media (min-width:700px){.quick{grid-template-columns:repeat(4,1fr)}}
   #sha,#col{grid-template-columns:minmax(0,1fr)}
 #sha-tray{background:rgba(38,35,92,.06)}
+/* ---------- música y laberinto ---------- */
+.t-mus{--t:#FF8A3D}.t-lab{--t:#2BB3A3}
+#musica .etitle b,#musica .eprog,#lab .etitle b{display:inline-block}
+@media (max-width:430px){#musica .etitle b{display:none}}
+#mus-mode button,#mus-lv button,#lab-lv button{min-width:64px;height:56px;font-size:.9rem}
+/* música */
+#mus-stage{place-items:stretch;padding:6px 4px 10px}
+.mus-wrap{display:grid;grid-template-rows:auto minmax(0,1fr);gap:10px;width:100%;height:100%;min-height:0;align-self:stretch}
+.mus-tools{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:center}
+.mus-tools[hidden]{display:none}
+.mus-again{display:flex;align-items:center;gap:8px;min-width:64px;min-height:64px;padding:0 18px;border-radius:20px;background:var(--surface);border:2.5px solid var(--edge);box-shadow:0 4px 0 var(--shadow);font-weight:800;font-size:.9rem;color:var(--ink);touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:transform .1s}
+.mus-again:active{transform:translateY(3px);box-shadow:0 1px 0 var(--shadow)}
+.mus-again svg{width:26px;height:26px;flex:0 0 auto}
+.mus-dots{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;max-width:220px}
+.mus-dots[hidden]{display:none}
+.mus-dot{width:18px;height:18px;border-radius:50%;border:2.5px solid var(--edge);background:var(--surface);transition:background-color .15s}
+.mus-dot.on{background:#FFD23F}
+.mus-tools{grid-row:1}.mus-bars{grid-row:2;display:flex;gap:clamp(6px,1.6vw,12px);align-items:stretch;min-height:0;width:100%;padding-top:4px}
+.mus-slot{position:relative;flex:1 1 0;min-width:0;display:flex;align-items:flex-end;justify-content:center;--h:calc(70% - var(--k)*4.5%);--w:calc(100% - var(--k)*5%)}
+.mus-bar{position:relative;width:100%;height:var(--h);min-height:64px;border-radius:20px;background:var(--c);border:2.5px solid var(--edge);
+  box-shadow:0 4px 0 var(--shadow),inset 0 6px 0 rgba(255,255,255,.38);touch-action:none;-webkit-tap-highlight-color:transparent;transform-origin:50% 100%;transition:filter .1s,box-shadow .1s,transform .1s}
+.mus-bar::before,.mus-bar::after{content:"";position:absolute;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:rgba(38,35,92,.35)}
+.mus-bar::before{top:12px}.mus-bar::after{bottom:12px}
+.mus-bar:active{transform:translateY(3px);box-shadow:0 1px 0 var(--shadow),inset 0 6px 0 rgba(255,255,255,.38)}
+.mus-bar.bounce{animation:musbounce .38s ease-out}
+.mus-bar.glow{filter:brightness(1.15) saturate(1.25);transform:translateY(-4px) scale(1.04);box-shadow:0 0 0 4px #fff,0 0 0 7px var(--c),0 6px 0 var(--shadow)}
+@keyframes musbounce{0%{transform:scaleY(1)}30%{transform:translateY(7px) scaleY(.93)}65%{transform:translateY(-4px) scaleY(1.03)}100%{transform:none}}
+.mus-pet{position:absolute;left:50%;bottom:var(--h);width:min(100%,88px,16vh);height:auto;margin-bottom:4px;opacity:0;pointer-events:none;-webkit-user-drag:none;transform:translateX(-50%);transition:opacity .15s}
+.mus-pet.on{opacity:1}
+.mus-pet.hop{animation:mushop .7s ease-out}
+@keyframes mushop{0%{transform:translate(-50%,0) scale(.6)}35%{transform:translate(-50%,-38%) scale(1.12)}65%{transform:translate(-50%,0) scale(.95)}82%{transform:translate(-50%,-10%)}100%{transform:translate(-50%,0)}}
+@media (orientation:portrait){
+  .mus-bars{flex-direction:column;gap:6px}
+  .mus-slot{flex:1 1 0;min-height:0;align-items:center;justify-content:flex-start}
+  .mus-bar{width:var(--w);height:100%;min-height:52px}
+  .mus-bar::before,.mus-bar::after{top:50%;bottom:auto;left:auto;margin:-6px 0 0}
+  .mus-bar::before{left:14px}.mus-bar::after{right:14px}
+  .mus-pet{left:min(calc(var(--w) + 4px),calc(100% - 44px));bottom:auto;top:50%;margin:0;width:auto;height:90%;max-width:20%;transform:translateY(-50%);object-fit:contain}
+  .mus-pet.hop{animation:mushopp .7s ease-out}
+  @keyframes mushopp{0%{transform:translateY(-50%) scale(.6)}35%{transform:translateY(-95%) scale(1.12)}65%{transform:translateY(-50%) scale(.95)}82%{transform:translateY(-60%)}100%{transform:translateY(-50%)}}
+}
+/* laberinto */
+.lab-cv{display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;filter:drop-shadow(0 4px 0 var(--shadow));max-width:100%;max-height:100%}
+.lab-cv:focus-visible{outline:3px solid var(--ink);outline-offset:4px;border-radius:20px}
+@media (prefers-reduced-motion: reduce){.mus-bar,.mus-bar.bounce,.mus-pet,.mus-pet.hop{animation:none;transition:none}}
+
+@media (min-width:700px){#musica,#lab{grid-template-columns:minmax(0,1fr)}}

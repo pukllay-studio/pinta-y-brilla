@@ -6,7 +6,7 @@ const newCanvas=(w,h=w)=>{const c=document.createElement('canvas');c.width=w;c.h
 const LANG_KEY='pinta-y-brilla-lang';
 const LANG=(()=>{let v=null;try{v=localStorage.getItem(LANG_KEY)}catch(e){}
   if(v==='es'||v==='en')return v;return /^es\b/i.test(navigator.language||'es')?'es':'en'})();
-const EN={"ui":{" ¡Y ganaste un sticker!":" And you earned a sticker!"," · necesita internet":" · needs internet"," ¿Pruebas con ${np}?":" Want to try ${np}?","${f.name}, ${f.p.length} puntos":"${f.name}, ${f.p.length} dots","${f.p.length} puntos":"${f.p.length} dots","${free||15} láminas gratis de ${total||30}. Con un solo pago desbloqueas todas y las que lleguen después.":"${free||15} free pages out of ${total||30}. With one payment, unlock them all, plus any that come later.","${got} de ${it.length}":"${got} of ${it.length}","${o.name}, bloqueado":"${o.name}, locked",", bloqueado":", locked","0 / ${f.p.length}":"0 / ${f.p.length}","1, 2, 3… ¿qué aparece?":"1, 2, 3… what will appear?","15 láminas gratis. Con un solo pago desbloqueas todas y las que lleguen después.":"15 free pages. With one payment, unlock them all, plus any that come later.","16 piezas":"16 pieces","2 piezas":"2 pieces","4 parejas":"4 pairs","4 piezas":"4 pieces","6 parejas":"6 pairs","8 parejas":"8 pairs","9 piezas":"9 pieces","<span>${ui.music?'Música: sí':'Música: no'}<\/span>":"<span>${ui.music?'Música: sí':'Música: no'}<\/span>","<span>${ui.sound?'Voz y sonidos: sí':'Voz y sonidos: no'}<\/span>":"<span>${ui.sound?'Voz y sonidos: sí':'Voz y sonidos: no'}<\/span>","Abriendo Google Play…":"Opening Google Play…","Agregar dibujo":"Add drawing","Arcoíris":"Rainbow","Arma el rompecabezas":"Build the puzzle","Arma las piezas":"Put the pieces together","Armaste las ${puzCount(puz.n)} piezas.":"You built all ${puzCount(puz.n)} pieces.","Arrastra cada pieza a su lugar":"Drag each piece to its place","Auto":"Car","Aún no agregaste dibujos. Toca \"Agregar dibujo\" y elige una imagen de líneas negras sobre fondo blanco.":"You haven't added any drawings yet. Tap \"Add drawing\" and choose an image with black lines on a white background.","Barco":"Boat","Borrar todo":"Erase all","Borrar todo el progreso":"Erase all progress","Básica":"Basic","Búho":"Owl","Calabaza":"Pumpkin","Cantidad de parejas":"Number of pairs","Cantidad de piezas":"Number of pieces","Carta ${k+1}":"Card ${k+1}","Casita":"Little house","Categorías":"Categories","Cerrar":"Close","Cohete":"Rocket","Colecciónalos":"Collect them all","Colorea, arma y juega":"Color, build, and play","Colorear":"Coloring","Colorear ":"Coloring ","Conejo":"Rabbit","Corazón":"Heart","Crayón":"Crayon","Crear números con mi coloreado":"Create numbers from my coloring","Créditos de las fotos":"Photo credits","Cupcake":"Cupcake","Desbloquear todo":"Unlock all","Desbloquear todo · ${priceText}":"Unlock all · ${priceText}","Deshacer":"Undo","Dibujo guardado":"Drawing saved","Dibujo libre":"Free drawing","Dibujo quitado":"Drawing removed","Dibujo sorpresa de ${f.p.length} puntos":"Surprise drawing with ${f.p.length} dots","Dinosaurio":"Dinosaur","Disponible en la app de Google Play":"Available on Google Play","Dona":"Donut","Elegir voz":"Choose voice","Elige cuántas piezas y luego un dibujo":"Choose how many pieces, then a drawing","Elige una voz":"Choose a voice","Elige uno y une los puntos en orden: 1, 2, 3…":"Pick one and connect the dots in order: 1, 2, 3…","Encontraste las ${n} parejas en ${mem.tries} intentos.":"You found all ${n} pairs in ${mem.tries} tries.","Encuentra las parejas":"Find the pairs","Esa imagen no parece un dibujo para colorear":"That image doesn't look like a coloring drawing","Esa imagen no se pudo abrir":"That image couldn't be opened","Esa no es. Prueba otra suma.":"That's not it. Try another sum.","Esa va en otro lugar. Mira la forma":"That one goes somewhere else. Look at the shape","Esa zona es el ${n}":"That area is ${n}","Ese es el ${i+1}. Busca el ${dots.next+1}":"That's ${i+1}. Find ${dots.next+1}","España":"Spain","Estados Unidos":"United States","Este dibujo aún no tiene números. Píntalo en \"Colorear\" con la cubeta y luego crea los números desde aquí.":"This drawing doesn't have numbers yet. Color it in \"Coloring\" with the bucket, then create the numbers from here.","Este navegador no tiene voces en español.":"This browser doesn't have English voices.","Fantasma":"Ghost","Flor":"Flower","Gana la memoria de ${o.n} parejas":"Win the ${o.n}-pair memory game","Ganaste una estrella por ${ed.d.name}.":"You earned a star for ${ed.d.name}.","Gatito con sombrero":"Kitten with hat","Gato":"Cat","Globo":"Balloon","Globos: tócalos para reventarlos":"Balloons: tap them to pop them","Gracias por apoyar a Pukllay Studio. Ya tienes todas las láminas.":"Thanks for supporting Pukllay Studio. You now have all the pages.","Grosor ":"Thickness ","Guardar imagen":"Save image","Guardar o compartir el dibujo":"Save or share the drawing","Helado":"Ice Cream","Hoja en blanco":"Blank page","Hoja limpia":"Clean page","Hoja para colorear":"Coloring page","Hongo":"Mushroom","Jugar otra vez":"Play again","La imagen es demasiado grande":"The image is too large","La imagen es demasiado grande (máximo 8000 px)":"The image is too large (maximum 8000 px)","La imagen es muy pequeña (mínimo 200 px)":"The image is too small (minimum 200 px)","La imagen pesa más de 10 MB":"The image is over 10 MB","La más natural · funciona sin internet":"The most natural · works offline","Las fotos del rompecabezas y la memoria vienen de Wikimedia Commons, con licencias libres para uso comercial.":"The puzzle and memory photos come from Wikimedia Commons, under free licenses for commercial use.","Latinoamérica":"Latin America","Letras y números":"Letters & numbers","Listo":"Done","Listo. Ahora a pintar por números":"Done. Now let's paint by numbers","Listo: ${seeds.length} zonas con ${pal.length} colores":"Done: ${seeds.length} areas with ${pal.length} colors","Listo: el progreso quedó en cero":"Done: progress has been reset to zero","Llama":"Llama","Los dibujos que pintaste, convertidos en rompecabezas":"The drawings you colored, turned into puzzles","Lápiz":"Pencil","Mariquita":"Ladybug","Memoria":"Memory","Memoria de ${n} parejas":"${n}-pair memory game","Memoria. Encuentra las parejas":"Memory. Find the pairs","Mi dibujo":"My drawing","Mi dibujo ":"My drawing ","Mis dibujos":"My drawings","Mis obras":"My artwork","Mis stickers":"My stickers","Mostrar pinceles y opciones":"Show brushes and options","Murciélago":"Bat","Muy bien. Ahora el ${dots.next+1}":"Great. Now ${dots.next+1}","Más opciones":"More options","México":"Mexico","Música de fondo":"Background music","No encontramos una compra con esta cuenta de Google":"We couldn't find a purchase on this Google account","No hay dibujos en esta categoría.":"There are no drawings in this category.","No hay nada que deshacer":"There's nothing to undo","No queda espacio para guardar. Borra algún dibujo.":"No space left to save. Delete a drawing.","No se pudieron cargar los dibujos":"Couldn't load the drawings","No se pudo abrir este dibujo":"Couldn't open this drawing","No se pudo abrir. Intenta otra vez":"Couldn't open it. Try again","No se pudo completar la compra. Inténtalo otra vez.":"The purchase couldn't be completed. Try again.","No se pudo guardar la imagen":"Couldn't save the image","No son iguales. ¡Intenta otra vez!":"They don't match. Try again!","Número ${n}, ${name}":"Number ${n}, ${name}","Números":"Numbers","Ocultar pinceles y opciones":"Hide brushes and options","Otro dibujo":"Another drawing","Otro rompecabezas":"Another puzzle","PNG o JPG de líneas negras sobre blanco":"PNG or JPG with black lines on white","Paleta":"Palette","Para entrar, toca el resultado:":"To enter, tap the answer:","Para mamá y papá":"For moms and dads","Perro":"Dog","Perú":"Peru","Pez":"Fish","Pide a un adulto que lo desbloquee":"Ask a grown-up to unlock it","Pide ayuda a un adulto para desbloquear más dibujos":"Ask a grown-up to help unlock more drawings","Pinta al menos dos zonas con la cubeta":"Color at least two areas with the bucket","Pinta el dibujo de ${o.name} o arma su rompecabezas para ganarlo":"Color the ${o.name} drawing or build its puzzle to win it","Pinta las zonas con el <b>${ui.num}<\/b> · ${rq2.filter(i=>f[i]).length} de ${rq2.length}":"Color the areas with <b>${ui.num}<\/b> · ${rq2.filter(i=>f[i]).length} of ${rq2.length}","Pista: ver la imagen":"Hint: see the picture","Pizarra neón":"Neon board","Plumón":"Marker","Por números":"By numbers","Preparando…":"Getting ready…","Primero pinta un poquito":"First, color a little","Probar con ${next} parejas":"Try ${next} pairs","Probar con ${np} piezas":"Try ${np} pieces","Pukllay":"Pukllay","Pukllay no tiene anuncios y no recoge ningún dato. Los pagos los procesa Google Play. Los dibujos se guardan solo en este equipo.":"Pukllay has no ads and collects no data. Payments are processed by Google Play. Drawings are saved only on this device.","Pulpo":"Octopus","Quitar ":"Remove ","Rehacer números":"Redo numbers","Rompecabezas":"Puzzle","Rompecabezas de ${d.name}, ${puzCount(puz.n)} piezas":"${d.name} puzzle, ${puzCount(puz.n)} pieces","Rompecabezas: arrastra las piezas al tablero":"Puzzle: drag the pieces to the board","Se agregó, pero no se podrá guardar al cerrar":"Added, but it can't be saved when closed","Seguir pintando":"Keep coloring","Seguir pintando ":"Keep coloring ","Sello ":"Stamp ","Sol":"Sun","Sticker escondido: ${o.name}":"Hidden sticker: ${o.name}","Sticker nuevo":"New sticker","Sólido":"Solid","Terminaste ${ed.d.name} otra vez.":"You finished ${ed.d.name} again.","Terminé":"I'm done","Tiene demasiadas partes oscuras. Usa líneas negras sobre fondo blanco.":"It has too many dark areas. Use black lines on a white background.","Tipo de pincel":"Brush type","Toca dos cartas para encontrar las parejas":"Tap two cards to find the pairs","Toca el 1 para empezar":"Tap 1 to start","Toca el uno para empezar":"Tap the one to start","Toca otra vez para borrar":"Tap again to erase","Toca una voz para escucharla. Las marcadas como \"Natural\" suenan menos robóticas.":"Tap a voice to hear it. Voices marked \"Natural\" sound less robotic.","Todas las láminas":"All pages","Todo desbloqueado":"Everything unlocked","Torta":"Cake","Tortuga":"Turtle","Trazos que brillan":"Glowing strokes","Tren":"Train","Tu dibujo está listo.":"Your drawing is ready.","Tu dibujo terminado":"Your finished drawing","Tu pago está pendiente. Se desbloqueará cuando Google lo confirme.":"Your payment is pending. It will unlock once Google confirms it.","Une los puntos de la figura ${o.name} para ganarlo":"Connect the dots of the ${o.name} figure to win it","Une los puntos en orden":"Connect the dots in order","Unir puntos":"Connect the dots","Uniste los ${f.p.length} puntos y apareció ${f.say}.":"You connected the ${f.p.length} dots and ${f.say} appeared.","Usa una imagen PNG, JPG o WebP":"Use a PNG, JPG, or WebP image","Vehículos":"Vehicles","Ver la lámina completa":"See the full page","Ver las cartas":"See the cards","Ver mi dibujo":"See my drawing","Ver mi rompecabezas":"See my puzzle","Ver todo":"See all","Versión 1.0.0":"Version 1.0.0","Volver":"Back","Volver a los dibujos":"Back to drawings","Voz activada":"Voice on","Voz grabada":"Recorded voice","Voz y sonidos":"Voice & sounds","Ya estaba desbloqueado":"Already unlocked","Ya lo compré: restaurar":"I already bought it: restore","Zona para padres":"Parents' area","amarillo neón":"neon yellow","azul neón":"neon blue","cian neón":"neon cyan","coral neón":"neon coral","hsl(${(s.seed+i*5)%360} 92% ${s.g?62:56}%)":"hsl(${(s.seed+i*5)%360} 92% ${s.g?62:56}%)","lima neón":"neon lime","limón":"lemon","marrón":"brown","naranja neón":"neon orange","rosa neón":"neon pink","translate(${zoom.x}px,${zoom.y}px) scale(${zoom.s})":"translate(${zoom.x}px,${zoom.y}px) scale(${zoom.s})","un corazón":"a heart","un árbol":"a tree","verde neón":"neon green","violeta neón":"neon violet","¡Armaste ${d.say||d.name}!":"You made ${d.say||d.name}!","¡Bien! Faltan ${left}":"Nice! ${left} to go","¡Compra restaurada!":"Purchase restored!","¡Encontraste las ${n} parejas!":"You found all ${n} pairs!","¡Eres un gran artista!":"You're a great artist!","¡Es ${f.say}!":"It's ${f.say}!","¡Excelente trabajo!":"Excellent work!","¡Falta una!":"One left!","¡Hola! Vamos a pintar juntos":"Hi! Let's color together","¡Listo! Todo desbloqueado":"Done! Everything unlocked","¡Lo hiciste genial!":"You did awesome!","¡Mira bien dónde está cada uno!":"Look carefully at where each one goes!","¡Muy bien!":"Great job!","¡Muy bien! Es ${d.say||d.name}":"Great! It's ${d.say||d.name}","¡Muy bien, campeón del color!":"Great job, color champion!","¡Nuevo!":"New!","¡Pareja de ${c.d.name}!":"Pair of ${c.d.name}!","¡Qué colores tan bonitos!":"What pretty colors!","¡Revienta los globos!":"Pop the balloons!","¡Te quedó precioso!":"It looks beautiful!","¡Terminé!":"I finished!","¡Wow, qué obra de arte!":"Wow, what a work of art!","¿Quitar?":"Remove?","¿Qué será?":"What could it be?","¿Seguro? Toca otra vez":"Are you sure? Tap again","Árbol":"Tree","Todos":"All","Animales":"Animals","Naturaleza":"Nature","Dulces":"Sweets","Halloween":"Halloween","Cometa":"Kite","una cometa":"a kite","Casa":"House","una casa":"a house","un helado":"an ice cream","Gatito":"Kitten","un gatito":"a kitten","un barco":"a boat","Estrella":"Star","una estrella":"a star","un cohete":"a rocket","un pez":"a fish","pares":"pairs","sombras":"shadows","colores":"colors","Sombras":"Shadows","Colores":"Colors","¿De quién es?":"Whose is it?","Toca el color":"Tap the color","Cantidad de figuras":"Number of shapes","Cantidad de dibujos":"Number of pictures","${n} figuras":"${n} shapes","${n} dibujos":"${n} pictures","Sombras. ¿De quién es cada sombra?":"Shadows. Whose shadow is this?","Arrastra cada dibujo a su sombra":"Drag each picture to its shadow","Busca la sombra que tiene su misma forma":"Find the shadow with the same shape","¡Juntaste las ${n} sombras!":"You matched all ${n} shadows!","Juntaste las ${n} figuras con su sombra.":"You matched ${n} shapes with their shadows.","Probar con ${n} figuras":"Try ${n} shapes","Probar con ${n} dibujos":"Try ${n} pictures","Otra ronda":"Another round","Colores. Toca el color que te pido":"Colors. Tap the color I say","Toca algo ${c}":"Tap something ${c}","¡Sí! ${name} es ${c}":"Yes! ${name} is ${c}!","Ese es ${a}. Busca algo ${c}":"That one is ${a}. Find something ${c}","Encontraste los ${n} colores.":"You found all ${n} colors.","Sombras de ${n} figuras":"Shadows with ${n} shapes","Colores con ${n} dibujos":"Colors with ${n} pictures","Idioma: Español":"Language: English","Música: sí":"Music: on","Música: no":"Music: off","Voz y sonidos: sí":"Voice & sounds: on","Voz y sonidos: no":"Voice & sounds: off","rojo":"red","naranja":"orange","amarillo":"yellow","verde":"green","azul":"blue","morado":"purple","rosado":"pink","celeste":"light blue","blanco":"white","gris":"gray","negro":"black","coral":"coral","lima":"lime","verde bosque":"forest green","turquesa":"turquoise","azul marino":"navy blue","lila":"lilac","fucsia":"fuchsia","durazno":"peach"},"names":{"gato":{"name":"Cat","say":null},"perro":{"name":"Dog","say":null},"pez":{"name":"Fish","say":null},"dino":{"name":"Dinosaur","say":null},"tortuga":{"name":"Turtle","say":null},"buho":{"name":"Owl","say":null},"mariquita":{"name":"Ladybug","say":null},"pulpo":{"name":"Octopus","say":null},"conejo":{"name":"Rabbit","say":null},"llama":{"name":"Llama","say":null},"auto":{"name":"Car","say":null},"cohete":{"name":"Rocket","say":null},"barco":{"name":"Boat","say":null},"globo":{"name":"Balloon","say":null},"tren":{"name":"Train","say":null},"flor":{"name":"Flower","say":null},"casita":{"name":"Little House","say":null},"arcoiris":{"name":"Rainbow","say":null},"hongo":{"name":"Mushroom","say":null},"sol":{"name":"Sun","say":null},"arbol":{"name":"Tree","say":null},"helado":{"name":"Ice Cream","say":null},"cupcake":{"name":"Cupcake","say":null},"dona":{"name":"Donut","say":null},"torta":{"name":"Cake","say":null},"paleta":{"name":"Lollipop","say":null},"calabaza":{"name":"Pumpkin","say":null},"fantasma":{"name":"Ghost","say":null},"gatito-bruja":{"name":"Kitten with Hat","say":null},"murcielago":{"name":"Bat","say":null},"letra-a":{"name":"A","say":"The letter a"},"letra-b":{"name":"B","say":"The letter b"},"letra-c":{"name":"C","say":"The letter c"},"letra-d":{"name":"D","say":"The letter d"},"letra-e":{"name":"E","say":"The letter e"},"letra-f":{"name":"F","say":"The letter f"},"letra-g":{"name":"G","say":"The letter g"},"letra-h":{"name":"H","say":"The letter h"},"letra-i":{"name":"I","say":"The letter i"},"letra-j":{"name":"J","say":"The letter j"},"letra-k":{"name":"K","say":"The letter k"},"letra-l":{"name":"L","say":"The letter l"},"letra-m":{"name":"M","say":"The letter m"},"letra-n":{"name":"N","say":"The letter n"},"letra-o":{"name":"O","say":"The letter o"},"letra-p":{"name":"P","say":"The letter p"},"letra-q":{"name":"Q","say":"The letter q"},"letra-r":{"name":"R","say":"The letter r"},"letra-s":{"name":"S","say":"The letter s"},"letra-t":{"name":"T","say":"The letter t"},"letra-u":{"name":"U","say":"The letter u"},"letra-v":{"name":"V","say":"The letter v"},"letra-w":{"name":"W","say":"The letter w"},"letra-x":{"name":"X","say":"The letter x"},"letra-y":{"name":"Y","say":"The letter y"},"letra-z":{"name":"Z","say":"The letter z"},"letra-enie":{"name":"Ñ","say":"The letter eñe"},"num-1":{"name":"1 Star","say":"One. One star."},"num-2":{"name":"2 Hearts","say":"Two. Two hearts."},"num-3":{"name":"3 Apples","say":"Three. Three apples."},"num-4":{"name":"4 Balls","say":"Four. Four balls."},"num-5":{"name":"5 Stars","say":"Five. Five stars."},"num-6":{"name":"6 Hearts","say":"Six. Six hearts."},"num-7":{"name":"7 Apples","say":"Seven. Seven apples."},"num-8":{"name":"8 Balls","say":"Eight. Eight balls."},"num-9":{"name":"9 Stars","say":"Nine. Nine stars."},"num-10":{"name":"10 Hearts","say":"Ten. Ten hearts."}},"dots":{"Cometa":{"name":"Kite","say":"a kite"},"Casa":{"name":"House","say":"a house"},"Helado":{"name":"Ice Cream","say":"an ice cream"},"Gatito":{"name":"Kitten","say":"a kitten"},"Barco":{"name":"Boat","say":"a boat"},"Estrella":{"name":"Star","say":"a star"},"Cohete":{"name":"Rocket","say":"a rocket"},"Pez":{"name":"Fish","say":"a fish"},"Corazón":{"name":"Heart","say":"a heart"},"Árbol":{"name":"Tree","say":"a tree"}}};
+const EN={"ui":{" ¡Y ganaste un sticker!":" And you earned a sticker!"," · necesita internet":" · needs internet"," ¿Pruebas con ${np}?":" Want to try ${np}?","${f.name}, ${f.p.length} puntos":"${f.name}, ${f.p.length} dots","${f.p.length} puntos":"${f.p.length} dots","${free||15} láminas gratis de ${total||30}. Con un solo pago desbloqueas todas y las que lleguen después.":"${free||15} free pages out of ${total||30}. With one payment, unlock them all, plus any that come later.","${got} de ${it.length}":"${got} of ${it.length}","${o.name}, bloqueado":"${o.name}, locked",", bloqueado":", locked","0 / ${f.p.length}":"0 / ${f.p.length}","1, 2, 3… ¿qué aparece?":"1, 2, 3… what will appear?","15 láminas gratis. Con un solo pago desbloqueas todas y las que lleguen después.":"15 free pages. With one payment, unlock them all, plus any that come later.","16 piezas":"16 pieces","2 piezas":"2 pieces","4 parejas":"4 pairs","4 piezas":"4 pieces","6 parejas":"6 pairs","8 parejas":"8 pairs","9 piezas":"9 pieces","<span>${ui.music?'Música: sí':'Música: no'}<\/span>":"<span>${ui.music?'Música: sí':'Música: no'}<\/span>","<span>${ui.sound?'Voz y sonidos: sí':'Voz y sonidos: no'}<\/span>":"<span>${ui.sound?'Voz y sonidos: sí':'Voz y sonidos: no'}<\/span>","Abriendo Google Play…":"Opening Google Play…","Agregar dibujo":"Add drawing","Arcoíris":"Rainbow","Arma el rompecabezas":"Build the puzzle","Arma las piezas":"Put the pieces together","Armaste las ${puzCount(puz.n)} piezas.":"You built all ${puzCount(puz.n)} pieces.","Arrastra cada pieza a su lugar":"Drag each piece to its place","Auto":"Car","Aún no agregaste dibujos. Toca \"Agregar dibujo\" y elige una imagen de líneas negras sobre fondo blanco.":"You haven't added any drawings yet. Tap \"Add drawing\" and choose an image with black lines on a white background.","Barco":"Boat","Borrar todo":"Erase all","Borrar todo el progreso":"Erase all progress","Básica":"Basic","Búho":"Owl","Calabaza":"Pumpkin","Cantidad de parejas":"Number of pairs","Cantidad de piezas":"Number of pieces","Carta ${k+1}":"Card ${k+1}","Casita":"Little house","Categorías":"Categories","Cerrar":"Close","Cohete":"Rocket","Colecciónalos":"Collect them all","Colorea, arma y juega":"Color, build, and play","Colorear":"Coloring","Colorear ":"Coloring ","Conejo":"Rabbit","Corazón":"Heart","Crayón":"Crayon","Crear números con mi coloreado":"Create numbers from my coloring","Créditos de las fotos":"Photo credits","Cupcake":"Cupcake","Desbloquear todo":"Unlock all","Desbloquear todo · ${priceText}":"Unlock all · ${priceText}","Deshacer":"Undo","Dibujo guardado":"Drawing saved","Dibujo libre":"Free drawing","Dibujo quitado":"Drawing removed","Dibujo sorpresa de ${f.p.length} puntos":"Surprise drawing with ${f.p.length} dots","Dinosaurio":"Dinosaur","Disponible en la app de Google Play":"Available on Google Play","Dona":"Donut","Elegir voz":"Choose voice","Elige cuántas piezas y luego un dibujo":"Choose how many pieces, then a drawing","Elige una voz":"Choose a voice","Elige uno y une los puntos en orden: 1, 2, 3…":"Pick one and connect the dots in order: 1, 2, 3…","Encontraste las ${n} parejas en ${mem.tries} intentos.":"You found all ${n} pairs in ${mem.tries} tries.","Encuentra las parejas":"Find the pairs","Esa imagen no parece un dibujo para colorear":"That image doesn't look like a coloring drawing","Esa imagen no se pudo abrir":"That image couldn't be opened","Esa no es. Prueba otra suma.":"That's not it. Try another sum.","Esa va en otro lugar. Mira la forma":"That one goes somewhere else. Look at the shape","Esa zona es el ${n}":"That area is ${n}","Ese es el ${i+1}. Busca el ${dots.next+1}":"That's ${i+1}. Find ${dots.next+1}","España":"Spain","Estados Unidos":"United States","Este dibujo aún no tiene números. Píntalo en \"Colorear\" con la cubeta y luego crea los números desde aquí.":"This drawing doesn't have numbers yet. Color it in \"Coloring\" with the bucket, then create the numbers from here.","Este navegador no tiene voces en español.":"This browser doesn't have English voices.","Fantasma":"Ghost","Flor":"Flower","Gana la memoria de ${o.n} parejas":"Win the ${o.n}-pair memory game","Ganaste una estrella por ${ed.d.name}.":"You earned a star for ${ed.d.name}.","Gatito con sombrero":"Kitten with hat","Gato":"Cat","Globo":"Balloon","Globos: tócalos para reventarlos":"Balloons: tap them to pop them","Gracias por apoyar a Pukllay Studio. Ya tienes todas las láminas.":"Thanks for supporting Pukllay Studio. You now have all the pages.","Grosor ":"Thickness ","Guardar imagen":"Save image","Guardar o compartir el dibujo":"Save or share the drawing","Helado":"Ice Cream","Hoja en blanco":"Blank page","Hoja limpia":"Clean page","Hoja para colorear":"Coloring page","Hongo":"Mushroom","Jugar otra vez":"Play again","La imagen es demasiado grande":"The image is too large","La imagen es demasiado grande (máximo 8000 px)":"The image is too large (maximum 8000 px)","La imagen es muy pequeña (mínimo 200 px)":"The image is too small (minimum 200 px)","La imagen pesa más de 10 MB":"The image is over 10 MB","La más natural · funciona sin internet":"The most natural · works offline","Las fotos del rompecabezas y la memoria vienen de Wikimedia Commons, con licencias libres para uso comercial.":"The puzzle and memory photos come from Wikimedia Commons, under free licenses for commercial use.","Latinoamérica":"Latin America","Letras y números":"Letters & numbers","Listo":"Done","Listo. Ahora a pintar por números":"Done. Now let's paint by numbers","Listo: ${seeds.length} zonas con ${pal.length} colores":"Done: ${seeds.length} areas with ${pal.length} colors","Listo: el progreso quedó en cero":"Done: progress has been reset to zero","Llama":"Llama","Los dibujos que pintaste, convertidos en rompecabezas":"The drawings you colored, turned into puzzles","Lápiz":"Pencil","Mariquita":"Ladybug","Memoria":"Memory","Memoria de ${n} parejas":"${n}-pair memory game","Memoria. Encuentra las parejas":"Memory. Find the pairs","Mi dibujo":"My drawing","Mi dibujo ":"My drawing ","Mis dibujos":"My drawings","Mis obras":"My artwork","Mis stickers":"My stickers","Mostrar pinceles y opciones":"Show brushes and options","Murciélago":"Bat","Muy bien. Ahora el ${dots.next+1}":"Great. Now ${dots.next+1}","Más opciones":"More options","México":"Mexico","Música de fondo":"Background music","No encontramos una compra con esta cuenta de Google":"We couldn't find a purchase on this Google account","No hay dibujos en esta categoría.":"There are no drawings in this category.","No hay nada que deshacer":"There's nothing to undo","No queda espacio para guardar. Borra algún dibujo.":"No space left to save. Delete a drawing.","No se pudieron cargar los dibujos":"Couldn't load the drawings","No se pudo abrir este dibujo":"Couldn't open this drawing","No se pudo abrir. Intenta otra vez":"Couldn't open it. Try again","No se pudo completar la compra. Inténtalo otra vez.":"The purchase couldn't be completed. Try again.","No se pudo guardar la imagen":"Couldn't save the image","No son iguales. ¡Intenta otra vez!":"They don't match. Try again!","Número ${n}, ${name}":"Number ${n}, ${name}","Números":"Numbers","Ocultar pinceles y opciones":"Hide brushes and options","Otro dibujo":"Another drawing","Otro rompecabezas":"Another puzzle","PNG o JPG de líneas negras sobre blanco":"PNG or JPG with black lines on white","Paleta":"Palette","Para entrar, toca el resultado:":"To enter, tap the answer:","Para mamá y papá":"For moms and dads","Perro":"Dog","Perú":"Peru","Pez":"Fish","Pide a un adulto que lo desbloquee":"Ask a grown-up to unlock it","Pide ayuda a un adulto para desbloquear más dibujos":"Ask a grown-up to help unlock more drawings","Pinta al menos dos zonas con la cubeta":"Color at least two areas with the bucket","Pinta el dibujo de ${o.name} o arma su rompecabezas para ganarlo":"Color the ${o.name} drawing or build its puzzle to win it","Pinta las zonas con el <b>${ui.num}<\/b> · ${rq2.filter(i=>f[i]).length} de ${rq2.length}":"Color the areas with <b>${ui.num}<\/b> · ${rq2.filter(i=>f[i]).length} of ${rq2.length}","Pista: ver la imagen":"Hint: see the picture","Pizarra neón":"Neon board","Plumón":"Marker","Por números":"By numbers","Preparando…":"Getting ready…","Primero pinta un poquito":"First, color a little","Probar con ${next} parejas":"Try ${next} pairs","Probar con ${np} piezas":"Try ${np} pieces","Pukllay":"Pukllay","Pukllay no tiene anuncios y no recoge ningún dato. Los pagos los procesa Google Play. Los dibujos se guardan solo en este equipo.":"Pukllay has no ads and collects no data. Payments are processed by Google Play. Drawings are saved only on this device.","Pulpo":"Octopus","Quitar ":"Remove ","Rehacer números":"Redo numbers","Rompecabezas":"Puzzle","Rompecabezas de ${d.name}, ${puzCount(puz.n)} piezas":"${d.name} puzzle, ${puzCount(puz.n)} pieces","Rompecabezas: arrastra las piezas al tablero":"Puzzle: drag the pieces to the board","Se agregó, pero no se podrá guardar al cerrar":"Added, but it can't be saved when closed","Seguir pintando":"Keep coloring","Seguir pintando ":"Keep coloring ","Sello ":"Stamp ","Sol":"Sun","Sticker escondido: ${o.name}":"Hidden sticker: ${o.name}","Sticker nuevo":"New sticker","Sólido":"Solid","Terminaste ${ed.d.name} otra vez.":"You finished ${ed.d.name} again.","Terminé":"I'm done","Tiene demasiadas partes oscuras. Usa líneas negras sobre fondo blanco.":"It has too many dark areas. Use black lines on a white background.","Tipo de pincel":"Brush type","Toca dos cartas para encontrar las parejas":"Tap two cards to find the pairs","Toca el 1 para empezar":"Tap 1 to start","Toca el uno para empezar":"Tap the one to start","Toca otra vez para borrar":"Tap again to erase","Toca una voz para escucharla. Las marcadas como \"Natural\" suenan menos robóticas.":"Tap a voice to hear it. Voices marked \"Natural\" sound less robotic.","Todas las láminas":"All pages","Todo desbloqueado":"Everything unlocked","Torta":"Cake","Tortuga":"Turtle","Trazos que brillan":"Glowing strokes","Tren":"Train","Tu dibujo está listo.":"Your drawing is ready.","Tu dibujo terminado":"Your finished drawing","Tu pago está pendiente. Se desbloqueará cuando Google lo confirme.":"Your payment is pending. It will unlock once Google confirms it.","Une los puntos de la figura ${o.name} para ganarlo":"Connect the dots of the ${o.name} figure to win it","Une los puntos en orden":"Connect the dots in order","Unir puntos":"Connect the dots","Uniste los ${f.p.length} puntos y apareció ${f.say}.":"You connected the ${f.p.length} dots and ${f.say} appeared.","Usa una imagen PNG, JPG o WebP":"Use a PNG, JPG, or WebP image","Vehículos":"Vehicles","Ver la lámina completa":"See the full page","Ver las cartas":"See the cards","Ver mi dibujo":"See my drawing","Ver mi rompecabezas":"See my puzzle","Ver todo":"See all","Versión 1.0.0":"Version 1.0.0","Volver":"Back","Volver a los dibujos":"Back to drawings","Voz activada":"Voice on","Voz grabada":"Recorded voice","Voz y sonidos":"Voice & sounds","Ya estaba desbloqueado":"Already unlocked","Ya lo compré: restaurar":"I already bought it: restore","Zona para padres":"Parents' area","amarillo neón":"neon yellow","azul neón":"neon blue","cian neón":"neon cyan","coral neón":"neon coral","hsl(${(s.seed+i*5)%360} 92% ${s.g?62:56}%)":"hsl(${(s.seed+i*5)%360} 92% ${s.g?62:56}%)","lima neón":"neon lime","limón":"lemon","marrón":"brown","naranja neón":"neon orange","rosa neón":"neon pink","translate(${zoom.x}px,${zoom.y}px) scale(${zoom.s})":"translate(${zoom.x}px,${zoom.y}px) scale(${zoom.s})","un corazón":"a heart","un árbol":"a tree","verde neón":"neon green","violeta neón":"neon violet","¡Armaste ${d.say||d.name}!":"You made ${d.say||d.name}!","¡Bien! Faltan ${left}":"Nice! ${left} to go","¡Compra restaurada!":"Purchase restored!","¡Encontraste las ${n} parejas!":"You found all ${n} pairs!","¡Eres un gran artista!":"You're a great artist!","¡Es ${f.say}!":"It's ${f.say}!","¡Excelente trabajo!":"Excellent work!","¡Falta una!":"One left!","¡Hola! Vamos a pintar juntos":"Hi! Let's color together","¡Listo! Todo desbloqueado":"Done! Everything unlocked","¡Lo hiciste genial!":"You did awesome!","¡Mira bien dónde está cada uno!":"Look carefully at where each one goes!","¡Muy bien!":"Great job!","¡Muy bien! Es ${d.say||d.name}":"Great! It's ${d.say||d.name}","¡Muy bien, campeón del color!":"Great job, color champion!","¡Nuevo!":"New!","¡Pareja de ${c.d.name}!":"Pair of ${c.d.name}!","¡Qué colores tan bonitos!":"What pretty colors!","¡Revienta los globos!":"Pop the balloons!","¡Te quedó precioso!":"It looks beautiful!","¡Terminé!":"I finished!","¡Wow, qué obra de arte!":"Wow, what a work of art!","¿Quitar?":"Remove?","¿Qué será?":"What could it be?","¿Seguro? Toca otra vez":"Are you sure? Tap again","Árbol":"Tree","Todos":"All","Animales":"Animals","Naturaleza":"Nature","Dulces":"Sweets","Halloween":"Halloween","Cometa":"Kite","una cometa":"a kite","Casa":"House","una casa":"a house","un helado":"an ice cream","Gatito":"Kitten","un gatito":"a kitten","un barco":"a boat","Estrella":"Star","una estrella":"a star","un cohete":"a rocket","un pez":"a fish","pares":"pairs","sombras":"shadows","colores":"colors","Sombras":"Shadows","Colores":"Colors","¿De quién es?":"Whose is it?","Toca el color":"Tap the color","Cantidad de figuras":"Number of shapes","Cantidad de dibujos":"Number of pictures","${n} figuras":"${n} shapes","${n} dibujos":"${n} pictures","Sombras. ¿De quién es cada sombra?":"Shadows. Whose shadow is this?","Arrastra cada dibujo a su sombra":"Drag each picture to its shadow","Busca la sombra que tiene su misma forma":"Find the shadow with the same shape","¡Juntaste las ${n} sombras!":"You matched all ${n} shadows!","Juntaste las ${n} figuras con su sombra.":"You matched ${n} shapes with their shadows.","Probar con ${n} figuras":"Try ${n} shapes","Probar con ${n} dibujos":"Try ${n} pictures","Otra ronda":"Another round","Colores. Toca el color que te pido":"Colors. Tap the color I say","Toca algo ${c}":"Tap something ${c}","¡Sí! ${name} es ${c}":"Yes! ${name} is ${c}!","Ese es ${a}. Busca algo ${c}":"That one is ${a}. Find something ${c}","Encontraste los ${n} colores.":"You found all ${n} colors.","Sombras de ${n} figuras":"Shadows with ${n} shapes","Colores con ${n} dibujos":"Colors with ${n} pictures","Idioma: Español":"Language: English","Música: sí":"Music: on","Música: no":"Music: off","Voz y sonidos: sí":"Voice & sounds: on","Voz y sonidos: no":"Voice & sounds: off","rojo":"red","naranja":"orange","amarillo":"yellow","verde":"green","azul":"blue","morado":"purple","rosado":"pink","celeste":"light blue","blanco":"white","gris":"gray","negro":"black","coral":"coral","lima":"lime","verde bosque":"forest green","turquesa":"turquoise","azul marino":"navy blue","lila":"lilac","fucsia":"fuchsia","durazno":"peach","Música":"Music","Toca y repite":"Play and repeat","Laberinto":"Maze","Llega a la estrella":"Reach the star","Modo de juego":"Game mode","Tocar libre":"Free play","Repite":"Repeat","Cantidad de notas":"Number of notes","${n} notas":"${n} notes","Escuchar otra vez":"Listen again","Xilófono":"Xylophone","Nota do":"Note C","Nota re":"Note D","Nota mi":"Note E","Nota fa":"Note F","Nota sol":"Note G","Nota la":"Note A","Nota si":"Note B","Nota do agudo":"High note C","Música. Toca las barras de colores":"Music. Tap the colorful bars","Toca las barras de colores":"Tap the colorful bars","Escucha la canción":"Listen to the song","Ahora repítela tú":"Now you play it","¡Muy bien! Otra canción":"Great job! Another song","Casi. Toca la barra que brilla":"Almost. Tap the bar that glows","¡Repetiste las 3 canciones!":"You repeated all 3 songs!","Repetiste 3 canciones de ${n} notas.":"You repeated 3 songs of ${n} notes.","Probar con ${n} notas":"Try ${n} notes","Nivel":"Level","Fácil":"Easy","Medio":"Medium","Difícil":"Hard","Laberinto: lleva el animal hasta la estrella":"Maze: take the animal to the star","Laberinto. Lleva el animal a la estrella":"Maze. Take the animal to the star","Arrastra el animal hasta la estrella":"Drag the animal to the star","Toca el animal y arrástralo":"Touch the animal and drag it","¡Llegaste a la estrella!":"You reached the star!","Llegaste a la estrella.":"You reached the star.","Probar el Medio":"Try Medium","Probar el Difícil":"Try Hard","Música de ${n} notas":"Music with ${n} notes","Laberinto nivel ${n}":"Maze level ${n}","notas":"notes","nivel":"level"},"names":{"gato":{"name":"Cat","say":null},"perro":{"name":"Dog","say":null},"pez":{"name":"Fish","say":null},"dino":{"name":"Dinosaur","say":null},"tortuga":{"name":"Turtle","say":null},"buho":{"name":"Owl","say":null},"mariquita":{"name":"Ladybug","say":null},"pulpo":{"name":"Octopus","say":null},"conejo":{"name":"Rabbit","say":null},"llama":{"name":"Llama","say":null},"auto":{"name":"Car","say":null},"cohete":{"name":"Rocket","say":null},"barco":{"name":"Boat","say":null},"globo":{"name":"Balloon","say":null},"tren":{"name":"Train","say":null},"flor":{"name":"Flower","say":null},"casita":{"name":"Little House","say":null},"arcoiris":{"name":"Rainbow","say":null},"hongo":{"name":"Mushroom","say":null},"sol":{"name":"Sun","say":null},"arbol":{"name":"Tree","say":null},"helado":{"name":"Ice Cream","say":null},"cupcake":{"name":"Cupcake","say":null},"dona":{"name":"Donut","say":null},"torta":{"name":"Cake","say":null},"paleta":{"name":"Lollipop","say":null},"calabaza":{"name":"Pumpkin","say":null},"fantasma":{"name":"Ghost","say":null},"gatito-bruja":{"name":"Kitten with Hat","say":null},"murcielago":{"name":"Bat","say":null},"letra-a":{"name":"A","say":"The letter a"},"letra-b":{"name":"B","say":"The letter b"},"letra-c":{"name":"C","say":"The letter c"},"letra-d":{"name":"D","say":"The letter d"},"letra-e":{"name":"E","say":"The letter e"},"letra-f":{"name":"F","say":"The letter f"},"letra-g":{"name":"G","say":"The letter g"},"letra-h":{"name":"H","say":"The letter h"},"letra-i":{"name":"I","say":"The letter i"},"letra-j":{"name":"J","say":"The letter j"},"letra-k":{"name":"K","say":"The letter k"},"letra-l":{"name":"L","say":"The letter l"},"letra-m":{"name":"M","say":"The letter m"},"letra-n":{"name":"N","say":"The letter n"},"letra-o":{"name":"O","say":"The letter o"},"letra-p":{"name":"P","say":"The letter p"},"letra-q":{"name":"Q","say":"The letter q"},"letra-r":{"name":"R","say":"The letter r"},"letra-s":{"name":"S","say":"The letter s"},"letra-t":{"name":"T","say":"The letter t"},"letra-u":{"name":"U","say":"The letter u"},"letra-v":{"name":"V","say":"The letter v"},"letra-w":{"name":"W","say":"The letter w"},"letra-x":{"name":"X","say":"The letter x"},"letra-y":{"name":"Y","say":"The letter y"},"letra-z":{"name":"Z","say":"The letter z"},"letra-enie":{"name":"Ñ","say":"The letter eñe"},"num-1":{"name":"1 Star","say":"One. One star."},"num-2":{"name":"2 Hearts","say":"Two. Two hearts."},"num-3":{"name":"3 Apples","say":"Three. Three apples."},"num-4":{"name":"4 Balls","say":"Four. Four balls."},"num-5":{"name":"5 Stars","say":"Five. Five stars."},"num-6":{"name":"6 Hearts","say":"Six. Six hearts."},"num-7":{"name":"7 Apples","say":"Seven. Seven apples."},"num-8":{"name":"8 Balls","say":"Eight. Eight balls."},"num-9":{"name":"9 Stars","say":"Nine. Nine stars."},"num-10":{"name":"10 Hearts","say":"Ten. Ten hearts."}},"dots":{"Cometa":{"name":"Kite","say":"a kite"},"Casa":{"name":"House","say":"a house"},"Helado":{"name":"Ice Cream","say":"an ice cream"},"Gatito":{"name":"Kitten","say":"a kitten"},"Barco":{"name":"Boat","say":"a boat"},"Estrella":{"name":"Star","say":"a star"},"Cohete":{"name":"Rocket","say":"a rocket"},"Pez":{"name":"Fish","say":"a fish"},"Corazón":{"name":"Heart","say":"a heart"},"Árbol":{"name":"Tree","say":"a tree"}}};
 const I18N=(()=>{if(LANG!=='en'||!EN)return null;
   const exact=new Map(),pats=[];
   for(const [k,v] of Object.entries(EN.ui||{})){if(typeof v!=='string')continue;const kk=k.trim();
@@ -39,7 +39,10 @@ if(I18N){document.documentElement.lang='en';trNode(document.body);
 const trName=(id,name,say)=>{const x=I18N&&EN.names&&EN.names[id];return x?{name:x.name||name,say:x.say||null}:{name,say}};
 const NEON_BG='#0B0B1A', INK='#1E1C45';
 /* Todas las láminas se trabajan en un cuadrado de N×N píxeles; los trazos se guardan en unidades 0–400 */
-const N=1024, UPX=N/400, LINE_T=140;
+/* en teléfonos verticales la hoja es alta (hasta 2:3) y la lámina lleva paisaje; se decide una vez por equipo para que el progreso no cambie */
+const ASP=(()=>{let a=0;try{a=+localStorage.getItem('pinta-y-brilla-asp')}catch(e){}
+  if(!(a>=1&&a<=1.5)){const r=(innerHeight-250)/Math.max(1,innerWidth);a=r<1.15?1:Math.min(1.5,Math.round(r*10)/10);try{localStorage.setItem('pinta-y-brilla-asp',String(a))}catch(e){}}return a})();
+const N=1024,NW=N,NH=Math.round(N*ASP/8)*8,UPX=N/400,UH=NH/UPX,LINE_T=140;
 
 /* ======================= catálogo ======================= */
 const CATS=[['todos','Todos','#FFC93C'],['obras','Mis obras','#FF8FB8'],['mios','Mis dibujos','#FF9E7A'],['animales','Animales','#7ED9A8'],['vehiculos','Vehículos','#8EC5FF'],
@@ -98,6 +101,7 @@ const byId=id=>DRAWINGS.find(d=>d.id===id);
 /* ======================= estado guardado ======================= */
 const KEY='pinta-y-brilla-v3';
 let state={fills:{},strokes:{},done:{},nums:{},when:{}};
+const LAM_KEY='pinta-y-brilla-lamina';
 /* miniaturas: id del dibujo (coloreado), n~id (por números), libre y neon */
 const THUMB_RE=/^(g~)?(n~)?[a-z0-9-]{1,40}$/;
 const ui={cat:'todos',tool:'cubeta',brush:'pincel',color:0,neon:6,size:2,tex:'solido',stamp:'estrella',clip:true,num:1,sound:true,music:false,compact:true,voice:''};
@@ -125,7 +129,7 @@ function cleanState(s){
     if(!keyOk(k)||!Array.isArray(arr))continue;
     out.strokes[k]=arr.slice(-600).filter(st=>st&&PAINT_TOOLS.has(st.t)&&HEX.test(st.c)&&inRange(st.w,.5,100)&&Number.isInteger(st.r)&&st.r>=-1&&st.r<1e7
       &&Number.isInteger(st.seed)&&Array.isArray(st.pts)&&st.pts.length>0&&st.pts.length<5000
-      &&st.pts.every(p=>Array.isArray(p)&&inRange(p[0],-50,450)&&inRange(p[1],-50,450)))
+      &&st.pts.every(p=>Array.isArray(p)&&inRange(p[0],-50,450)&&inRange(p[1],-50,UH+50)))
       .map(st=>{const o={t:st.t,c:st.c,w:st.w,r:st.r,seed:st.seed,pts:st.pts.map(p=>[p[0],p[1]])};
         if(st.t==='sello')o.k=STAMP_OK.has(st.k)?st.k:'estrella';if(st.g)o.g=1;return o});
   }
@@ -151,6 +155,12 @@ function cleanUi(u){
   if(typeof u.voice==='string'&&u.voice.length<=300)ui.voice=u.voice;
 }
 try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&typeof s==='object'){state=cleanState(s.state);cleanUi(s.ui)}}catch(e){}
+/* la forma de la hoja cambió: lo pintado en láminas del catálogo ya no calza y se empieza de nuevo (lo hecho en láminas propias se conserva) */
+const lamReset=(()=>{let v=null;try{v=localStorage.getItem(LAM_KEY)}catch(e){}const now='v2:'+ASP;if(v===now)return false;
+  try{localStorage.setItem(LAM_KEY,now)}catch(e){}if(v===null&&ASP===1)return false;
+  for(const k of Object.keys(state.fills))if(!/^[cn]:u-/.test(k))delete state.fills[k];
+  for(const k of Object.keys(state.strokes))if(/^[cn]:/.test(k)&&!/^[cn]:u-/.test(k))delete state.strokes[k];
+  for(const k of Object.keys(state.when))if(!/^(g~)?(n~)?u-/.test(k)&&!/^(g~)?(libre|neon)$/.test(k))delete state.when[k];return true})();
 let saveT,saveWarned=false;
 const save=()=>{clearTimeout(saveT);saveT=setTimeout(()=>{
   try{localStorage.setItem(KEY,JSON.stringify({state,ui}));saveWarned=false}
@@ -273,22 +283,97 @@ function tileFor(c,t){
 /* ======================= preparar una lámina ======================= */
 /* 1) se coloca la imagen en N×N sobre blanco; 2) píxeles oscuros = línea; 3) zonas claras conectadas = regiones;
    4) cada píxel de línea se asigna a la región más cercana, así el color llega hasta debajo de la línea y no quedan bordes blancos */
+/* recorte cuadrado de la hoja (miniaturas, fiesta, rompecabezas), centrado en el dibujo */
+function sqCrop(){const w=cv.width,h=cv.height;if(h<=w)return[0,0,w,h];const t=ed.R&&ed.R.tf,c=t&&t.cy?t.cy/NH*h:h/2;
+  return[0,Math.max(0,Math.min(h-w,Math.round(c-w/2))),w,w]}
+/* coloca la imagen en la hoja; en hojas altas recorta el margen, agranda el dibujo y le pone un paisaje para colorear */
+function compose(x,im,d){
+  const iw=im.naturalWidth,ih=im.naturalHeight;
+  if(!d||d.custom){const s=Math.min(NW/iw,NH/ih),w=iw*s,h=ih*s;x.drawImage(im,(NW-w)/2,(NH-h)/2,w,h);return{k:1,dx:0,dy:0,bx:0,by:0,cy:NH/2}}
+  const q=newCanvas(N),qx=q.getContext('2d',{willReadFrequently:true});qx.fillStyle='#FFFFFF';qx.fillRect(0,0,N,N);qx.imageSmoothingQuality='high';
+  const s0=Math.min(N/iw,N/ih),w0=iw*s0,h0=ih*s0;qx.drawImage(im,(N-w0)/2,(N-h0)/2,w0,h0);
+  if(NH===N){x.drawImage(q,0,0);return{k:1,dx:0,dy:0,bx:0,by:0,cy:N/2}}
+  const qd=qx.getImageData(0,0,N,N).data;let x0=N,y0=N,x1=-1,y1=-1;
+  for(let y=0;y<N;y++)for(let xx=0;xx<N;xx++){const j=(y*N+xx)*4;if(qd[j]<200){if(xx<x0)x0=xx;if(xx>x1)x1=xx;if(y<y0)y0=y;if(y>y1)y1=y}}
+  if(x1<0){x.drawImage(q,0,(NH-N)/2);return{k:1,dx:0,dy:(NH-N)/2,bx:0,by:0,cy:NH/2}}
+  x0=Math.max(0,x0-6);y0=Math.max(0,y0-6);x1=Math.min(N-1,x1+6);y1=Math.min(N-1,y1+6);
+  const bw=x1-x0+1,bh=y1-y0+1,kind=sceneOf(d),mid=kind==='espacio'||kind==='agua'||kind==='cielo'||kind==='ninguno';
+  const k=Math.min(NW*.94/bw,NH*(mid?.7:.72)/bh),sw=Math.round(bw*k),sh=Math.round(bh*k);
+  const dx=Math.round((NW-sw)/2),dy=Math.round(mid?NH*.53-sh/2:NH*.87-sh);
+  if(kind!=='ninguno')drawScene(x,kind,d,dy,dy+sh);
+  /* el dibujo tapa el paisaje por dentro de su contorno */
+  const sc=newCanvas(sw,sh),sx=sc.getContext('2d',{willReadFrequently:true});sx.imageSmoothingQuality='high';sx.drawImage(q,x0,y0,bw,bh,0,0,sw,sh);
+  const si=sx.getImageData(0,0,sw,sh),sp=si.data,S=sw*sh,out=new Uint8Array(S),st=new Int32Array(S);let n=0;
+  const light=i=>sp[i*4]>=LINE_T;
+  for(let i=0;i<sw;i++){for(const p of [i,(sh-1)*sw+i])if(light(p)&&!out[p]){out[p]=1;st[n++]=p}}
+  for(let j=0;j<sh;j++){for(const p of [j*sw,j*sw+sw-1])if(light(p)&&!out[p]){out[p]=1;st[n++]=p}}
+  while(n){const p=st[--n],px=p%sw;
+    if(px>0&&!out[p-1]&&light(p-1)){out[p-1]=1;st[n++]=p-1}
+    if(px<sw-1&&!out[p+1]&&light(p+1)){out[p+1]=1;st[n++]=p+1}
+    if(p>=sw&&!out[p-sw]&&light(p-sw)){out[p-sw]=1;st[n++]=p-sw}
+    if(p<S-sw&&!out[p+sw]&&light(p+sw)){out[p+sw]=1;st[n++]=p+sw}}
+  const dst=x.getImageData(dx,dy,sw,sh),dp=dst.data;
+  for(let i=0;i<S;i++)if(!out[i]){const j=i*4;dp[j]=sp[j];dp[j+1]=sp[j+1];dp[j+2]=sp[j+2];dp[j+3]=255}
+  x.putImageData(dst,dx,dy);
+  return{k,dx,dy,bx:x0,by:y0,cy:dy+sh/2};
+}
+function sceneOf(d){const id=d.id;
+  if(d.cat==='letras')return'ninguno';
+  if(id==='pez'||id==='pulpo')return'agua';if(id==='barco')return'mar';if(id==='cohete')return'espacio';if(id==='globo')return'cielo';
+  if(d.cat==='halloween')return'noche';if(d.cat==='dulces')return'fiesta';return'campo'}
+/* paisajes de línea negra sobre blanco, con zonas cerradas para pintar */
+function drawScene(x,kind,d,top,bot){
+  const W=NW,H=NH,lw=3.6*UPX,r=rng(hash('esc'+d.id));x.save();x.lineWidth=lw;x.lineJoin=x.lineCap='round';x.strokeStyle='#000000';x.fillStyle='#FFFFFF';
+  const L=(...p)=>{x.beginPath();x.moveTo(p[0],p[1]);for(let i=2;i<p.length;i+=2)x.lineTo(p[i],p[i+1]);x.stroke()};
+  const circ=(cx,cy,rr)=>{x.beginPath();x.arc(cx,cy,rr,0,Math.PI*2);x.fill();x.stroke()};
+  const wave=(y,a,f,ph)=>{x.beginPath();for(let xx=-20;xx<=W+20;xx+=8){const yy=y+a*Math.sin(xx/f+ph);xx===-20?x.moveTo(xx,yy):x.lineTo(xx,yy)}x.stroke()};
+  const cloud=(cx,cy,k)=>{const b=[[-58,8,36],[-18,-14,48],[30,-6,40],[62,10,30]].map(([a,b2,c])=>[cx+a*k,cy+b2*k,c*k]);
+    x.beginPath();b.forEach(([a,b2,c])=>{x.moveTo(a+c,b2);x.arc(a,b2,c,0,Math.PI*2)});x.rect(cx-58*k,cy+8*k,120*k,30*k);x.stroke();
+    x.save();x.lineWidth=0;b.forEach(([a,b2,c])=>{x.beginPath();x.arc(a,b2,c-lw/2,0,Math.PI*2);x.fill()});x.fillRect(cx-58*k,cy+8*k-lw,120*k,30*k-lw/2+lw);x.restore();
+    L(cx-94*k,cy+38*k,cx+92*k,cy+38*k)};
+  const sun=(cx,cy,rr)=>{for(let i=0;i<8;i++){const t=i*Math.PI/4;L(cx+Math.cos(t)*(rr+18),cy+Math.sin(t)*(rr+18),cx+Math.cos(t)*(rr+52),cy+Math.sin(t)*(rr+52))}circ(cx,cy,rr)};
+  const star=(cx,cy,rr)=>{x.beginPath();for(let i=0;i<10;i++){const t=-Math.PI/2+i*Math.PI/5,q=i%2?rr*.45:rr;x.lineTo(cx+Math.cos(t)*q,cy+Math.sin(t)*q)}x.closePath();x.fill();x.stroke()};
+  const flower=(cx,cy,k)=>{L(cx,cy,cx,cy+70*k);for(let i=0;i<5;i++){const t=i*Math.PI*2/5-Math.PI/2;circ(cx+Math.cos(t)*24*k,cy+Math.sin(t)*24*k,17*k)}circ(cx,cy,13*k)};
+  const tuft=(cx,cy,k)=>{L(cx-16*k,cy,cx-22*k,cy-30*k);L(cx,cy,cx,cy-40*k);L(cx+16*k,cy,cx+24*k,cy-28*k)};
+  const sky=top-30,ground=bot-50,sf=r()<.5;
+  const skyStuff=(withSun)=>{if(sky<150)return;const k=Math.min(1.1,sky/300);
+    const sx=sf?W*.2:W*.8;if(withSun)sun(sx,Math.min(sky*.5,160),Math.min(70,sky*.25));
+    cloud(sf?W*.68:W*.32,Math.min(sky*.42,150),k);if(sky>280)cloud(sf?W*.4:W*.6,sky*.78,k*.7)};
+  if(kind==='campo'){skyStuff(d.id!=='sol');wave(ground,26,190,r()*6);wave(ground+(H-ground)*.5,18,140,r()*6);
+    const fy=ground+(H-ground)*.62;if(H-ground>140){flower(W*.12,fy,1);flower(W*.88,fy+6,1);tuft(W*.5,H-24,1);tuft(W*.3,ground+(H-ground)*.42,.8);tuft(W*.7,ground+(H-ground)*.4,.8)}}
+  else if(kind==='fiesta'){if(sky>150){x.beginPath();x.moveTo(-10,60);x.quadraticCurveTo(W/2,sky*.55,W+10,60);x.stroke();
+      for(let i=1;i<8;i++){const t=i/8,px=-10+t*(W+20),py=(1-t)*(1-t)*60+2*(1-t)*t*sky*.55+t*t*60;x.beginPath();x.moveTo(px-38,py);x.lineTo(px+38,py);x.lineTo(px,py+70);x.closePath();x.fill();x.stroke()}
+      if(sky>330)[[W*.15,sky*.8],[W*.85,sky*.75]].forEach(([a,b])=>star(a,b,26))}
+    L(-10,ground+20,W+10,ground+20);x.beginPath();for(let xx=-10;xx<W+40;xx+=64){x.moveTo(xx,ground+20);x.arc(xx+32,ground+20,32,Math.PI,0,true)}x.stroke();
+    if(H-ground>120)L(-10,ground+(H-ground)*.75,W+10,ground+(H-ground)*.75)}
+  else if(kind==='noche'){if(sky>150){const mx=sf?W*.78:W*.22,my=Math.min(sky*.45,150),mr=Math.min(64,sky*.22);circ(mx,my,mr);circ(mx-mr*.3,my-mr*.2,mr*.18);circ(mx+mr*.35,my+mr*.25,mr*.12);
+      for(let i=0;i<5;i++)star(W*(.1+r()*.8),20+r()*(sky-60),14+r()*12)}
+    wave(ground,34,160,r()*6);if(H-ground>110){tuft(W*.15,H-30,1.1);tuft(W*.85,H-36,1.1);tuft(W*.5,ground+(H-ground)*.7,1)}}
+  else if(kind==='mar'){skyStuff(true);wave(ground-30,20,90,0);wave(ground+40,18,80,1.5);if(H-ground>150)wave(ground+(H-ground)*.75,16,70,3)}
+  else if(kind==='agua'){const by=top-20;for(let i=0;i<7;i++){const cx=W*(.08+r()*.84),cy=24+r()*Math.max(40,by-60);if(by>60)circ(cx,cy,10+r()*22)}
+    wave(28,14,70,0);const sy=bot+(H-bot)*.45;wave(sy,16,120,r()*6);
+    [W*.1,W*.9].forEach((cx,i)=>{x.beginPath();x.moveTo(cx,H+10);for(let t=0;t<=1;t+=.05)x.lineTo(cx+Math.sin(t*9+i)*18,H+10-t*(H-top)*.45);x.stroke()})}
+  else if(kind==='espacio'){for(let i=0;i<9;i++){const yy=r()<.5?20+r()*Math.max(30,top-60):bot+20+r()*Math.max(30,H-bot-60);star(W*(.06+r()*.88),yy,12+r()*14)}
+    if(H-bot>170){const px=sf?W*.2:W*.8,py=bot+(H-bot)*.55,pr=Math.min(70,(H-bot)*.3);circ(px,py,pr);x.beginPath();x.ellipse(px,py,pr*1.7,pr*.45,-.3,0,Math.PI*2);x.stroke()}
+    if(top>170)circ(sf?W*.82:W*.18,top*.45,Math.min(46,top*.2))}
+  else if(kind==='cielo'){skyStuff(true);if(H-bot>140){cloud(W*.22,bot+(H-bot)*.4,.8);cloud(W*.8,bot+(H-bot)*.55,.9);wave(H-40,22,200,r()*6)}}
+  x.restore()}
+
 const loadImg=src=>new Promise((res,rej)=>{const im=new Image();im.onload=()=>res(im);im.onerror=()=>rej(new Error('img'));im.src=src});
-function prepare(im){
-  const T=N*N,c=newCanvas(N),x=c.getContext('2d',{willReadFrequently:true});
-  x.fillStyle='#FFFFFF';x.fillRect(0,0,N,N);
-  const s=Math.min(N/im.naturalWidth,N/im.naturalHeight),w=im.naturalWidth*s,h=im.naturalHeight*s;
-  x.imageSmoothingQuality='high';x.drawImage(im,(N-w)/2,(N-h)/2,w,h);
-  const px=x.getImageData(0,0,N,N).data,lum=new Uint8Array(T);
+function prepare(im,d){
+  const T=NW*NH,c=newCanvas(NW,NH),x=c.getContext('2d',{willReadFrequently:true});
+  x.fillStyle='#FFFFFF';x.fillRect(0,0,NW,NH);x.imageSmoothingQuality='high';
+  const tf=compose(x,im,d);
+  const px=x.getImageData(0,0,NW,NH).data,lum=new Uint8Array(T);
   for(let i=0,j=0;i<T;i++,j+=4)lum[i]=(px[j]*299+px[j+1]*587+px[j+2]*114)/1000|0;
   /* regiones */
   const lab=new Int32Array(T).fill(-1),stack=new Int32Array(T);let k=0;const sizes=[];
   for(let i=0;i<T;i++){if(lum[i]<LINE_T||lab[i]>=0)continue;let sp=0,n=0;stack[sp++]=i;lab[i]=k;
-    while(sp){const q=stack[--sp];n++;const qx=q%N;
+    while(sp){const q=stack[--sp];n++;const qx=q%NW;
       if(qx>0&&lab[q-1]<0&&lum[q-1]>=LINE_T){lab[q-1]=k;stack[sp++]=q-1}
-      if(qx<N-1&&lab[q+1]<0&&lum[q+1]>=LINE_T){lab[q+1]=k;stack[sp++]=q+1}
-      if(q>=N&&lab[q-N]<0&&lum[q-N]>=LINE_T){lab[q-N]=k;stack[sp++]=q-N}
-      if(q<T-N&&lab[q+N]<0&&lum[q+N]>=LINE_T){lab[q+N]=k;stack[sp++]=q+N}}
+      if(qx<NW-1&&lab[q+1]<0&&lum[q+1]>=LINE_T){lab[q+1]=k;stack[sp++]=q+1}
+      if(q>=NW&&lab[q-NW]<0&&lum[q-NW]>=LINE_T){lab[q-NW]=k;stack[sp++]=q-NW}
+      if(q<T-NW&&lab[q+NW]<0&&lum[q+NW]>=LINE_T){lab[q+NW]=k;stack[sp++]=q+NW}}
     sizes.push(n);k++}
   /* las zonas diminutas (ruido) no se pintan solas: se unen a su vecina */
   const MIN=Math.round(T*.00006),remap=new Int32Array(k).fill(-1);let K=0;
@@ -297,61 +382,61 @@ function prepare(im){
   /* dueño de cada píxel = región más cercana (BFS desde todas las regiones) */
   const own=K<32000?Int16Array.from(lab):Int32Array.from(lab),q=stack;let head=0,tail=0;
   for(let i=0;i<T;i++)if(own[i]>=0)q[tail++]=i;
-  while(head<tail){const i=q[head++],o=own[i],ix=i%N;
+  while(head<tail){const i=q[head++],o=own[i],ix=i%NW;
     if(ix>0&&own[i-1]<0){own[i-1]=o;q[tail++]=i-1}
-    if(ix<N-1&&own[i+1]<0){own[i+1]=o;q[tail++]=i+1}
-    if(i>=N&&own[i-N]<0){own[i-N]=o;q[tail++]=i-N}
-    if(i<T-N&&own[i+N]<0){own[i+N]=o;q[tail++]=i+N}}
+    if(ix<NW-1&&own[i+1]<0){own[i+1]=o;q[tail++]=i+1}
+    if(i>=NW&&own[i-NW]<0){own[i-NW]=o;q[tail++]=i-NW}
+    if(i<T-NW&&own[i+NW]<0){own[i+NW]=o;q[tail++]=i+NW}}
   /* lista de píxeles por región (orden de conteo) y su caja */
   const off=new Int32Array(K+1),bb=new Int32Array(K*4);
-  for(let r=0;r<K;r++){bb[r*4]=N;bb[r*4+1]=N;bb[r*4+2]=-1;bb[r*4+3]=-1}
-  for(let i=0;i<T;i++){const o=own[i];if(o<0)continue;off[o+1]++;const ix=i%N,iy=(i/N)|0,b=o*4;
+  for(let r=0;r<K;r++){bb[r*4]=NW;bb[r*4+1]=NH;bb[r*4+2]=-1;bb[r*4+3]=-1}
+  for(let i=0;i<T;i++){const o=own[i];if(o<0)continue;off[o+1]++;const ix=i%NW,iy=(i/NW)|0,b=o*4;
     if(ix<bb[b])bb[b]=ix;if(iy<bb[b+1])bb[b+1]=iy;if(ix>bb[b+2])bb[b+2]=ix;if(iy>bb[b+3])bb[b+3]=iy}
   for(let r=0;r<K;r++)off[r+1]+=off[r];
   const list=new Int32Array(off[K]),fillp=off.slice(0,K);
   for(let i=0;i<T;i++){const o=own[i];if(o>=0)list[fillp[o]++]=i}
   /* capa de línea: color tinta con transparencia según lo oscuro del píxel (conserva el suavizado) */
-  const oc=newCanvas(N),ox=oc.getContext('2d'),oi=ox.createImageData(N,N),o32=new Uint32Array(oi.data.buffer);
+  const oc=newCanvas(NW,NH),ox=oc.getContext('2d'),oi=ox.createImageData(NW,NH),o32=new Uint32Array(oi.data.buffer);
   const [ir,ig,ib]=hexRGB(INK);
   for(let i=0;i<T;i++){const l=lum[i];if(l>=215)continue;const a=Math.min(255,((215-l)*255/165)|0);o32[i]=((a<<24)|(ib<<16)|(ig<<8)|ir)>>>0}
   ox.putImageData(oi,0,0);
   /* capa de relleno */
-  const fc=newCanvas(N),fx2=fc.getContext('2d'),fimg=fx2.createImageData(N,N),f32=new Uint32Array(fimg.data.buffer);
+  const fc=newCanvas(NW,NH),fx2=fc.getContext('2d'),fimg=fx2.createImageData(NW,NH),f32=new Uint32Array(fimg.data.buffer);
   f32.fill(0xFFFFFFFF);fx2.putImageData(fimg,0,0);
   /* con menos de 32 000 zonas basta la mitad de memoria para las etiquetas */
-  return{K,lab:K<32000?Int16Array.from(lab):lab,own,off,list,bb,line:oc,F:fc,Fx:fx2,fimg,f32,masks:new Map(),pos:null};
+  return{K,lab:K<32000?Int16Array.from(lab):lab,own,off,list,bb,line:oc,F:fc,Fx:fx2,fimg,f32,masks:new Map(),pos:null,tf};
 }
-function regionAt(R,u){const x=Math.max(0,Math.min(N-1,Math.floor(u[0]*UPX))),y=Math.max(0,Math.min(N-1,Math.floor(u[1]*UPX)));return R.own[y*N+x]}
+function regionAt(R,u){const x=Math.max(0,Math.min(NW-1,Math.floor(u[0]*UPX))),y=Math.max(0,Math.min(NH-1,Math.floor(u[1]*UPX)));return R.own[y*NW+x]}
 function paintRegion(R,id,v,put=true){
   if(id<0||id>=R.K)return;
   const f=R.f32,L=R.list,a=R.off[id],b=R.off[id+1];
   if(!v){for(let k=a;k<b;k++)f[L[k]]=0xFFFFFFFF}
   else if(!v.t||v.t==='solido'){const [r,g,bl]=hexRGB(v.c),val=pack(r,g,bl);for(let k=a;k<b;k++)f[L[k]]=val}
-  else{const t=tileFor(v.c,v.t);for(let k=a;k<b;k++){const p=L[k];f[p]=t[(((p/N)|0)&127)*TILE+((p%N)&127)]}}
+  else{const t=tileFor(v.c,v.t);for(let k=a;k<b;k++){const p=L[k];f[p]=t[(((p/NW)|0)&127)*TILE+((p%NW)&127)]}}
   if(put){const o=id*4;R.Fx.putImageData(R.fimg,0,0,R.bb[o],R.bb[o+1],R.bb[o+2]-R.bb[o]+1,R.bb[o+3]-R.bb[o+1]+1)}
 }
 function rebuildFills(){const R=ed.R;if(!R)return;R.f32.fill(0xFFFFFFFF);const f=state.fills[key()]||{};
   for(const i in f)paintRegion(R,+i,f[i],false);R.Fx.putImageData(R.fimg,0,0);R.fillKey=key()}
 function maskFor(id){
   const R=ed.R;if(R.masks.has(id))return R.masks.get(id);
-  const c=newCanvas(N),x=c.getContext('2d'),im=x.createImageData(N,N),m=new Uint32Array(im.data.buffer);
+  const c=newCanvas(NW,NH),x=c.getContext('2d'),im=x.createImageData(NW,NH),m=new Uint32Array(im.data.buffer);
   for(let k=R.off[id];k<R.off[id+1];k++)m[R.list[k]]=0xFF000000;x.putImageData(im,0,0);
   R.masks.set(id,c);if(R.masks.size>8)R.masks.delete(R.masks.keys().next().value);return c;
 }
 /* punto más interior de cada región (para poner el número) en una rejilla de 4 px */
 function positions(R){
   if(R.pos)return R.pos;
-  const st=4,G=N/st,own=new Int32Array(G*G);
-  for(let y=0;y<G;y++)for(let x=0;x<G;x++)own[y*G+x]=R.lab[(y*st+2)*N+x*st+2];
-  const dist=new Float32Array(G*G),R2=Math.SQRT2;
-  for(let y=0;y<G;y++)for(let x=0;x<G;x++){const k=y*G+x,o=own[k];
-    dist[k]=(o<0||x===0||y===0||x===G-1||y===G-1||own[k-1]!==o||own[k+1]!==o||own[k-G]!==o||own[k+G]!==o)?0:1e9}
-  for(let y=1;y<G-1;y++)for(let x=1;x<G-1;x++){const k=y*G+x;if(dist[k])dist[k]=Math.min(dist[k],dist[k-1]+1,dist[k-G]+1,dist[k-G-1]+R2,dist[k-G+1]+R2)}
-  for(let y=G-2;y>0;y--)for(let x=G-2;x>0;x--){const k=y*G+x;if(dist[k])dist[k]=Math.min(dist[k],dist[k+1]+1,dist[k+G]+1,dist[k+G+1]+R2,dist[k+G-1]+R2)}
+  const st=4,G=NW/st,GH=NH/st,own=new Int32Array(G*GH);
+  for(let y=0;y<GH;y++)for(let x=0;x<G;x++)own[y*G+x]=R.lab[(y*st+2)*NW+x*st+2];
+  const dist=new Float32Array(G*GH),R2=Math.SQRT2;
+  for(let y=0;y<GH;y++)for(let x=0;x<G;x++){const k=y*G+x,o=own[k];
+    dist[k]=(o<0||x===0||y===0||x===G-1||y===GH-1||own[k-1]!==o||own[k+1]!==o||own[k-G]!==o||own[k+G]!==o)?0:1e9}
+  for(let y=1;y<GH-1;y++)for(let x=1;x<G-1;x++){const k=y*G+x;if(dist[k])dist[k]=Math.min(dist[k],dist[k-1]+1,dist[k-G]+1,dist[k-G-1]+R2,dist[k-G+1]+R2)}
+  for(let y=GH-2;y>0;y--)for(let x=G-2;x>0;x--){const k=y*G+x;if(dist[k])dist[k]=Math.min(dist[k],dist[k+1]+1,dist[k+G]+1,dist[k+G+1]+R2,dist[k+G-1]+R2)}
   const pos={};
-  for(let k=0;k<G*G;k++){const o=own[k];if(o<0)continue;if(!pos[o]||dist[k]>pos[o].d)pos[o]={x:((k%G)*st+2)/UPX,y:(((k/G)|0)*st+2)/UPX,d:dist[k]}}
+  for(let k=0;k<G*GH;k++){const o=own[k];if(o<0)continue;if(!pos[o]||dist[k]>pos[o].d)pos[o]={x:((k%G)*st+2)/UPX,y:(((k/G)|0)*st+2)/UPX,d:dist[k]}}
   for(const o in pos)pos[o].d=pos[o].d*st/UPX;
-  for(let r=0;r<R.K;r++)if(!pos[r]){const p=R.list[(R.off[r]+R.off[r+1])>>1];if(p!==undefined)pos[r]={x:(p%N)/UPX,y:((p/N)|0)/UPX,d:2}}
+  for(let r=0;r<R.K;r++)if(!pos[r]){const p=R.list[(R.off[r]+R.off[r+1])>>1];if(p!==undefined)pos[r]={x:(p%NW)/UPX,y:((p/NW)|0)/UPX,d:2}}
   return R.pos=pos;
 }
 
@@ -364,8 +449,8 @@ function required(){
   const R=ed.R,d=ed.d;if(!R||!d)return new Map();const n=numsFor(d),sig=d.id+':'+(n?n.seeds.length+':'+(n.pal?n.pal.join(''):'std'):'none');
   if(R.reqFor===sig)return R.req;
   const m=new Map();
-  if(n)for(const [sx,sy,num] of n.seeds){const x=Math.min(N-1,Math.floor(sx*N)),y=Math.min(N-1,Math.floor(sy*N));
-    let id=R.lab[y*N+x];if(id<0)id=R.own[y*N+x];if(id>=0&&!m.has(id))m.set(id,num)}
+  if(n)for(const [sx,sy,num] of n.seeds){const t=R.tf,x=Math.max(0,Math.min(NW-1,Math.floor(t.dx+(sx*N-t.bx)*t.k))),y=Math.max(0,Math.min(NH-1,Math.floor(t.dy+(sy*N-t.by)*t.k)));
+    let id=R.lab[y*NW+x];if(id<0)id=R.own[y*NW+x];if(id>=0&&!m.has(id))m.set(id,num)}
   R.req=m;R.reqFor=sig;return m;
 }
 const numsList=()=>[...new Set(required().values())].sort((a,b)=>a-b);
@@ -373,11 +458,11 @@ const numDone=n=>{const f=fillsOf(key());for(const [id,v] of required())if(v===n
 const allDone=()=>{const f=fillsOf(key());for(const id of required().keys())if(!f[id])return false;return required().size>0};
 function pickNum(){const ns=numsList();ui.num=ns.find(n=>!numDone(n))||ns[0]||1}
 let flash={i:-1,t:0},hiKey='';
-const H=newCanvas(N/2),Hx=H.getContext('2d'),Himg=Hx.createImageData(N/2,N/2),H32=new Uint32Array(Himg.data.buffer);
+const H=newCanvas(NW/2,NH/2),Hx=H.getContext('2d'),Himg=Hx.createImageData(NW/2,NH/2),H32=new Uint32Array(Himg.data.buffer);
 function buildHighlight(){
   const R=ed.R,f=fillsOf(key()),k=ed.d.id+':'+ui.num+':'+Object.keys(f).length;if(hiKey===k)return;hiKey=k;
-  H32.fill(0);const val=((44<<24)|(54<<16)|(90<<8)|255)>>>0,h=N/2;
-  for(const [id,n] of required()){if(n!==ui.num||f[id])continue;for(let j=R.off[id];j<R.off[id+1];j++){const p=R.list[j];H32[(((p/N)|0)>>1)*h+((p%N)>>1)]=val}}
+  H32.fill(0);const val=((44<<24)|(54<<16)|(90<<8)|255)>>>0,h=NW/2;
+  for(const [id,n] of required()){if(n!==ui.num||f[id])continue;for(let j=R.off[id];j<R.off[id+1];j++){const p=R.list[j];H32[(((p/NW)|0)>>1)*h+((p%NW)>>1)]=val}}
   Hx.putImageData(Himg,0,0);
 }
 
@@ -473,18 +558,18 @@ function render(){
   if(ed.mode==='libre'||ed.mode==='neon'){
     if(active&&active.buf&&clipDirty){clipDirty=false;restoreB();compositeK(active.s,false)}
     else if(!active&&layerKey!==key()+':'+L.width)rebuildLayer();
-    x.setTransform(S,0,0,S,0,0);x.fillStyle=ed.mode==='neon'?NEON_BG:'#FFFFFF';x.fillRect(0,0,400,400);
-    if(ed.mode==='neon'){x.fillStyle='rgba(255,255,255,.07)';for(let i=10;i<400;i+=20)for(let j=10;j<400;j+=20)x.fillRect(i-1,j-1,2,2)}
+    x.setTransform(S,0,0,S,0,0);x.fillStyle=ed.mode==='neon'?NEON_BG:'#FFFFFF';x.fillRect(0,0,400,UH);
+    if(ed.mode==='neon'){x.fillStyle='rgba(255,255,255,.07)';for(let i=10;i<400;i+=20)for(let j=10;j<UH;j+=20)x.fillRect(i-1,j-1,2,2)}
     x.setTransform(1,0,0,1,0,0);x.drawImage(L,0,0);return;
   }
-  const R=ed.R;if(!R){x.fillStyle='#FFFFFF';x.fillRect(0,0,px,px);return}
+  const R=ed.R,py=cv.height;if(!R){x.fillStyle='#FFFFFF';x.fillRect(0,0,px,py);return}
   if(R.fillKey!==key())rebuildFills();
   if(active&&active.buf&&clipDirty){clipDirty=false;restoreB();compositeK(active.s,false)}
   else if(!active&&ed.mode==='colorear'&&layerKey!==key()+':'+L.width)rebuildLayer();
-  x.drawImage(R.F,0,0,px,px);
+  x.drawImage(R.F,0,0,px,py);
   if(ed.mode==='colorear')x.drawImage(L,0,0);
-  if(ed.mode==='numeros'){buildHighlight();x.drawImage(H,0,0,px,px)}
-  x.drawImage(R.line,0,0,px,px);
+  if(ed.mode==='numeros'){buildHighlight();x.drawImage(H,0,0,px,py)}
+  x.drawImage(R.line,0,0,px,py);
   if(ed.mode==='numeros'){
     const pos=positions(R),f=fillsOf(key()),now=performance.now();x.setTransform(S,0,0,S,0,0);x.textAlign='center';x.textBaseline='middle';x.lineJoin='round';
     for(const [id,n] of required()){if(f[id])continue;const l=pos[id];if(!l)continue;
@@ -572,7 +657,8 @@ async function loadCustom(){
     for(const r of recs.sort((a,b)=>a.created-b.created)){if(!r||!ID_RE.test(r.id)||!(r.blob instanceof Blob)||byId(r.id))continue;
       const nm=String(r.name||'').slice(0,30),n=DRAWINGS.filter(d=>d.custom).length+1;  /* nombres viejos que eran solo números */
       DRAWINGS.push({id:r.id,name:/\p{L}{2,}/u.test(nm)?nm:'Mi dibujo '+n,cat:'mios',src:URL.createObjectURL(r.blob),custom:true,nums:null})}
-    for(const [k,v] of await idb.entries('thumbs'))if(THUMB_RE.test(k)&&typeof v==='string'&&v.startsWith('data:image/'))thumbs[k]=v;
+    for(const [k,v] of await idb.entries('thumbs'))if(THUMB_RE.test(k)&&typeof v==='string'&&v.startsWith('data:image/')){
+      if(lamReset&&!/^(g~)?(n~)?u-/.test(k)&&!/^(g~)?(libre|neon)$/.test(k)){idb.del('thumbs',k).catch(()=>{});continue}thumbs[k]=v}
   }catch(e){}
   renderGrid();
 }
@@ -634,7 +720,7 @@ const panel=$('#panel'),prepCache=new Map();
 const PREP_MAX=(navigator.deviceMemory||4)<=2?1:2;
 async function getPrepared(d){
   if(prepCache.has(d.id)){const R=prepCache.get(d.id);prepCache.delete(d.id);prepCache.set(d.id,R);return R}
-  const im=await loadImg(d.src);const R=prepare(im);prepCache.set(d.id,R);
+  const im=await loadImg(d.src);const R=prepare(im,d);prepCache.set(d.id,R);
   if(prepCache.size>PREP_MAX)prepCache.delete(prepCache.keys().next().value);return R;
 }
 async function openEditor(mode,d){
@@ -662,10 +748,10 @@ function storeThumb(){
   const id=ed.mode==='colorear'?ed.d.id:ed.mode==='numeros'?'n~'+ed.d.id:ed.mode,k=key();
   const has=Object.keys(state.fills[k]||{}).length||(state.strokes[k]||[]).length;
   if(!has){delete state.when[id];if(thumbs[id]){delete thumbs[id];idb.del('thumbs',id).catch(()=>{})}if(thumbs['g~'+id]){delete thumbs['g~'+id];idb.del('thumbs','g~'+id).catch(()=>{})}return}
-  render();const c=newCanvas(220),x=c.getContext('2d');x.imageSmoothingQuality='high';x.drawImage(cv,0,0,220,220);
+  render();const c=newCanvas(220),x=c.getContext('2d');x.imageSmoothingQuality='high';x.drawImage(cv,...sqCrop(),0,0,220,220);
   const url=c.toDataURL('image/jpeg',.82);thumbs[id]=url;idb.put('thumbs',url,id).catch(()=>{});
   /* versión grande para armarla como rompecabezas */
-  const g=newCanvas(720),gx=g.getContext('2d');gx.imageSmoothingQuality='high';gx.drawImage(cv,0,0,720,720);
+  const g=newCanvas(720),gx=g.getContext('2d');gx.imageSmoothingQuality='high';gx.drawImage(cv,...sqCrop(),0,0,720,720);
   const big=g.toDataURL('image/jpeg',.85);thumbs['g~'+id]=big;idb.put('thumbs',big,'g~'+id).catch(()=>{});
   if(dirtyWork){state.when[id]=Date.now();dirtyWork=false}else if(!state.when[id])state.when[id]=Date.now();save();
 }
@@ -781,14 +867,14 @@ function drawPreview(c,id,w){
 function createNumbers(){
   const R=ed.R,f=state.fills['c:'+ed.d.id]||{},pos=positions(R),pal=[],seeds=[];
   for(const [id,v] of Object.entries(f)){const p=pos[id];if(!p||+id>=R.K)continue;let n=pal.indexOf(v.c);if(n<0){if(pal.length>=24)continue;pal.push(v.c);n=pal.length-1}
-    seeds.push([+(p.x/400).toFixed(4),+(p.y/400).toFixed(4),n+1])}
+    const t=R.tf;seeds.push([+((t.bx+(p.x*UPX-t.dx)/t.k)/N).toFixed(4),+((t.by+(p.y*UPX-t.dy)/t.k)/N).toFixed(4),n+1])}
   if(seeds.length<2){toast('Pinta al menos dos zonas con la cubeta');return}
   state.nums[ed.d.id]={pal,seeds};delete state.fills['n:'+ed.d.id];delete state.done[ed.d.id];R.fillKey=null;hiKey='';pickNum();refreshEditor();
   toast(`Listo: ${seeds.length} zonas con ${pal.length} colores`);say('Listo. Ahora a pintar por números');
 }
 
 /* ---------- toques y trazos ---------- */
-const toPt=e=>{const r=cv.getBoundingClientRect();return[f1((e.clientX-r.left)/r.width*400),f1((e.clientY-r.top)/r.height*400)]};
+const toPt=e=>{const r=cv.getBoundingClientRect();return[f1((e.clientX-r.left)/r.width*400),f1((e.clientY-r.top)/r.height*UH)]};
 function tapFill(pt){
   const R=ed.R,id=regionAt(R,pt);if(id<0)return;const k=key(),f=fillsOf(k);
   pushHist({key:k,kind:'fill',idx:id,prev:f[id]||null});f[id]={c:curColor(),t:ui.tex};paintRegion(R,id,f[id]);sfx('pop');req();save();checkComplete();
@@ -813,8 +899,8 @@ function addPoint(pt){
 const zoomer=$('#zoomer'),zreset=$('#zreset'),touches=new Map();
 const zoom={s:1,x:0,y:0,pinch:null};let pendingTap=null,hiResT=0;
 function applyZoom(){zoomer.style.transform=zoom.s===1?'':`translate(${zoom.x}px,${zoom.y}px) scale(${zoom.s})`;zreset.hidden=zoom.s===1}
-function clampZoom(){const W=paper.clientWidth;zoom.s=Math.min(3,Math.max(1,zoom.s));
-  zoom.x=Math.min(0,Math.max(W-W*zoom.s,zoom.x));zoom.y=Math.min(0,Math.max(W-W*zoom.s,zoom.y))}
+function clampZoom(){const W=paper.clientWidth,Hh=paper.clientHeight;zoom.s=Math.min(3,Math.max(1,zoom.s));
+  zoom.x=Math.min(0,Math.max(W-W*zoom.s,zoom.x));zoom.y=Math.min(0,Math.max(Hh-Hh*zoom.s,zoom.y))}
 function resetZoom(){if(zoom.s===1&&!zoom.pinch)return;zoom.s=1;zoom.x=zoom.y=0;zoom.pinch=null;applyZoom();resize()}
 zreset.onclick=resetZoom;
 const local=e=>{const r=paper.getBoundingClientRect();return[e.clientX-r.left-paper.clientLeft,e.clientY-r.top-paper.clientTop]};
@@ -887,7 +973,7 @@ const moreBtn=$('#more'),menu=$('#menu');
 function setMenu(open){menu.hidden=!open;moreBtn.setAttribute('aria-expanded',open);if(!open)disarm()}
 moreBtn.onclick=e=>{e.stopPropagation();setMenu(menu.hidden);if(!menu.hidden){const f=menu.querySelector('.mitem:not([hidden])');if(f)f.focus()}};
 document.addEventListener('pointerdown',e=>{if(!menu.hidden&&!e.target.closest('.more-wrap'))setMenu(false)});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('#voices').hidden)closeVoices();else if(!$('#pgate').hidden)closeParents();else if(!$('#party').hidden)closeParty();else if(!menu.hidden){setMenu(false);moreBtn.focus()}else if(dots.on)dotsBack();else if(puz.on)puzBack();else if(mem.on)memBack();else if(sha.on)shaBack();else if(col.on)colBack();else if(albOn)leaveAlbum()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('#voices').hidden)closeVoices();else if(!$('#pgate').hidden)closeParents();else if(!$('#party').hidden)closeParty();else if(!menu.hidden){setMenu(false);moreBtn.focus()}else if(dots.on)dotsBack();else if(puz.on)puzBack();else if(mem.on)memBack();else if(sha.on)shaBack();else if(col.on)colBack();else if(mus.on)musBack();else if(lab.on)labBack();else if(albOn)leaveAlbum()}});
 const clearBtn=$('#clear'),clearIcon=clearBtn.innerHTML;let armed=false,armT;
 function disarm(){armed=false;clearTimeout(armT);clearBtn.innerHTML=clearIcon;clearBtn.classList.remove('armed')}
 clearBtn.onclick=()=>{
@@ -1049,7 +1135,7 @@ if(APP){
   /* botón Atrás de Android: cierra lo que esté abierto antes de salir de la app */
   APP.addListener('backButton',()=>{
     if(!$('#voices').hidden)closeVoices();else if(!$('#pgate').hidden)closeParents();else if(!$('#party').hidden)closeParty();else if(!menu.hidden)setMenu(false);
-    else if(dots.on)dotsBack();else if(puz.on)puzBack();else if(mem.on)memBack();else if(sha.on)shaBack();else if(col.on)colBack();else if(albOn)leaveAlbum();else if(ed.on)showHome();else APP.exitApp();
+    else if(dots.on)dotsBack();else if(puz.on)puzBack();else if(mem.on)memBack();else if(sha.on)shaBack();else if(col.on)colBack();else if(mus.on)musBack();else if(lab.on)labBack();else if(albOn)leaveAlbum();else if(ed.on)showHome();else APP.exitApp();
   });
   APP.addListener('pause',()=>{stopVoice();stopMusic();save()});
   APP.addListener('resume',()=>{if(BILL)checkPurchases()});
@@ -1063,8 +1149,8 @@ $('#voices').addEventListener('pointerdown',e=>{if(e.target.id==='voices')closeV
 let wasComplete=false;
 /* zonas que cuentan para terminar: las numeradas; si la lámina no tiene números, las grandes que no tocan el borde (el fondo blanco no hace falta pintarlo) */
 function bigRegions(){const R=ed.R,rq=required();if(rq.size)return[...rq.keys()];  /* con números: las zonas numeradas */
-  if(R.big)return R.big;const min=N*N*.005,a=[],bb=R.bb;
-  for(let r=0;r<R.K;r++){const b=r*4,edge=bb[b]<=1||bb[b+1]<=1||bb[b+2]>=N-2||bb[b+3]>=N-2;if(R.off[r+1]-R.off[r]>=min&&!edge)a.push(r)}return R.big=a}
+  if(R.big)return R.big;const min=NW*NH*.005,a=[],bb=R.bb;
+  for(let r=0;r<R.K;r++){const b=r*4,edge=bb[b]<=1||bb[b+1]<=1||bb[b+2]>=NW-2||bb[b+3]>=NH-2;if(R.off[r+1]-R.off[r]>=min&&!edge)a.push(r)}return R.big=a}
 function colorComplete(){
   if(ed.mode!=='colorear'||!ed.R)return false;
   const f=state.fills[key()]||{},sr=new Set();for(const s of state.strokes[key()]||[])if(s.r>=0)sr.add(s.r);
@@ -1086,7 +1172,7 @@ function celebrate(){
   if(drawing){const first=!state.done[ed.d.id];state.done[ed.d.id]=true;save();storeThumb();
     sub=first?`Ganaste una estrella por ${ed.d.name}.`:`Terminaste ${ed.d.name} otra vez.`}
   else sub='Tu dibujo está listo.';
-  render();const c=newCanvas(440),x=c.getContext('2d');x.imageSmoothingQuality='high';x.drawImage(cv,0,0,440,440);
+  render();const c=newCanvas(440),x=c.getContext('2d');x.imageSmoothingQuality='high';x.drawImage(cv,...sqCrop(),0,0,440,440);
   $('#party-img').src=c.toDataURL('image/jpeg',.88);
   $('#party-t').textContent=phrase;$('#party-s').textContent=sub;
   const p=$('#party');partyFocus=document.activeElement;p.hidden=false;
@@ -1095,10 +1181,10 @@ function celebrate(){
   $('#party-more').focus();
 }
 function closeParty(){$('#party').hidden=true;stopVoice();if(partyFocus&&partyFocus.focus)partyFocus.focus()}
-$('#party-more').onclick=()=>{closeParty();if(sha.on){shaPartyMore();return}if(col.on){colPartyMore();return}
+$('#party-more').onclick=()=>{closeParty();if(sha.on){shaPartyMore();return}if(col.on){colPartyMore();return}if(mus.on){musPartyMore();return}if(lab.on){labPartyMore();return}
   if(puz.on&&puz.done&&puz.nextN){puz.n=puz.nextN;puz.nextN=0;try{localStorage.setItem(PUZ_KEY,String(puz.n))}catch(e){}paintLevels();puzBuild();say('Arma el rompecabezas')}
   else if(mem.on&&mem.done&&mem.nextN){mem.n=mem.nextN;mem.nextN=0;try{localStorage.setItem(MEM_KEY,String(mem.n))}catch(e){}paintMemLv();memStart()}};
-$('#party-home').onclick=()=>{closeParty();if(sha.on)shaStart();else if(col.on)colStart();else if(dots.on)openDotsList();else if(puz.on)openPuzList();else if(mem.on)memStart();else showHome()};
+$('#party-home').onclick=()=>{closeParty();if(sha.on)shaStart();else if(col.on)colStart();else if(mus.on)musStart();else if(lab.on)labStart();else if(dots.on)openDotsList();else if(puz.on)openPuzList();else if(mem.on)memStart();else showHome()};
 $('#party-save').onclick=savePicture;
 $('#party').addEventListener('pointerdown',e=>{if(e.target.id==='party')closeParty()});
 $('#finish').onclick=celebrate;
@@ -1477,7 +1563,7 @@ const stkKeyOf=k=>{const m=/^puz-(.+)-[1234]$/.exec(k);return m?m[1]:k};
   /* primera vez con stickers: lo que ya hizo cuenta como ganado (y sale como nuevo en el álbum) */
   else Object.keys(state.done).forEach(k=>stk.a.add(stkKeyOf(k)))})();
 function stkStore(){try{localStorage.setItem(STK_KEY,JSON.stringify({a:[...stk.a],v:[...stk.v]}))}catch(e){}}
-function stkEarned(key){if(/^(puntos|mem|sha|col)-/.test(key))return!!state.done[key];
+function stkEarned(key){if(/^(puntos|mem|sha|col|mus|lab)-/.test(key))return!!state.done[key];
   return!!(state.done[key]||[1,2,3,4].some(n=>state.done[`puz-${key}-${n}`]))}
 function stkItems(){const out=[];
   DRAWINGS.filter(d=>!d.custom&&!/^(letra|num)-/.test(d.id)).forEach(d=>out.push({key:d.id,d,name:d.name,cat:d.cat}));
@@ -1485,6 +1571,8 @@ function stkItems(){const out=[];
   MEM_LV.forEach(n=>out.push({key:'mem-'+n,n,name:`Memoria de ${n} parejas`,cat:'trofeos'}));
   [3,4,6].forEach(n=>out.push({key:'sha-'+n,n,name:`Sombras de ${n} figuras`,cat:'trofeos'}));
   [3,4,6].forEach(n=>out.push({key:'col-'+n,n,name:`Colores con ${n} dibujos`,cat:'trofeos'}));
+  [3,5,8].forEach(n=>out.push({key:'mus-'+n,n,name:`Música de ${n} notas`,cat:'trofeos'}));
+  [1,2,3].forEach(n=>out.push({key:'lab-'+n,n,name:`Laberinto nivel ${n}`,cat:'trofeos'}));
   return out}
 const stkCache={};
 function stkSrc(key){if(stkCache[key])return stkCache[key];
@@ -1492,7 +1580,7 @@ function stkSrc(key){if(stkCache[key])return stkCache[key];
     const c=newCanvas(240),x=c.getContext('2d'),s=240/400*.84;x.setTransform(s,0,0,s,240*.08,240*.08);x.lineJoin=x.lineCap='round';
     x.save();x.strokeStyle='#FFFFFF';x.lineWidth=44;figPath(x,f);x.stroke();x.fillStyle='#FFFFFF';x.fill();x.restore();drawFigure(x,f,1);
     return stkCache[key]=c.toDataURL('image/png')}
-  const MED={mem:['pares','#E8424C',{4:'#2BB3A3',6:'#2F6FD6',8:'#9B6BD6'}],sha:['sombras','#2F9E5B',{3:'#FFD23F',4:'#FF8A3D',6:'#9B6BD6'}],col:['colores','#E8424C',{3:'#6CC24A',4:'#2F6FD6',6:'#FF8FB8'}]};
+  const MED={mem:['pares','#E8424C',{4:'#2BB3A3',6:'#2F6FD6',8:'#9B6BD6'}],sha:['sombras','#2F9E5B',{3:'#FFD23F',4:'#FF8A3D',6:'#9B6BD6'}],col:['colores','#E8424C',{3:'#6CC24A',4:'#2F6FD6',6:'#FF8FB8'}],mus:['notas','#FF8A3D',{3:'#FFD23F',5:'#2F6FD6',8:'#9B6BD6'}],lab:['nivel','#2BB3A3',{1:'#6CC24A',2:'#FF8A3D',3:'#E8424C'}]};
   const mg=MED[key.split('-')[0]];
   if(mg){const n=+key.split('-')[1],c=newCanvas(240),x=c.getContext('2d'),col=mg[2][n]||'#2BB3A3';
     x.lineJoin='round';x.lineWidth=8;x.strokeStyle='#FFFFFF';
@@ -1736,6 +1824,189 @@ document.querySelectorAll('#col-lv button').forEach(b=>b.onclick=()=>{const n=+b
   try{localStorage.setItem(COL_KEY,String(n))}catch(e){}paintColLv();sfx('pop');colStart()});
 if(/[?&]prueba\b/.test(location.search))Object.assign(window.__t||(window.__t={}),{sha,col});
 
+/* ---------- música ---------- */
+const MUS_KEY='pinta-y-brilla-mus',MUS_MKEY='pinta-y-brilla-musm',MUS_LV=[3,5,8],MUS_MODES=['libre','repite'],MUS_R=3;
+const MUS_F=[261.63,293.66,329.63,349.23,392,440,493.88,523.25];
+const MUS_HEX=['#E8424C','#FF8A3D','#FFD23F','#6CC24A','#2BB3A3','#2F6FD6','#9B6BD6','#FF8FB8'];
+const MUS_NAME=['Nota do','Nota re','Nota mi','Nota fa','Nota sol','Nota la','Nota si','Nota do agudo'];
+/* frases originales; cada número es una barra (0 = do grave … 7 = do agudo) */
+const MUS_SONGS={3:[[0,4,2],[2,0,4],[4,5,4],[1,3,1],[0,2,0],[5,3,4]],
+  5:[[0,4,2,5,4],[2,2,5,3,0],[4,6,5,2,0],[1,3,5,3,1],[7,4,5,2,0]],
+  8:[[0,2,4,7,5,3,1,0],[0,4,2,6,5,7,4,0],[7,5,6,3,4,1,2,0],[0,1,4,2,5,3,6,7],[2,4,2,5,4,7,5,0]]};
+const musEl=$('#musica'),musStage=$('#mus-stage'),musBars=$('#mus-bars'),musTools=$('#mus-tools'),musHint=$('#mus-hint'),musProg=$('#mus-prog'),musDotsEl=$('#mus-dots');
+const mus={on:false,mode:'libre',n:3,round:0,seq:[],pos:0,phase:'idle',done:false,nextN:0,token:0,used:[],slots:[],fin:null};
+try{const v=+localStorage.getItem(MUS_KEY);if(MUS_LV.includes(v))mus.n=v;const m=localStorage.getItem(MUS_MKEY);if(MUS_MODES.includes(m))mus.mode=m}catch(e){}
+function musOkId(d){return d&&typeof d.id==='string'&&/^[a-z0-9-]+$/.test(d.id)}
+function musPool(){return puzList().filter(d=>musOkId(d)&&!isLocked(d))}
+function musNote(k){if(!ui.sound)return;const a=getActx();if(!a)return;const f=MUS_F[k],t=a.currentTime+.005;
+  /* marimba: seno con caída corta + un armónico agudo que se apaga rápido */
+  [[f,'sine',.24,.9],[f*4,'triangle',.07,.14]].forEach(([fr,ty,vol,dur])=>{const o=a.createOscillator(),g=a.createGain();o.type=ty;o.frequency.setValueAtTime(fr,t);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.006);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+    o.connect(g);g.connect(a.destination);o.start(t);o.stop(t+dur+.05)})}
+function musLater(fn,ms,tk){setTimeout(()=>{if(tk===mus.token&&mus.on)fn()},ms)}
+function musClear(){mus.slots.forEach(s=>{s.bar.classList.remove('glow','bounce');s.pet.classList.remove('on','hop');clearTimeout(s.t)})}
+function musBuild(){MUS_F.forEach((f,k)=>{const slot=mk('div','mus-slot'),bar=mk('button','mus-bar'),pet=mk('img','mus-pet');
+  slot.style.setProperty('--k',k);bar.style.setProperty('--c',MUS_HEX[k]);bar.setAttribute('aria-label',MUS_NAME[k]);pet.alt='';pet.decoding='async';pet.draggable=false;
+  bar.addEventListener('pointerdown',e=>{if(e.button>0)return;e.preventDefault();musTap(k)});
+  bar.addEventListener('click',e=>{if(e.detail===0)musTap(k)});
+  slot.append(pet,bar);musBars.append(slot);mus.slots.push({slot,bar,pet,t:0})})}
+musBuild();
+function musBounce(k){const b=mus.slots[k].bar;if(reduceMotion())return;b.classList.remove('bounce');void b.offsetWidth;b.classList.add('bounce')}
+function musGlow(k,ms){const b=mus.slots[k].bar;b.classList.add('glow');setTimeout(()=>b.classList.remove('glow'),ms)}
+function musFlash(k,tk){for(let i=0;i<3;i++){musLater(()=>mus.slots[k].bar.classList.add('glow'),300+i*520,tk);setTimeout(()=>mus.slots[k].bar.classList.remove('glow'),300+i*520+300)}}
+function musPet(k){const pool=musPool();if(!pool.length)return;const d=pool[Math.floor(Math.random()*pool.length)],s=mus.slots[k],im=s.pet;
+  im.src='dibujos/sticker/'+d.id+'.webp';im.classList.remove('on','hop');void im.offsetWidth;im.classList.add('on');if(!reduceMotion())im.classList.add('hop');
+  clearTimeout(s.t);s.t=setTimeout(()=>im.classList.remove('on','hop'),reduceMotion()?600:900)}
+function paintMus(){document.querySelectorAll('#mus-mode button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===mus.mode));
+  document.querySelectorAll('#mus-lv button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.n===mus.n));
+  const r=mus.mode==='repite';musTools.hidden=!r;musProg.hidden=!r}
+function musProgress(){musProg.textContent=`${Math.min(mus.round,MUS_R)} / ${MUS_R}`}
+function musDots(){const n=mus.seq.length;if(musDotsEl.children.length!==n){musDotsEl.textContent='';for(let i=0;i<n;i++)musDotsEl.append(mk('i','mus-dot'))}
+  [...musDotsEl.children].forEach((d,i)=>d.classList.toggle('on',i<mus.pos))}
+function openMus(){$('#home').hidden=true;$('#editor').hidden=true;musEl.hidden=false;mus.on=true;paintMus();musStart();if(mus.mode==='libre')say('Música. Toca las barras de colores')}
+function leaveMus(){mus.on=false;mus.token++;popStop();stopVoice();musClear();musEl.hidden=true;$('#home').hidden=false;paintStkCard()}
+function musBack(){if(!$('#party').hidden){closeParty();return}if(popOn){popStop();return}leaveMus()}
+function musStart(){popStop();const tk=++mus.token;musClear();
+  Object.assign(mus,{round:0,pos:0,seq:[],phase:'idle',done:false,nextN:0,used:[]});paintMus();musDots();
+  if(mus.mode==='libre'){musHint.textContent='Toca las barras de colores';return}
+  musProgress();musHint.textContent='';musLater(()=>musRound(),mus.on?700:0,tk)}
+function musRound(){const tk=mus.token,songs=MUS_SONGS[mus.n];let idx=songs.map((s,i)=>i).filter(i=>!mus.used.includes(i));if(!idx.length){mus.used=[];idx=songs.map((s,i)=>i)}
+  const i=idx[Math.floor(Math.random()*idx.length)];mus.used.push(i);mus.seq=songs[i].filter(v=>v>=0&&v<8);mus.pos=0;musDots();musPlaySeq(tk)}
+function musPlaySeq(tk){mus.phase='play';mus.pos=0;musDots();musHint.textContent='Escucha la canción';say('Escucha la canción');
+  const t0=1400,gap=650;
+  mus.seq.forEach((k,i)=>musLater(()=>{musNote(k);musGlow(k,420)},t0+i*gap,tk));
+  musLater(()=>{mus.phase='input';musHint.textContent='Ahora repítela tú';say('Ahora repítela tú')},t0+mus.seq.length*gap+250,tk)}
+function musTap(k){if(!mus.on||!$('#party').hidden||popOn||mus.done)return;
+  if(mus.mode==='repite'&&mus.phase!=='input')return;
+  musNote(k);musBounce(k);
+  if(mus.mode==='libre'){musPet(k);return}
+  const tk=mus.token;
+  if(k===mus.seq[mus.pos]){musPet(k);mus.pos++;musDots();
+    if(mus.pos>=mus.seq.length){mus.phase='wait';mus.round++;musProgress();musLater(()=>sfx('ok'),350,tk);
+      if(mus.round>=MUS_R)musFinish();
+      else{musHint.textContent='¡Muy bien! Otra canción';say('¡Muy bien! Otra canción');musLater(()=>musRound(),2400,tk)}}}
+  else{musHint.textContent='Casi. Toca la barra que brilla';say('Casi. Toca la barra que brilla');musFlash(mus.seq[mus.pos],tk)}}
+function musRR(x,a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath()}
+function musFinish(){const n=mus.n,tk=mus.token;mus.done=true;mus.phase='done';state.done['mus-'+n]=true;save();
+  const pool=musPool();mus.fin=null;if(pool.length){mus.fin=new Image();mus.fin.src='dibujos/sticker/'+pool[Math.floor(Math.random()*pool.length)].id+'.webp'}
+  musHint.textContent=`¡Repetiste las ${MUS_R} canciones!`;
+  setTimeout(()=>{if(tk!==mus.token||!mus.on)return;musHint.textContent='¡Revienta los globos!';popSurprise(()=>{if(tk!==mus.token||!mus.on)return;
+    let i;do{i=Math.floor(Math.random()*PRAISE.length)}while(i===lastPraise&&PRAISE.length>1);lastPraise=i;
+    const c=newCanvas(440),x=c.getContext('2d');x.fillStyle='#FFF6E3';x.fillRect(0,0,440,440);
+    MUS_F.forEach((f,k)=>{const h=280-k*22;musRR(x,24+k*50,410-h,42,h,12);x.fillStyle=MUS_HEX[k];x.fill();x.lineWidth=5;x.strokeStyle='#26235C';x.stroke()});
+    if(mus.fin)try{x.drawImage(mus.fin,300,18,112,112)}catch(e){}
+    $('#party-img').src=c.toDataURL('image/jpeg',.88);
+    const next=MUS_LV[MUS_LV.indexOf(n)+1]||0;mus.nextN=next;
+    $('#party-t').textContent=PRAISE[i];$('#party-s').textContent=`Repetiste 3 canciones de ${n} notas.`;
+    $('#party-more').textContent=next?`Probar con ${next} notas`:'Jugar otra vez';$('#party-save').hidden=true;$('#party-home').textContent='Otra ronda';
+    const p=$('#party');partyFocus=document.activeElement;p.hidden=false;
+    const pf=$('#party-fx');pf.width=Math.round(innerWidth*dpr);pf.height=Math.round(innerHeight*dpr);
+    confetti(pf,200);tada();partyFx('mus-'+n);setTimeout(()=>say(PRAISE[i]),900);$('#party-more').focus()})},1500)}
+function musPartyMore(){if(mus.nextN){mus.n=mus.nextN;mus.nextN=0;try{localStorage.setItem(MUS_KEY,String(mus.n))}catch(e){}paintMus()}musStart()}
+$('#go-mus').onclick=openMus;$('#mus-back').onclick=musBack;
+$('#mus-again').onclick=()=>{if(mus.mode==='repite'&&mus.phase==='input'&&!mus.done)musPlaySeq(mus.token)};
+document.querySelectorAll('#mus-mode button').forEach(b=>b.onclick=()=>{const m=b.dataset.m;if(!MUS_MODES.includes(m)||m===mus.mode)return;mus.mode=m;
+  try{localStorage.setItem(MUS_MKEY,m)}catch(e){}sfx('pop');musStart();if(m==='libre')say('Toca las barras de colores')});
+document.querySelectorAll('#mus-lv button').forEach(b=>b.onclick=()=>{const n=+b.dataset.n;if(!MUS_LV.includes(n)||(n===mus.n&&!mus.done&&!mus.round))return;mus.n=n;
+  try{localStorage.setItem(MUS_KEY,String(n))}catch(e){}paintMus();sfx('pop');musStart()});
+
+/* ---------- laberinto ---------- */
+const LAB_KEY='pinta-y-brilla-lab',LAB_LV=[1,2,3],LAB_SZ={1:[4,5],2:[6,8],3:[8,11]},LAB_INK='#26235C',LAB_DX=[0,1,0,-1],LAB_DY=[-1,0,1,0];
+const LAB_TRAIL=['#E8424C','#FF8A3D','#FFD23F','#6CC24A','#2BB3A3','#2F6FD6','#9B6BD6','#FF8FB8'];
+const labEl=$('#lab'),labStage=$('#lab-stage'),labCv=$('#lab-cv'),labX=labCv.getContext('2d'),labHint=$('#lab-hint');
+const lab={on:false,n:1,cols:0,rows:0,open:null,seed:0,cell:0,t:0,path:[0],cur:0,vx:0,vy:0,img:null,done:false,nextN:0,token:0,drag:null,raf:0};
+try{const v=+localStorage.getItem(LAB_KEY);if(LAB_LV.includes(v))lab.n=v}catch(e){}
+function paintLabLv(){document.querySelectorAll('#lab-lv button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.n===lab.n))}
+function labRng(s){return()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+/* DFS con semilla; open[i] guarda las salidas de la celda i: 1 arriba, 2 derecha, 4 abajo, 8 izquierda */
+function labGen(cols,rows,seed){const R=labRng(seed),open=new Uint8Array(cols*rows),seen=new Uint8Array(cols*rows),st=[0];seen[0]=1;
+  while(st.length){const i=st[st.length-1],c=i%cols,r=(i-c)/cols,dirs=[];
+    for(let d=0;d<4;d++){const nc=c+LAB_DX[d],nr=r+LAB_DY[d];if(nc>=0&&nc<cols&&nr>=0&&nr<rows&&!seen[nr*cols+nc])dirs.push(d)}
+    if(!dirs.length){st.pop();continue}
+    const d=dirs[Math.floor(R()*dirs.length)],j=(r+LAB_DY[d])*cols+c+LAB_DX[d];open[i]|=1<<d;open[j]|=1<<((d+2)%4);seen[j]=1;st.push(j)}
+  return open}
+function labCtr(i){const c=i%lab.cols,r=(i-c)/lab.cols,p=lab.t/2;return[p+(c+.5)*lab.cell,p+(r+.5)*lab.cell]}
+function labRR(x,a,b,w,h,r){x.beginPath();x.moveTo(a+r,b);x.arcTo(a+w,b,a+w,b+h,r);x.arcTo(a+w,b+h,a,b+h,r);x.arcTo(a,b+h,a,b,r);x.arcTo(a,b,a+w,b,r);x.closePath()}
+function labStar(x,cx,cy,R){x.beginPath();for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,r=k%2?R*.46:R;x[k?'lineTo':'moveTo'](cx+Math.cos(a)*r,cy+Math.sin(a)*r)}x.closePath()}
+function labDraw(){const x=labX,{cell,t,cols,rows,open}=lab;if(!cell||!open)return;const w=cell*cols+t,h=cell*rows+t,p=t/2,inner=cell-t;
+  x.clearRect(0,0,w,h);x.fillStyle='#FFF6E3';labRR(x,0,0,w,h,t*1.4);x.fill();
+  /* rastro de color */
+  x.lineCap='round';x.lineJoin='round';x.lineWidth=Math.max(5,inner*.4);
+  for(let k=1;k<lab.path.length;k++){const[a,b]=[labCtr(lab.path[k-1]),labCtr(lab.path[k])];x.strokeStyle=LAB_TRAIL[k%LAB_TRAIL.length];x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(b[0],b[1]);x.stroke()}
+  /* meta */
+  const[gx,gy]=labCtr(cols*rows-1);x.fillStyle='rgba(255,210,63,.35)';x.beginPath();x.arc(gx,gy,inner*.52,0,Math.PI*2);x.fill();
+  labStar(x,gx,gy,inner*.44);x.fillStyle='#FFD23F';x.fill();x.lineWidth=Math.max(2.5,inner*.07);x.strokeStyle=LAB_INK;x.stroke();
+  /* paredes gruesas redondeadas */
+  x.lineWidth=t;x.strokeStyle=LAB_INK;x.beginPath();
+  for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){const o=open[r*cols+c],px=p+c*cell,py=p+r*cell;
+    if(!(o&1)){x.moveTo(px,py);x.lineTo(px+cell,py)}
+    if(!(o&8)){x.moveTo(px,py);x.lineTo(px,py+cell)}
+    if(r===rows-1&&!(o&4)){x.moveTo(px,py+cell);x.lineTo(px+cell,py+cell)}
+    if(c===cols-1&&!(o&2)){x.moveTo(px+cell,py);x.lineTo(px+cell,py+cell)}}
+  x.stroke();
+  /* animal */
+  const s=inner*.94,im=lab.img;
+  if(im&&im.complete&&im.naturalWidth){const q=im.naturalWidth/im.naturalHeight,iw=q>=1?s:s*q,ih=q>=1?s/q:s;try{x.drawImage(im,lab.vx-iw/2,lab.vy-ih/2,iw,ih)}catch(e){}}
+  else{x.fillStyle='#2BB3A3';x.beginPath();x.arc(lab.vx,lab.vy,s*.4,0,Math.PI*2);x.fill()}}
+function labSize(){if(!lab.on||!lab.open)return;const W=labStage.clientWidth-8,H=labStage.clientHeight-8;if(W<40||H<40)return;
+  const c0=Math.min(W/lab.cols,H/lab.rows),t0=Math.max(6,c0*.16),cell=Math.floor(Math.min((W-t0)/lab.cols,(H-t0)/lab.rows,150));if(cell<10)return;
+  const t=Math.max(6,Math.round(cell*.16)),w=cell*lab.cols+t,h=cell*lab.rows+t;lab.cell=cell;lab.t=t;
+  labCv.width=Math.round(w*dpr);labCv.height=Math.round(h*dpr);labCv.style.width=w+'px';labCv.style.height=h+'px';labX.setTransform(dpr,0,0,dpr,0,0);
+  [lab.vx,lab.vy]=labCtr(lab.cur);labDraw()}
+new ResizeObserver(labSize).observe(labStage);
+function labKick(){if(lab.raf||!lab.on)return;lab.raf=requestAnimationFrame(labTick)}
+function labTick(){lab.raf=0;if(!lab.on)return;const[tx,ty]=labCtr(lab.cur),dx=tx-lab.vx,dy=ty-lab.vy;
+  if(reduceMotion()||Math.abs(dx)+Math.abs(dy)<.6){lab.vx=tx;lab.vy=ty}else{lab.vx+=dx*.38;lab.vy+=dy*.38;lab.raf=requestAnimationFrame(labTick)}
+  labDraw()}
+function openLab(){$('#home').hidden=true;$('#editor').hidden=true;labEl.hidden=false;lab.on=true;paintLabLv();labStart();say('Laberinto. Lleva el animal a la estrella')}
+function leaveLab(){lab.on=false;lab.token++;lab.drag=null;cancelAnimationFrame(lab.raf);lab.raf=0;popStop();stopVoice();labEl.hidden=true;$('#home').hidden=false;paintStkCard()}
+function labBack(){if(!$('#party').hidden){closeParty();return}if(popOn){popStop();return}leaveLab()}
+function labStart(){popStop();const tk=++lab.token;cancelAnimationFrame(lab.raf);lab.raf=0;lab.drag=null;
+  const pool=musPool();
+  if(!pool.length){lab.open=null;lab.cell=0;labX.clearRect(0,0,labCv.width,labCv.height);labHint.textContent=loadState==='loading'?'Preparando…':'No se pudieron cargar los dibujos';return}
+  let[cols,rows]=LAB_SZ[lab.n]||LAB_SZ[1];if(labStage.clientWidth>labStage.clientHeight*1.2)[cols,rows]=[rows,cols];
+  /* en teléfonos altos se agregan filas para usar toda la pantalla, sin achicar las celdas */
+  {const sw=labStage.clientWidth,sh=labStage.clientHeight;if(sw&&sh&&sh>sw*1.2)rows=Math.max(rows,Math.min(rows+4,Math.floor(cols*sh/sw*.92)))}
+  const seed=Math.floor(Math.random()*4294967296)>>>0,d=pool[Math.floor(Math.random()*pool.length)];
+  Object.assign(lab,{cols,rows,seed,open:labGen(cols,rows,seed),path:[0],cur:0,done:false,nextN:0});
+  const im=new Image();im.onload=()=>{if(tk===lab.token&&lab.on)labDraw()};im.src='dibujos/sticker/'+d.id+'.webp';lab.img=im;
+  labHint.textContent='Arrastra el animal hasta la estrella';labSize()}
+function labPt(e){const r=labCv.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]}
+function labStep(ni){const L=lab.path;if(L.length>=2&&L[L.length-2]===ni)L.pop();else L.push(ni);lab.cur=ni;labKick();if(ni===lab.cols*lab.rows-1)labFinish()}
+function labDir(d){const i=lab.cur;if(lab.done||!lab.open||!(lab.open[i]&(1<<d)))return false;const c=i%lab.cols,r=(i-c)/lab.cols;labStep((r+LAB_DY[d])*lab.cols+c+LAB_DX[d]);return true}
+/* sigue el dedo celda por celda: solo pasa a una celda vecina si no hay pared en medio */
+function labMoveTo(px,py){const{cell,t,cols,rows}=lab;
+  const tc=Math.max(0,Math.min(cols-1,Math.floor((px-t/2)/cell))),tr=Math.max(0,Math.min(rows-1,Math.floor((py-t/2)/cell)));
+  for(let n=0;n<8&&!lab.done;n++){const i=lab.cur,c=i%cols,r=(i-c)/cols,dx=tc-c,dy=tr-r;if(!dx&&!dy)break;
+    const tries=Math.abs(dx)>=Math.abs(dy)?[[dx,0],[0,dy]]:[[0,dy],[dx,0]];let moved=false;
+    for(const[ax,ay]of tries){if(!ax&&!ay)continue;if(labDir(ax>0?1:ax<0?3:ay>0?2:0)){moved=true;break}}
+    if(!moved)break}}
+labCv.addEventListener('pointerdown',e=>{if(!lab.on||lab.done||lab.drag||!lab.open||e.button>0)return;e.preventDefault();const[px,py]=labPt(e);
+  if(Math.hypot(px-lab.vx,py-lab.vy)>lab.cell*1.4){labHint.textContent='Toca el animal y arrástralo';return}
+  try{labCv.setPointerCapture(e.pointerId)}catch(_){}lab.drag={id:e.pointerId};labMoveTo(px,py)});
+labCv.addEventListener('pointermove',e=>{if(!lab.drag||e.pointerId!==lab.drag.id)return;const[px,py]=labPt(e);labMoveTo(px,py)});
+function labUp(e){if(!lab.drag||e.pointerId!==lab.drag.id)return;lab.drag=null;try{labCv.releasePointerCapture(e.pointerId)}catch(_){}}
+labCv.addEventListener('pointerup',labUp);labCv.addEventListener('pointercancel',labUp);
+labCv.addEventListener('keydown',e=>{const d={ArrowUp:0,ArrowRight:1,ArrowDown:2,ArrowLeft:3}[e.key];if(d===undefined)return;e.preventDefault();labDir(d)});
+function labFinish(){const n=lab.n,tk=lab.token;lab.done=true;lab.drag=null;state.done['lab-'+n]=true;save();sfx('ok');
+  labHint.textContent='¡Llegaste a la estrella!';say('¡Llegaste a la estrella!');
+  setTimeout(()=>{if(tk!==lab.token||!lab.on)return;labHint.textContent='¡Revienta los globos!';popSurprise(()=>{if(tk!==lab.token||!lab.on)return;
+    let i;do{i=Math.floor(Math.random()*PRAISE.length)}while(i===lastPraise&&PRAISE.length>1);lastPraise=i;
+    const c=newCanvas(440),x=c.getContext('2d');x.fillStyle='#FFF6E3';x.fillRect(0,0,440,440);
+    try{const q=labCv.width/labCv.height,bw=q>=1?420:420*q,bh=q>=1?420/q:420;x.drawImage(labCv,220-bw/2,220-bh/2,bw,bh)}catch(e){}
+    $('#party-img').src=c.toDataURL('image/jpeg',.88);
+    const next=LAB_LV[LAB_LV.indexOf(n)+1]||0;lab.nextN=next;
+    $('#party-t').textContent=PRAISE[i];$('#party-s').textContent='Llegaste a la estrella.';
+    $('#party-more').textContent=next===2?'Probar el Medio':next===3?'Probar el Difícil':'Jugar otra vez';$('#party-save').hidden=true;$('#party-home').textContent='Otra ronda';
+    const p=$('#party');partyFocus=document.activeElement;p.hidden=false;
+    const pf=$('#party-fx');pf.width=Math.round(innerWidth*dpr);pf.height=Math.round(innerHeight*dpr);
+    confetti(pf,200);tada();partyFx('lab-'+n);setTimeout(()=>say(PRAISE[i]),900);$('#party-more').focus()})},900)}
+function labPartyMore(){if(lab.nextN){lab.n=lab.nextN;lab.nextN=0;try{localStorage.setItem(LAB_KEY,String(lab.n))}catch(e){}paintLabLv()}labStart()}
+$('#go-lab').onclick=openLab;$('#lab-back').onclick=labBack;
+document.querySelectorAll('#lab-lv button').forEach(b=>b.onclick=()=>{const n=+b.dataset.n;if(!LAB_LV.includes(n)||(n===lab.n&&!lab.done&&lab.path.length<2))return;lab.n=n;
+  try{localStorage.setItem(LAB_KEY,String(n))}catch(e){}paintLabLv();sfx('pop');labStart()});
+
+if(/[?&]prueba\b/.test(location.search))Object.assign(window.__t||(window.__t={}),{mus,lab});
 /* ---------- efectos ---------- */
 let toastT;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2200)}
 function confetti(target=fx,count=120){
@@ -1753,11 +2024,11 @@ function confetti(target=fx,count=120){
 const stage=$('#stage'),paper=$('#paper');
 function resize(){
   if(!ed.on)return;
-  const s=Math.max(160,Math.floor(Math.min(stage.clientWidth-24,stage.clientHeight-30)));
-  paper.style.width=paper.style.height=s+'px';
+  const s=Math.max(160,Math.floor(Math.min(stage.clientWidth-24,(stage.clientHeight-30)/ASP)));
+  paper.style.width=s+'px';paper.style.height=Math.round(s*ASP)+'px';
   /* con zoom se dibuja con más píxeles para que las líneas no se vean borrosas (con tope para no gastar memoria) */
   const cap=(navigator.deviceMemory||4)<=2?1200:1600,base=cv.clientWidth*dpr,px=Math.round(Math.max(base,Math.min(cap,base*zoom.s)));
-  if(px>0&&cv.width!==px){if(active){active=null;save()}[cv,fx,L,T,K,B].forEach(c=>{c.width=c.height=px});layerKey=''}
+  if(px>0&&cv.width!==px){if(active){active=null;save()}const ph=Math.round(px*ASP);[cv,fx,L,T,K,B].forEach(c=>{c.width=px;c.height=ph});layerKey=''}
   render();
 }
 new ResizeObserver(resize).observe(stage);

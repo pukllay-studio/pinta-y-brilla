@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+
+# Node / Capacitor
+node_modules/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Secretos
+.env
+.env.*
+*.keystore
+*.jks
